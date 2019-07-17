@@ -1,0 +1,22 @@
+{
+  "name": "generate-react-cli",
+  "version": "1.0.0",
+  "description": "A lightweight CLI that runs create-react-app under the hood to boilerplate react apps and generate react components with a little more structure in mind.",
+  "main": "src/index.js",
+  "bin": {
+    "gr": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "generate-react-cli"
+  ],
+  "author": "",
+  "license": "ISC"
+}
