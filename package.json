@@ -4,7 +4,7 @@
   "description": "A lightweight CLI that runs create-react-app under the hood to boilerplate react apps and generate react components with a little more structure in mind.",
   "main": "src/index.js",
   "bin": {
-    "gr": "bin/index.js"
+    "generate-react": "bin/generate-react"
   },
   "publishConfig": {
     "access": "public"
@@ -17,6 +17,18 @@
     "react",
     "generate-react-cli"
   ],
-  "author": "",
-  "license": "ISC"
+  "author": "Armin Broubakarian",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "esm": "^3.2.25",
+    "inquirer": "^6.5.0",
+    "ncp": "^2.0.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ]
 }
