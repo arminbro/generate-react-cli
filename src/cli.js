@@ -1,20 +1,18 @@
 import program from 'commander';
-// import inquirer from 'inquirer';
 import chalk from 'chalk';
-import fs from 'fs';
-import ncp from 'ncp';
+import { accessSync, constants, copySync, existsSync } from 'fs-extra';
 import path from 'path';
-import { promisify } from 'util';
 
-const access = promisify(fs.access);
-const copy = promisify(ncp);
 let commandNotFound = true;
 
 export function cli(args) {
   program.version('1.0.0');
 
   // Generate Component
-  program.command('component').action(generateComponent);
+  program
+    .command('component <name>')
+    .option('-p, --path <path>', 'With specified path value')
+    .action(generateComponent);
 
   program.parse(args);
 
@@ -24,24 +22,41 @@ export function cli(args) {
   }
 }
 
-async function generateComponent(componentPath, cmd) {
+function generateComponent(componentName, cmd) {
+  const componentTemplateDir = path.resolve(new URL(import.meta.url).pathname, '../../templates/components');
+  const componentPathDir = cmd.path ? `${cmd.path}/${componentName}` : `./src/components/${componentName}`;
+
   commandNotFound = false;
 
-  const componentTemplateDir = path.resolve(new URL(import.meta.url).pathname, '../../templates/components');
+  // Make sure component name is valid.
+  if (!componentName.match(/^[$A-Z_][0-9A-Z_$]*$/i)) {
+    console.error(
+      chalk.red.bold(
+        'ERROR: Component name is invalid. Please use a valid naming convention for the component you are trying to create.'
+      )
+    );
+
+    return;
+  }
 
   // Make sure we have access to the template directory.
   try {
-    await access(componentTemplateDir, fs.constants.R_OK);
+    accessSync(componentTemplateDir, constants.R_OK);
   } catch (error) {
     console.error(chalk.red.bold('ERROR: ', error));
-    process.exit(1);
+    return process.exit(1);
   }
 
-  // Copy template over to target destination
-  try {
-    await copy(componentTemplateDir, `./src/components/${componentPath}`, { clobber: false });
-  } catch (error) {
-    console.log(chalk.red('ERROR: ', error));
+  // Make sure the component does not already exists in the path.
+  if (existsSync(componentPathDir)) {
+    console.log(chalk.red(`Component "${componentName}" already exists in this path "${componentPathDir}".`));
+  } else {
+    // Copy template over to target destination
+    try {
+      copySync(componentTemplateDir, componentPathDir, { clobber: false });
+    } catch (error) {
+      console.log(chalk.red('ERROR: ', error));
+    }
   }
 }
 
