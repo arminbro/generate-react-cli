@@ -24,7 +24,8 @@
     "commander": "^2.20.0",
     "esm": "^3.2.25",
     "fs-extra": "^8.1.0",
-    "inquirer": "^6.5.0"
+    "inquirer": "^6.5.0",
+    "replace": "^1.1.0"
   },
   "files": [
     "bin/",

@@ -1,7 +1,10 @@
 import program from 'commander';
 import chalk from 'chalk';
-import { accessSync, constants, copySync, existsSync } from 'fs-extra';
-import path from 'path';
+import { existsSync, outputFileSync } from 'fs-extra';
+import replace from 'replace';
+import componentJsTemplate from '../templates/components/componentJsTemplate';
+import componentCssTemplate from '../templates/components/componentCssTemplate';
+import componentTestTemplate from '../templates/components/componentTestTemplate';
 
 let commandNotFound = true;
 
@@ -23,7 +26,6 @@ export function cli(args) {
 }
 
 function generateComponent(componentName, cmd) {
-  const componentTemplateDir = path.resolve(new URL(import.meta.url).pathname, '../../templates/components');
   const componentPathDir = cmd.path ? `${cmd.path}/${componentName}` : `./src/components/${componentName}`;
 
   commandNotFound = false;
@@ -39,40 +41,79 @@ function generateComponent(componentName, cmd) {
     return;
   }
 
-  // Make sure we have access to the template directory.
-  try {
-    accessSync(componentTemplateDir, constants.R_OK);
-  } catch (error) {
-    console.error(chalk.red.bold('ERROR: ', error));
-    return process.exit(1);
+  // Make sure the stylesheet file does not already exists in the path directory.
+  if (existsSync(`${componentPathDir}/${componentName}.module.css`)) {
+    console.log(
+      chalk.red(`Stylesheet "${componentName}.module.css" already exists in this path "${componentPathDir}".`)
+    );
+  } else {
+    try {
+      outputFileSync(`${componentPathDir}/${componentName}.module.css`, componentCssTemplate);
+
+      replace({
+        regex: 'TemplateName',
+        replacement: componentName,
+        paths: [`${componentPathDir}/${componentName}.module.css`],
+        recursive: false,
+        silent: true,
+      });
+
+      console.log(
+        chalk.cyan(
+          `Stylesheet ${componentName} was created successfully at ${componentPathDir}/${componentName}.module.css`
+        )
+      );
+    } catch (error) {
+      console.log(chalk.red(`Stylesheet ${componentName} was not created successfully.`));
+      console.log(error);
+    }
   }
 
-  // Make sure the component does not already exists in the path.
-  if (existsSync(componentPathDir)) {
-    console.log(chalk.red(`Component "${componentName}" already exists in this path "${componentPathDir}".`));
+  // Make sure the component JS file does not already exists in the path directory.
+  if (existsSync(`${componentPathDir}/${componentName}.js`)) {
+    console.log(chalk.red(`Component "${componentName}.js" already exists in this path "${componentPathDir}".`));
   } else {
-    // Copy template over to target destination
     try {
-      copySync(componentTemplateDir, componentPathDir, { clobber: false });
+      outputFileSync(`${componentPathDir}/${componentName}.js`, componentJsTemplate);
+
+      replace({
+        regex: 'TemplateName',
+        replacement: componentName,
+        paths: [`${componentPathDir}/${componentName}.js`],
+        recursive: false,
+        silent: true,
+      });
+
+      console.log(
+        chalk.cyan(`Component ${componentName} was created successfully at ${componentPathDir}/${componentName}.js`)
+      );
     } catch (error) {
-      console.log(chalk.red('ERROR: ', error));
+      console.log(chalk.red(`Component ${componentName} was not created successfully.`));
+      console.log(error);
+    }
+  }
+
+  // Make sure the Test file does not already exists in the path directory.
+  if (existsSync(`${componentPathDir}/${componentName}.test.js`)) {
+    console.log(chalk.red(`Test "${componentName}.test.js" already exists in this path "${componentPathDir}".`));
+  } else {
+    try {
+      outputFileSync(`${componentPathDir}/${componentName}.test.js`, componentTestTemplate);
+
+      replace({
+        regex: 'TemplateName',
+        replacement: componentName,
+        paths: [`${componentPathDir}/${componentName}.test.js`],
+        recursive: false,
+        silent: true,
+      });
+
+      console.log(
+        chalk.cyan(`Test ${componentName} was created successfully at ${componentPathDir}/${componentName}.test.js`)
+      );
+    } catch (error) {
+      console.log(chalk.red(`Test ${componentName} was not created successfully.`));
+      console.log(error);
     }
   }
 }
-
-// still in progress - coming soon..
-// async function promptQuestionsForGenerateReactProject() {
-//   const questions = [
-//     {
-//       type: 'list',
-//       name: 'router',
-//       message: 'Does this project require a routing system?',
-//       choices: ['React Router', 'No router'],
-//       default: 'No router',
-//     },
-//   ];
-
-//   const answers = await inquirer.prompt(questions);
-
-//   return answers;
-// }
