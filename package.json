@@ -29,7 +29,8 @@
   },
   "files": [
     "bin/",
-    "src/"
+    "src/",
+    "templates/"
   ],
   "repository": {
     "type": "git",
