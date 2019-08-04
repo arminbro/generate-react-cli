@@ -1,6 +1,6 @@
 {
   "name": "generate-react-cli",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A lightweight CLI that runs create-react-app under the hood to boilerplate react apps and generate react components with a little more structure in mind.",
   "main": "src/index.js",
   "bin": {
