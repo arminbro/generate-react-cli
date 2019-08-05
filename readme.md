@@ -1,6 +1,5 @@
 # generate-react-cli
 
-<br>
 ## Why?
 
 To help speed up productivity in react projects. For example you can run one command `generate-react component <ComponentName>` to instantly generate a component with its corresponding files (stylesheet, test).
@@ -12,12 +11,10 @@ _Few notes:_
 - The CLI also has an opinion on how files are structured within the project. [We follow Grouping by features or routes](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)
 - The CLI uses CSS Modules by default. This will be customizable in the future.
 
-<br>
 ## Install
 
 >`npm i -g generate-react-cli`
 
-<br>
 ## Commands
 
 ### Generate Component
@@ -26,13 +23,11 @@ _Few notes:_
 
 This will create a folder with your component name within the **src/components** directory, and it will generate 3 corresponding files (.js, .module.css, .test.js) within it.
 
-<br>
-#### Options Parameter
+#### Options
 |Parameter|Description|Default Value|
 |---------|-----------|-------|
 | **`-p`** OR<br>**`--path`** | Path value to where you want the component to be generated in (e.g **`src/pages`**). | **`src/components`**
 
-<br>
 ## Coming Soon
 - CLI custom configuration: e.g. preprocessor stylesheet type, choose different test framework, choose different file structure type, etc..
 
