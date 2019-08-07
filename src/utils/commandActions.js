@@ -25,7 +25,10 @@ export function generateComponent(componentName, cmd, componentConfig) {
   }
 
   generateTemplate(
-    componentJsTemplate,
+    componentJsTemplate.replace(
+      'TemplateName.module.css',
+      `${componentName}${module}.${componentConfig.css.preprocessor}`
+    ),
     `Component "${componentName}.js"`,
     `${componentPathDir}/${componentName}.js`,
     componentName
@@ -50,8 +53,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
   if (componentConfig.withStory) {
     generateTemplate(
       componentStoryTemplate,
-      `Story "${componentName}.story.js"`,
-      `${componentPathDir}/${componentName}.story.js`,
+      `Story "${componentName}.stories.js"`,
+      `${componentPathDir}/${componentName}.stories.js`,
       componentName
     );
   }
