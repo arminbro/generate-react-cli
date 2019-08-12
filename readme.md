@@ -46,7 +46,7 @@ This command will create a folder with your component name within your default (
 |Parameter|Description|Default Value|
 |---------|-----------|-------|
 | **-p** or<br>**--path** | Value of the path where you want the component to be generated in (e.g. **src/pages**). | **src/components**
-| **-t** or<br>**--withTest** | Create a corresponding test file with this component?. | **Boolean value selected in "generate-react-cli.json" config file**
+| **-t** or<br>**--withTest** | Create a corresponding test file with this component? | **Boolean value selected in "generate-react-cli.json" config file**
 | **-s** or<br>**--withStory** | Create a corresponding story file with this component? | **Boolean value selected in "generate-react-cli.json" config file**
 | **-l** or<br>**--withLazy** | Create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: [code-splitting](https://reactjs.org/docs/code-splitting.html#code-splitting)) with this component? | **Boolean value selected in "generate-react-cli.json" config file**
 
