@@ -42,7 +42,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
     return;
   }
 
-  if (componentConfig.withTest) {
+  // converting boolean to string intentionally.
+  if (cmd.withTest.toString() === 'true') {
     componentTemplates.push({
       template: componentTestTemplate,
       templateType: `Test "${componentName}.test.js"`,
@@ -51,7 +52,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
     });
   }
 
-  if (componentConfig.withStory) {
+  // converting boolean to string intentionally.
+  if (cmd.withStory.toString() === 'true') {
     componentTemplates.push({
       template: componentStoryTemplate,
       templateType: `Story "${componentName}.stories.js"`,
@@ -60,7 +62,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
     });
   }
 
-  if (componentConfig.withLazy) {
+  // converting boolean to string intentionally.
+  if (cmd.withLazy.toString() === 'true') {
     componentTemplates.push({
       template: componentLazyTemplate,
       templateType: `Lazy "${componentName}.lazy.js"`,

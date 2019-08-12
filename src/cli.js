@@ -16,6 +16,9 @@ export async function cli(args) {
     .command('component <name>')
     .alias('c')
     .option('-p, --path <path>', 'With specified path value', component.path || './src/components')
+    .option('-t, --withTest <withTest>', 'Override default boolean value', component.withTest)
+    .option('-s, --withStory <withStory>', 'Override default boolean value', component.withStory)
+    .option('-l, --withLazy <withLazy>', 'Override default boolean value', component.withLazy)
     .action((componentName, cmd) => generateComponent(componentName, cmd, component))
     .action(() => (commandNotFound = false));
 
