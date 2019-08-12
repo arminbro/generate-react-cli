@@ -19,7 +19,7 @@ When you run generate-react-cli within your project the first time, it will ask 
 
 ### e.g. **generate-react-cli.json**
 
-```
+```json
 {
   "component": {
     "path": "src/components",
