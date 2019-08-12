@@ -1,13 +1,13 @@
 import program from 'commander';
 import chalk from 'chalk';
 import pkg from '../package.json';
-import { generateComponent, getGenerateReactConfigFile } from './utils/commandActions';
+import { generateComponent, getCLIConfigFile } from './services/commandActions';
 
 let commandNotFound = true;
 
 export async function cli(args) {
-  const grcFile = (await getGenerateReactConfigFile()) || {};
-  const { component } = grcFile;
+  const cliConfigFile = (await getCLIConfigFile()) || {};
+  const { component } = cliConfigFile;
 
   program.version(pkg.version);
 

@@ -1,0 +1,12 @@
+{
+  "component": {
+    "path": null,
+    "css": {
+      "preprocessor": null,
+      "module": null
+    },
+    "withTest": null,
+    "withStory": null,
+    "withLazy": null
+  }
+}
