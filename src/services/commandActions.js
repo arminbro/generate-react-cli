@@ -3,8 +3,9 @@ import { accessSync, constants, readFileSync } from 'fs-extra';
 import deepKeys from 'deep-keys';
 import { generateComponentTemplates } from '../utils/templateUtils';
 import { createCLIConfig, updateCLIConfig } from './cliConfig';
-import grcConfigTemplateFIle from '../../templates/configs/grc-configi-template.json'
+import grcConfigTemplateFIle from '../../templates/configs/grc-configi-template.json';
 import componentJsTemplate from '../../templates/components/componentJsTemplate';
+import componentLazyTemplate from '../../templates/components/componentLazyTemplate';
 import componentCssTemplate from '../../templates/components/componentCssTemplate';
 import componentTestTemplate from '../../templates/components/componentTestTemplate';
 import componentStoryTemplate from '../../templates/components/componentStoryTemplate';
@@ -59,6 +60,15 @@ export function generateComponent(componentName, cmd, componentConfig) {
     });
   }
 
+  if (componentConfig.withLazy) {
+    componentTemplates.push({
+      template: componentLazyTemplate,
+      templateType: `Lazy "${componentName}.lazy.js"`,
+      componentPath: `${componentPathDir}/${componentName}.lazy.js`,
+      componentName,
+    });
+  }
+
   generateComponentTemplates(componentTemplates);
 }
 
@@ -75,7 +85,7 @@ export async function getCLIConfigFile() {
       if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFIle).toString()) {
         return await updateCLIConfig();
       }
-  
+
       return configFile;
     } catch (e) {
       return await createCLIConfig();
