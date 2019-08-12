@@ -16,9 +16,21 @@ export async function cli(args) {
     .command('component <name>')
     .alias('c')
     .option('-p, --path <path>', 'With specified path value', component.path || './src/components')
-    .option('-t, --withTest <withTest>', 'Override default boolean value', component.withTest)
-    .option('-s, --withStory <withStory>', 'Override default boolean value', component.withStory)
-    .option('-l, --withLazy <withLazy>', 'Override default boolean value', component.withLazy)
+    .option(
+      '-t, --withTest <withTest>',
+      'Would you like to create a corresponding test file with this component?',
+      component.withTest
+    )
+    .option(
+      '-s, --withStory <withStory>',
+      'Would you like to create a corresponding story file with this component?',
+      component.withStory
+    )
+    .option(
+      '-l, --withLazy <withLazy>',
+      'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with this component?',
+      component.withLazy
+    )
     .action((componentName, cmd) => generateComponent(componentName, cmd, component))
     .action(() => (commandNotFound = false));
 
