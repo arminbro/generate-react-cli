@@ -4,11 +4,11 @@
 
 ## Why?
 
-To help speed up productivity in react projects. For example, you can run one command `generate-react component <ComponentName>` to instantly generate a component with its corresponding files (stylesheet, test).
+To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
 **_Few notes:_**
-- The CLI assumes that your project uses [jest](https://github.com/facebook/jest) & [enzyme](https://github.com/airbnb/enzyme) for testing. This will be customizable in the future.
-- The CLI also has an opinion on how files are structured within the project. [We follow Grouping by features or routes](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)
+- The CLI assumes that your project uses [jest](https://github.com/facebook/jest) & [enzyme](https://github.com/airbnb/enzyme) for testing (This will be customizable in the future).
+- The CLI also has an opinion on how files are structured within the project. We follow "[grouping by features](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)."
 
 ## Install
 
@@ -48,7 +48,7 @@ This command will create a folder with your component name within your default (
 | **-p** or<br>**--path** | Value of the path where you want the component to be generated in (e.g. **src/pages**). | **src/components**
 | **-t** or<br>**--withTest** | Create a corresponding test file with this component? | **Boolean value selected in "generate-react-cli.json" config file**
 | **-s** or<br>**--withStory** | Create a corresponding story file with this component? | **Boolean value selected in "generate-react-cli.json" config file**
-| **-l** or<br>**--withLazy** | Create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: [code-splitting](https://reactjs.org/docs/code-splitting.html#code-splitting)) with this component? | **Boolean value selected in "generate-react-cli.json" config file**
+| **-l** or<br>**--withLazy** | Create a corresponding lazy file (a file that lazy-loads your component out of the box and enables [code splitting](https://reactjs.org/docs/code-splitting.html#code-splitting)) with this component? | **Boolean value selected in "generate-react-cli.json" config file**
 
 <br>
 Have fun!
