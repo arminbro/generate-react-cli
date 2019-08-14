@@ -2,11 +2,7 @@
 [![dependencies](https://david-dm.org/arminbro/generate-react-cli.svg)](https://david-dm.org/arminbro/generate-react-cli)
 [![License](https://img.shields.io/npm/l/express.svg)](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE)
 
-<p align="center">
-  <video width="400" controls autoplay>
-    <source src="/asset/component.mov" type="video/mp4">
-  </video>
-</p>
+<p align="center"><img src="/asset/component-cmd.gif?raw=true"/></p>
 
 ## Why?
 
