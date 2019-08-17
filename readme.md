@@ -5,7 +5,6 @@
 <p align="center"><img src="/asset/component-cmd.gif?raw=true"/></p>
 
 ## Why?
-
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
 **_Few notes:_**
@@ -13,14 +12,12 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 - The CLI also has an opinion on how files are structured within the project. We follow "[grouping by features](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)."
 
 ## Install
-
 `npm i -g generate-react-cli`
 
 ## Config File
 When you run generate-react-cli within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
 
 ### e.g. **generate-react-cli.json**
-
 ```json
 {
   "component": {
@@ -39,8 +36,10 @@ When you run generate-react-cli within your project the first time, it will ask 
 ## Commands
 
 ### Generate Component
-
 `generate-react component <ComponentName>`
+
+#### Shorthand 
+`g-r c <ComponentName>`
 
 This command will create a folder with your component name within your default (e.g. **src/components**) directory, and its corresponding files.
 
