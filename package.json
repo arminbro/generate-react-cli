@@ -4,7 +4,8 @@
   "description": "A simple React CLI to generate components instantly and more.",
   "main": "src/index.js",
   "bin": {
-    "generate-react": "bin/generate-react"
+    "generate-react": "bin/generate-react",
+    "g-r": "bin/generate-react"
   },
   "publishConfig": {
     "access": "public"
