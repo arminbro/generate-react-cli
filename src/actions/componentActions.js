@@ -1,9 +1,5 @@
 import chalk from 'chalk';
-import { accessSync, constants, readFileSync } from 'fs-extra';
-import deepKeys from 'deep-keys';
-import { generateComponentTemplates } from '../utils/templateUtils';
-import { createCLIConfig, updateCLIConfig } from './cliConfig';
-import grcConfigTemplateFIle from '../../templates/configs/grc-configi-template.json';
+import { generateComponentTemplates } from '../services/templateService';
 import componentJsTemplate from '../../templates/components/componentJsTemplate';
 import componentLazyTemplate from '../../templates/components/componentLazyTemplate';
 import componentCssTemplate from '../../templates/components/componentCssTemplate';
@@ -73,32 +69,4 @@ export function generateComponent(componentName, cmd, componentConfig) {
   }
 
   generateComponentTemplates(componentTemplates);
-}
-
-export async function getCLIConfigFile() {
-  // Make sure the cli commands are running from the root level of the project
-  try {
-    accessSync('./package.json', constants.R_OK);
-
-    // check to see if the grc config file exists
-    try {
-      accessSync('./generate-react-cli.json', constants.R_OK);
-      const configFile = JSON.parse(readFileSync('./generate-react-cli.json'));
-
-      if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFIle).toString()) {
-        return await updateCLIConfig();
-      }
-
-      return configFile;
-    } catch (e) {
-      return await createCLIConfig();
-    }
-  } catch (error) {
-    console.error(
-      chalk.red.bold(
-        "ERROR: Please make sure that you're running the generate-react-cli commands from the root level of your React project"
-      )
-    );
-    process.exit(1);
-  }
 }

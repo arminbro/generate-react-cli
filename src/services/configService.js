@@ -1,6 +1,8 @@
-import { outputFileSync } from 'fs-extra';
+import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
+import deepKeys from 'deep-keys';
 import chalk from 'chalk';
 import { prompt } from 'inquirer';
+import grcConfigTemplateFIle from '../../templates/configs/grc-configi-template.json';
 
 const questions = [
   {
@@ -41,7 +43,39 @@ const questions = [
   },
 ];
 
-export async function createCLIConfig() {
+// public
+
+export async function getCLIConfigFile() {
+  // Make sure the cli commands are running from the root level of the project
+  try {
+    accessSync('./package.json', constants.R_OK);
+
+    // check to see if the grc config file exists
+    try {
+      accessSync('./generate-react-cli.json', constants.R_OK);
+      const configFile = JSON.parse(readFileSync('./generate-react-cli.json'));
+
+      if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFIle).toString()) {
+        return await updateCLIConfigFile();
+      }
+
+      return configFile;
+    } catch (e) {
+      return await createCLIConfigFile();
+    }
+  } catch (error) {
+    console.error(
+      chalk.red.bold(
+        "ERROR: Please make sure that you're running the generate-react-cli commands from the root level of your React project"
+      )
+    );
+    process.exit(1);
+  }
+}
+
+// private
+
+async function createCLIConfigFile() {
   try {
     console.log('');
     console.log(
@@ -87,7 +121,7 @@ export async function createCLIConfig() {
   }
 }
 
-export async function updateCLIConfig() {
+async function updateCLIConfigFile() {
   try {
     console.log('');
     console.log(
