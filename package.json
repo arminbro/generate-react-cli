@@ -27,8 +27,8 @@
     "deep-keys": "^0.5.0",
     "esm": "^3.2.25",
     "fs-extra": "^8.1.0",
-    "inquirer": "^6.5.0",
-    "replace": "^1.1.0"
+    "inquirer": "^6.5.2",
+    "replace": "^1.1.1"
   },
   "files": [
     "bin/",
