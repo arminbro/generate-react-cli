@@ -1,10 +1,10 @@
 import chalk from 'chalk';
 import { generateComponentTemplates } from '../services/templateService';
-import componentJsTemplate from '../../templates/components/componentJsTemplate';
-import componentLazyTemplate from '../../templates/components/componentLazyTemplate';
-import componentCssTemplate from '../../templates/components/componentCssTemplate';
-import componentTestTemplate from '../../templates/components/componentTestTemplate';
-import componentStoryTemplate from '../../templates/components/componentStoryTemplate';
+import componentJsTemplate from '../templates/components/componentJsTemplate';
+import componentLazyTemplate from '../templates/components/componentLazyTemplate';
+import componentCssTemplate from '../templates/components/componentCssTemplate';
+import componentTestTemplate from '../templates/components/componentTestTemplate';
+import componentStoryTemplate from '../templates/components/componentStoryTemplate';
 
 export function generateComponent(componentName, cmd, componentConfig) {
   const componentPathDir = `${cmd.path}/${componentName}`;

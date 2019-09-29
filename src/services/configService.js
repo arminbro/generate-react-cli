@@ -2,7 +2,7 @@ import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
 import deepKeys from 'deep-keys';
 import chalk from 'chalk';
 import { prompt } from 'inquirer';
-import grcConfigTemplateFIle from '../../templates/configs/grc-configi-template.json';
+import grcConfigTemplateFile from '../templates/configs/grc-configi-template.json';
 
 const questions = [
   {
@@ -55,7 +55,7 @@ export async function getCLIConfigFile() {
       accessSync('./generate-react-cli.json', constants.R_OK);
       const configFile = JSON.parse(readFileSync('./generate-react-cli.json'));
 
-      if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFIle).toString()) {
+      if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFile).toString()) {
         return await updateCLIConfigFile();
       }
 
