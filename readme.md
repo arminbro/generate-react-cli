@@ -7,8 +7,8 @@
 ## Why?
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
-**_Few notes:_**
-- The CLI also has an opinion on how files are structured within the project. We follow "[grouping by features](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)."
+**_Note:_**
+- The CLI has an opinion on how files are structured within the project. We follow "[grouping by features](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)."
 
 ## Install
 `npm i -g generate-react-cli`
