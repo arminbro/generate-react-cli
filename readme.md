@@ -8,7 +8,6 @@
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
 **_Few notes:_**
-- The CLI assumes that your project uses [jest](https://github.com/facebook/jest) & [enzyme](https://github.com/airbnb/enzyme) for testing (This will be customizable in the future).
 - The CLI also has an opinion on how files are structured within the project. We follow "[grouping by features](https://reactjs.org/docs/faq-structure.html#grouping-by-features-or-routes)."
 
 ## Install

@@ -20,7 +20,7 @@ export async function cli(args) {
     .option(
       '-t, --withTest <withTest>',
       'Would you like to create a corresponding test file with this component?',
-      component.withTest
+      component.test.withTest
     )
     .option(
       '-s, --withStory <withStory>',

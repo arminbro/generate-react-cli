@@ -25,8 +25,14 @@ const questions = [
     message: 'Does your project use CSS modules?',
   },
   {
+    type: 'list',
+    name: 'component.test.library',
+    message: 'What testing component library does your project use?',
+    choices: ['Enzyme', 'Testing Library', 'None'],
+  },
+  {
     type: 'confirm',
-    name: 'component.withTest',
+    name: 'component.test.withTest',
     message: 'Would you like to create a corresponding test file with each component you generate?',
   },
   {

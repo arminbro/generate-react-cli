@@ -3,7 +3,9 @@ import { generateComponentTemplates } from '../services/templateService';
 import componentJsTemplate from '../templates/components/componentJsTemplate';
 import componentLazyTemplate from '../templates/components/componentLazyTemplate';
 import componentCssTemplate from '../templates/components/componentCssTemplate';
-import componentTestTemplate from '../templates/components/componentTestTemplate';
+import componentTestDefaultTemplate from '../templates/components/componentTestDefaultTemplate';
+import componentTestEnzymeTemplate from '../templates/components/componentTestEnzymeTemplate';
+import componentTestTestingLibraryTemplate from '../templates/components/componentTestTestingLibraryTemplate';
 import componentStoryTemplate from '../templates/components/componentStoryTemplate';
 
 export function generateComponent(componentName, cmd, componentConfig) {
@@ -41,7 +43,7 @@ export function generateComponent(componentName, cmd, componentConfig) {
   // converting boolean to string intentionally.
   if (cmd.withTest.toString() === 'true') {
     componentTemplates.push({
-      template: componentTestTemplate,
+      template: getTestingLibraryTemplate(componentConfig),
       templateType: `Test "${componentName}.test.js"`,
       componentPath: `${componentPathDir}/${componentName}.test.js`,
       componentName,
@@ -69,4 +71,15 @@ export function generateComponent(componentName, cmd, componentConfig) {
   }
 
   generateComponentTemplates(componentTemplates);
+}
+
+function getTestingLibraryTemplate(componentConfig) {
+  switch (componentConfig.test.library) {
+    case 'Enzyme':
+      return componentTestEnzymeTemplate;
+    case 'Testing Library':
+      return componentTestTestingLibraryTemplate;
+    default:
+      return componentTestDefaultTemplate;
+  }
 }

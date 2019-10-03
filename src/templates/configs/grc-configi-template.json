@@ -5,7 +5,10 @@
       "preprocessor": null,
       "module": null
     },
-    "withTest": null,
+    "test": {
+      "library": null,
+      "withTest": null
+    },
     "withStory": null,
     "withLazy": null
   }
