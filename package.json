@@ -28,6 +28,7 @@
     "esm": "^3.2.25",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.0",
+    "lodash-es": "^4.17.15",
     "replace": "^1.1.1"
   },
   "files": [

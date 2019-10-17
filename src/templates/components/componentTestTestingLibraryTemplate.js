@@ -7,9 +7,9 @@ describe('<TemplateName />', () => {
   afterEach(cleanup);
 
   test('it should mount', () => {
-    const { getByText } = render(<TemplateName />);
-    const FollowBtn = getByText('TemplateName Component');
+    const { getByTestId } = render(<TemplateName />);
+    const templateName = getByTestId('TemplateName');
 
-    expect(FollowBtn).toBeInTheDocument();
+    expect(templateName).toBeInTheDocument();
   });
 });`;
