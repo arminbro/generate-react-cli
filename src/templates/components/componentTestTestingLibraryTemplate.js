@@ -8,8 +8,8 @@ describe('<TemplateName />', () => {
 
   test('it should mount', () => {
     const { getByText } = render(<TemplateName />);
-    const FollowBtn = getByText('TemplateName Component');
+    const templateName = getByText('TemplateName Component');
 
-    expect(FollowBtn).toBeInTheDocument();
+    expect(templateName).toBeInTheDocument();
   });
 });`;
