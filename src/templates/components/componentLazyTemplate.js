@@ -1,9 +1,9 @@
-export default `import React, { Fragment, lazy, Suspense } from 'react';
+export default `import React, { lazy, Suspense } from 'react';
 
 const LazyTemplateName = lazy(() => import('./TemplateName'));
 
 const TemplateName = props => (
-  <Suspense fallback={<Fragment />}>
+  <Suspense fallback={null}>
     <LazyTemplateName {...props} />
   </Suspense>
 );
