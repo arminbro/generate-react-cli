@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { camelCase } from 'lodash-es';
 import { generateComponentTemplates } from '../services/templateService';
 import componentJsTemplate from '../templates/components/componentJsTemplate';
 import componentLazyTemplate from '../templates/components/componentLazyTemplate';
@@ -11,12 +12,30 @@ import componentStoryTemplate from '../templates/components/componentStoryTempla
 export function generateComponent(componentName, cmd, componentConfig) {
   const componentPathDir = `${cmd.path}/${componentName}`;
   const module = componentConfig.css.module ? '.module' : '';
+  let jsTemplate = componentJsTemplate;
+
+  // if test library is not Testing Library. Remove data-testid from jsTemplate
+  if (componentConfig.test.library !== 'Testing Library') {
+    jsTemplate = jsTemplate.replace(` data-testid="TemplateName"`, '');
+  }
+
+  // if the css module is true make sure to update the componentJsTemplate accordingly
+  if (module.length) {
+    jsTemplate = jsTemplate.replace(
+      `'./TemplateName.module.css'`,
+      `'./${componentName}${module}.${componentConfig.css.preprocessor}'`
+    );
+  } else {
+    jsTemplate = jsTemplate.replace(`{styles.TemplateName}`, `"${componentName}"`);
+    jsTemplate = jsTemplate.replace(
+      `styles from './TemplateName.module.css'`,
+      `'./${componentName}${module}.${componentConfig.css.preprocessor}'`
+    );
+  }
+
   const componentTemplates = [
     {
-      template: componentJsTemplate.replace(
-        'TemplateName.module.css',
-        `${componentName}${module}.${componentConfig.css.preprocessor}`
-      ),
+      template: jsTemplate,
       templateType: `Component "${componentName}.js"`,
       componentPath: `${componentPathDir}/${componentName}.js`,
       componentName,
@@ -43,7 +62,7 @@ export function generateComponent(componentName, cmd, componentConfig) {
   // converting boolean to string intentionally.
   if (cmd.withTest.toString() === 'true') {
     componentTemplates.push({
-      template: getTestingLibraryTemplate(componentConfig),
+      template: getTestingLibraryTemplate(componentName, componentConfig),
       templateType: `Test "${componentName}.test.js"`,
       componentPath: `${componentPathDir}/${componentName}.test.js`,
       componentName,
@@ -73,12 +92,12 @@ export function generateComponent(componentName, cmd, componentConfig) {
   generateComponentTemplates(componentTemplates);
 }
 
-function getTestingLibraryTemplate(componentConfig) {
+function getTestingLibraryTemplate(componentName, componentConfig) {
   switch (componentConfig.test.library) {
     case 'Enzyme':
       return componentTestEnzymeTemplate;
     case 'Testing Library':
-      return componentTestTestingLibraryTemplate;
+      return componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName))
     default:
       return componentTestDefaultTemplate;
   }

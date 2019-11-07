@@ -1,6 +1,5 @@
 import { existsSync, outputFileSync } from 'fs-extra';
 import chalk from 'chalk';
-import { camelCase } from 'lodash-es';
 import replace from 'replace';
 
 export function generateComponentTemplates(componentTemplates) {
@@ -23,12 +22,6 @@ export function generateComponentTemplates(componentTemplates) {
         };
 
         replace(replaceDefaultOptions);
-
-        replace({
-          ...replaceDefaultOptions,
-          regex: 'templateName',
-          replacement: camelCase(componentName),
-        });
 
         console.log(chalk.green(`${templateType} was created successfully at ${componentPath}`));
       } catch (error) {
