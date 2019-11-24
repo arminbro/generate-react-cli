@@ -7,7 +7,7 @@ import { getCLIConfigFile } from './services/configService';
 let commandNotFound = true;
 
 export async function cli(args) {
-  const cliConfigFile = (await getCLIConfigFile()) || {};
+  const cliConfigFile = await getCLIConfigFile();
   const { component } = cliConfigFile;
 
   program.version(pkg.version);

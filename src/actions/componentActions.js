@@ -1,18 +1,25 @@
 import chalk from 'chalk';
-import { camelCase } from 'lodash-es';
-import { generateComponentTemplates } from '../services/templateService';
+import { generateComponentTemplates, getTestingLibraryTemplate } from '../services/templateService';
 import componentJsTemplate from '../templates/components/componentJsTemplate';
 import componentLazyTemplate from '../templates/components/componentLazyTemplate';
 import componentCssTemplate from '../templates/components/componentCssTemplate';
-import componentTestDefaultTemplate from '../templates/components/componentTestDefaultTemplate';
-import componentTestEnzymeTemplate from '../templates/components/componentTestEnzymeTemplate';
-import componentTestTestingLibraryTemplate from '../templates/components/componentTestTestingLibraryTemplate';
 import componentStoryTemplate from '../templates/components/componentStoryTemplate';
 
 export function generateComponent(componentName, cmd, componentConfig) {
   const componentPathDir = `${cmd.path}/${componentName}`;
   const module = componentConfig.css.module ? '.module' : '';
   let jsTemplate = componentJsTemplate;
+
+  // Make sure component name is valid.
+  if (!componentName.match(/^[$A-Z_][0-9A-Z_$]*$/i)) {
+    console.error(
+      chalk.red.bold(
+        'ERROR: Component name is invalid. Please use a valid naming convention for the component you are trying to create.'
+      )
+    );
+
+    return;
+  }
 
   // if test library is not Testing Library. Remove data-testid from jsTemplate
   if (componentConfig.test.library !== 'Testing Library') {
@@ -48,17 +55,6 @@ export function generateComponent(componentName, cmd, componentConfig) {
     },
   ];
 
-  // Make sure component name is valid.
-  if (!componentName.match(/^[$A-Z_][0-9A-Z_$]*$/i)) {
-    console.error(
-      chalk.red.bold(
-        'ERROR: Component name is invalid. Please use a valid naming convention for the component you are trying to create.'
-      )
-    );
-
-    return;
-  }
-
   // converting boolean to string intentionally.
   if (cmd.withTest.toString() === 'true') {
     componentTemplates.push({
@@ -90,15 +86,4 @@ export function generateComponent(componentName, cmd, componentConfig) {
   }
 
   generateComponentTemplates(componentTemplates);
-}
-
-function getTestingLibraryTemplate(componentName, componentConfig) {
-  switch (componentConfig.test.library) {
-    case 'Enzyme':
-      return componentTestEnzymeTemplate;
-    case 'Testing Library':
-      return componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName))
-    default:
-      return componentTestDefaultTemplate;
-  }
 }

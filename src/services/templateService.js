@@ -1,6 +1,10 @@
 import { existsSync, outputFileSync } from 'fs-extra';
 import chalk from 'chalk';
 import replace from 'replace';
+import { camelCase } from 'lodash-es';
+import componentTestEnzymeTemplate from '../templates/components/componentTestEnzymeTemplate';
+import componentTestDefaultTemplate from '../templates/components/componentTestDefaultTemplate';
+import componentTestTestingLibraryTemplate from '../templates/components/componentTestTestingLibraryTemplate';
 
 export function generateComponentTemplates(componentTemplates) {
   for (let i = 0; i < componentTemplates.length; i++) {
@@ -29,5 +33,16 @@ export function generateComponentTemplates(componentTemplates) {
         console.error(error);
       }
     }
+  }
+}
+
+export function getTestingLibraryTemplate(componentName, componentConfig) {
+  switch (componentConfig.test.library) {
+    case 'Enzyme':
+      return componentTestEnzymeTemplate;
+    case 'Testing Library':
+      return componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName));
+    default:
+      return componentTestDefaultTemplate;
   }
 }
