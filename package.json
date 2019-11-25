@@ -1,6 +1,6 @@
 {
   "name": "generate-react-cli",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "A simple React CLI to generate components instantly and more.",
   "main": "src/index.js",
   "bin": {
