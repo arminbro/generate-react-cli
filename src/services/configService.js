@@ -1,9 +1,10 @@
-import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
-import deepKeys from 'deep-keys';
 import chalk from 'chalk';
+import deepKeys from 'deep-keys';
 import { prompt } from 'inquirer';
 import { merge } from 'lodash-es';
-import grcConfigTemplateFile from '../templates/configs/grc-config-template.json';
+import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
+
+// --- Generate React Config file questions.
 
 const grcConfigQuestions = [
   {
@@ -66,9 +67,15 @@ export async function getCLIConfigFile() {
     try {
       accessSync('./generate-react-cli.json', constants.R_OK);
       const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
-      const missingConfigQuestions = deepKeys(grcConfigTemplateFile)
-        .filter(question => !deepKeys(currentConfigFile).includes(question))
-        .map(missingQuestion => grcConfigQuestions.find(question => missingQuestion === question.name));
+
+      /**
+       *  Check to see if there's a difference between grcConfigQuestions & currentConfigFile.
+       *  If there is, update the currentConfigFile with the missingConfigQuestions.
+       */
+
+      const missingConfigQuestions = grcConfigQuestions.filter(
+        question => !deepKeys(currentConfigFile).includes(question.name)
+      );
 
       if (missingConfigQuestions.length) {
         return await updateCLIConfigFile(missingConfigQuestions, currentConfigFile);
