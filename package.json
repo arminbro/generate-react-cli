@@ -33,8 +33,7 @@
   },
   "files": [
     "bin/",
-    "src/",
-    "templates/"
+    "src/"
   ],
   "repository": {
     "type": "git",
@@ -42,11 +41,18 @@
   },
   "devDependencies": {
     "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

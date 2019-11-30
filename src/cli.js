@@ -6,7 +6,7 @@ import { getCLIConfigFile } from './services/configService';
 
 let commandNotFound = true;
 
-export async function cli(args) {
+export default async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
   const { component } = cliConfigFile;
 
@@ -33,7 +33,9 @@ export async function cli(args) {
     .option('--no-withLazy', 'Without corresponding lazy file.')
 
     .action((componentName, cmd) => generateComponent(componentName, cmd, component))
-    .action(() => (commandNotFound = false));
+    .action(() => {
+      commandNotFound = false;
+    });
 
   program.parse(args);
 
