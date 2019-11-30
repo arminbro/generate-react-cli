@@ -10,7 +10,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
   const componentPathDir = `${cmd.path}/${componentName}`;
   let jsTemplate = componentJsTemplate;
 
-  // Make sure component name is valid.
+  // --- Make sure component name is valid.
+
   if (!componentName.match(/^[$A-Z_][0-9A-Z_$]*$/i)) {
     console.error(
       chalk.red.bold(
@@ -21,7 +22,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
     return;
   }
 
-  // if test library is not Testing Library. Remove data-testid from jsTemplate
+  // --- If test library is not Testing Library. Remove data-testid from jsTemplate
+
   if (componentConfig.test.library !== 'Testing Library') {
     jsTemplate = jsTemplate.replace(` data-testid="TemplateName"`, '');
   }
@@ -30,7 +32,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
     const module = componentConfig.css.module ? '.module' : '';
     const cssPath = `${componentName}${module}.${componentConfig.css.preprocessor}`;
 
-    // if the css module is true make sure to update the jsTemplate accordingly
+    // --- If the css module is true make sure to update the jsTemplate accordingly
+
     if (module.length) {
       jsTemplate = jsTemplate.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
     } else {
@@ -45,6 +48,8 @@ export function generateComponent(componentName, cmd, componentConfig) {
       componentName,
     });
   } else {
+    // --- If no stylesheet remove className attribute and style import from jsTemplate
+
     jsTemplate = jsTemplate.replace(`className={styles.TemplateName} `, '');
     jsTemplate = jsTemplate.replace(`import styles from './TemplateName.module.css';`, '');
   }

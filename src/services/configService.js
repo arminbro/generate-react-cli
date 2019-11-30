@@ -5,7 +5,7 @@ import { prompt } from 'inquirer';
 import { merge } from 'lodash-es';
 import grcConfigTemplateFile from '../templates/configs/grc-config-template.json';
 
-const cliConfigQuestions = [
+const grcConfigQuestions = [
   {
     type: 'input',
     name: 'component.path',
@@ -56,21 +56,24 @@ const cliConfigQuestions = [
 // public
 
 export async function getCLIConfigFile() {
-  // Make sure the cli commands are running from the root level of the project
+  // --- Make sure the cli commands are running from the root level of the project
+
   try {
     accessSync('./package.json', constants.R_OK);
 
-    // check to see if the grc config file exists
+    // --- Check to see if the config file exists
+
     try {
       accessSync('./generate-react-cli.json', constants.R_OK);
-      const configFile = JSON.parse(readFileSync('./generate-react-cli.json'));
+      const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
 
-      // check to see if the current config file doesn't match the config file template
-      if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFile).toString()) {
-        return await updateCLIConfigFile(configFile);
+      // --- Check to see if the current config file doesn't match the config file template
+
+      if (deepKeys(currentConfigFile).toString() !== deepKeys(grcConfigTemplateFile).toString()) {
+        return await updateCLIConfigFile(currentConfigFile);
       }
 
-      return configFile;
+      return currentConfigFile;
     } catch (e) {
       return await createCLIConfigFile();
     }
@@ -108,7 +111,7 @@ async function createCLIConfigFile() {
     );
     console.log('');
 
-    const answers = await prompt(cliConfigQuestions);
+    const answers = await prompt(grcConfigQuestions);
 
     outputFileSync('generate-react-cli.json', JSON.stringify(answers, null, 2));
 
@@ -156,7 +159,7 @@ async function updateCLIConfigFile(currentConfigFile) {
 
     const missingConfigQuestions = deepKeys(grcConfigTemplateFile)
       .filter(question => !deepKeys(currentConfigFile).includes(question))
-      .map(missingQuestion => cliConfigQuestions.find(question => missingQuestion === question.name));
+      .map(missingQuestion => grcConfigQuestions.find(question => missingQuestion === question.name));
 
     const answers = await prompt(missingConfigQuestions);
     const updatedAnswers = merge({}, currentConfigFile, answers);

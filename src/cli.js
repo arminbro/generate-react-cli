@@ -12,7 +12,8 @@ export async function cli(args) {
 
   program.version(pkg.version);
 
-  // Generate Component
+  // --- Generate Component
+
   program
     .command('component <name>')
     .alias('c')
