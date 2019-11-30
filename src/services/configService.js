@@ -2,16 +2,15 @@ import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
 import deepKeys from 'deep-keys';
 import chalk from 'chalk';
 import { prompt } from 'inquirer';
-import grcConfigTemplateFile from '../templates/configs/grc-configi-template.json';
+import { merge } from 'lodash-es';
+import grcConfigTemplateFile from '../templates/configs/grc-config-template.json';
 
-const questions = [
+const cliConfigQuestions = [
   {
     type: 'input',
     name: 'component.path',
     message: 'Set the default path directory to where your components will be generated in?',
-    default: function() {
-      return 'src/components';
-    },
+    default: () => 'src/components',
   },
   {
     type: 'list',
@@ -23,6 +22,11 @@ const questions = [
     type: 'confirm',
     name: 'component.css.module',
     message: 'Does your project use CSS modules?',
+  },
+  {
+    type: 'confirm',
+    name: 'component.css.withStyle',
+    message: 'Would you like to create a corresponding stylesheet file with each component you generate?',
   },
   {
     type: 'list',
@@ -61,8 +65,9 @@ export async function getCLIConfigFile() {
       accessSync('./generate-react-cli.json', constants.R_OK);
       const configFile = JSON.parse(readFileSync('./generate-react-cli.json'));
 
+      // check to see if the current config file doesn't match the config file template
       if (deepKeys(configFile).toString() !== deepKeys(grcConfigTemplateFile).toString()) {
-        return await updateCLIConfigFile();
+        return await updateCLIConfigFile(configFile);
       }
 
       return configFile;
@@ -103,7 +108,7 @@ async function createCLIConfigFile() {
     );
     console.log('');
 
-    const answers = await prompt(questions);
+    const answers = await prompt(cliConfigQuestions);
 
     outputFileSync('generate-react-cli.json', JSON.stringify(answers, null, 2));
 
@@ -127,7 +132,7 @@ async function createCLIConfigFile() {
   }
 }
 
-async function updateCLIConfigFile() {
+async function updateCLIConfigFile(currentConfigFile) {
   try {
     console.log('');
     console.log(
@@ -149,9 +154,14 @@ async function updateCLIConfigFile() {
     );
     console.log('');
 
-    const answers = await prompt(questions);
+    const missingConfigQuestions = deepKeys(grcConfigTemplateFile)
+      .filter(question => !deepKeys(currentConfigFile).includes(question))
+      .map(missingQuestion => cliConfigQuestions.find(question => missingQuestion === question.name));
 
-    outputFileSync('generate-react-cli.json', JSON.stringify(answers, null, 2));
+    const answers = await prompt(missingConfigQuestions);
+    const updatedAnswers = merge({}, currentConfigFile, answers);
+
+    outputFileSync('generate-react-cli.json', JSON.stringify(updatedAnswers, null, 2));
 
     console.log('');
     console.log(chalk.cyan('The ("generate-react-cli.json") was successfully updated for this project.'));
@@ -163,7 +173,7 @@ async function updateCLIConfigFile() {
     console.log('');
     console.log('');
 
-    return answers;
+    return updatedAnswers;
   } catch (e) {
     console.error(chalk.red.bold('ERROR: Could not update the "generate-react-cli.json" config file.'));
   }

@@ -6,6 +6,11 @@ import componentTestEnzymeTemplate from '../templates/components/componentTestEn
 import componentTestDefaultTemplate from '../templates/components/componentTestDefaultTemplate';
 import componentTestTestingLibraryTemplate from '../templates/components/componentTestTestingLibraryTemplate';
 
+
+export function generateComponentTemplate(templateType) {
+
+}
+
 export function generateComponentTemplates(componentTemplates) {
   for (let i = 0; i < componentTemplates.length; i++) {
     const { template, templateType, componentPath, componentName } = componentTemplates[i];

@@ -3,7 +3,8 @@
     "path": null,
     "css": {
       "preprocessor": null,
-      "module": null
+      "module": null,
+      "withStyle": null
     },
     "test": {
       "library": null,

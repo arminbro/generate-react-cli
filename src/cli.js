@@ -16,22 +16,21 @@ export async function cli(args) {
   program
     .command('component <name>')
     .alias('c')
-    .option('-p, --path <path>', 'With specified path value', component.path || './src/components')
-    .option(
-      '-t, --withTest <withTest>',
-      'Would you like to create a corresponding test file with this component?',
-      component.test.withTest
-    )
-    .option(
-      '-s, --withStory <withStory>',
-      'Would you like to create a corresponding story file with this component?',
-      component.withStory
-    )
-    .option(
-      '-l, --withLazy <withLazy>',
-      'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with this component?',
-      component.withLazy
-    )
+
+    .option('-p, --path <path>', 'Path of where the component will get genereted in.', component.path)
+
+    .option('--withStyle', 'With corresponding test file.', component.css.withStyle)
+    .option('--no-withStyle', 'Without corresponding test file.')
+
+    .option('--withTest', 'With corresponding test file.', component.test.withTest)
+    .option('--no-withTest', 'Without corresponding test file.')
+
+    .option('--withStory', 'With corresponding story file.', component.withStory)
+    .option('--no-withStory', 'Without corresponding story file.')
+
+    .option('--withLazy', 'With corresponding lazy file.', component.withLazy)
+    .option('--no-withLazy', 'Without corresponding lazy file.')
+
     .action((componentName, cmd) => generateComponent(componentName, cmd, component))
     .action(() => (commandNotFound = false));
 

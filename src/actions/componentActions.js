@@ -6,8 +6,8 @@ import componentCssTemplate from '../templates/components/componentCssTemplate';
 import componentStoryTemplate from '../templates/components/componentStoryTemplate';
 
 export function generateComponent(componentName, cmd, componentConfig) {
+  const componentTemplates = [];
   const componentPathDir = `${cmd.path}/${componentName}`;
-  const module = componentConfig.css.module ? '.module' : '';
   let jsTemplate = componentJsTemplate;
 
   // Make sure component name is valid.
@@ -26,37 +26,30 @@ export function generateComponent(componentName, cmd, componentConfig) {
     jsTemplate = jsTemplate.replace(` data-testid="TemplateName"`, '');
   }
 
-  // if the css module is true make sure to update the componentJsTemplate accordingly
-  if (module.length) {
-    jsTemplate = jsTemplate.replace(
-      `'./TemplateName.module.css'`,
-      `'./${componentName}${module}.${componentConfig.css.preprocessor}'`
-    );
+  if (cmd.withStyle) {
+    const module = componentConfig.css.module ? '.module' : '';
+    const cssPath = `${componentName}${module}.${componentConfig.css.preprocessor}`;
+
+    // if the css module is true make sure to update the jsTemplate accordingly
+    if (module.length) {
+      jsTemplate = jsTemplate.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
+    } else {
+      jsTemplate = jsTemplate.replace(`{styles.TemplateName}`, `"${componentName}"`);
+      jsTemplate = jsTemplate.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
+    }
+
+    componentTemplates.push({
+      template: componentCssTemplate,
+      templateType: `Stylesheet "${cssPath}"`,
+      componentPath: `${componentPathDir}/${cssPath}`,
+      componentName,
+    });
   } else {
-    jsTemplate = jsTemplate.replace(`{styles.TemplateName}`, `"${componentName}"`);
-    jsTemplate = jsTemplate.replace(
-      `styles from './TemplateName.module.css'`,
-      `'./${componentName}${module}.${componentConfig.css.preprocessor}'`
-    );
+    jsTemplate = jsTemplate.replace(`className={styles.TemplateName} `, '');
+    jsTemplate = jsTemplate.replace(`import styles from './TemplateName.module.css';`, '');
   }
 
-  const componentTemplates = [
-    {
-      template: jsTemplate,
-      templateType: `Component "${componentName}.js"`,
-      componentPath: `${componentPathDir}/${componentName}.js`,
-      componentName,
-    },
-    {
-      template: componentCssTemplate,
-      templateType: `Stylesheet "${componentName}${module}.${componentConfig.css.preprocessor}"`,
-      componentPath: `${componentPathDir}/${componentName}${module}.${componentConfig.css.preprocessor}`,
-      componentName,
-    },
-  ];
-
-  // converting boolean to string intentionally.
-  if (cmd.withTest.toString() === 'true') {
+  if (cmd.withTest) {
     componentTemplates.push({
       template: getTestingLibraryTemplate(componentName, componentConfig),
       templateType: `Test "${componentName}.test.js"`,
@@ -65,8 +58,7 @@ export function generateComponent(componentName, cmd, componentConfig) {
     });
   }
 
-  // converting boolean to string intentionally.
-  if (cmd.withStory.toString() === 'true') {
+  if (cmd.withStory) {
     componentTemplates.push({
       template: componentStoryTemplate,
       templateType: `Story "${componentName}.stories.js"`,
@@ -75,8 +67,7 @@ export function generateComponent(componentName, cmd, componentConfig) {
     });
   }
 
-  // converting boolean to string intentionally.
-  if (cmd.withLazy.toString() === 'true') {
+  if (cmd.withLazy) {
     componentTemplates.push({
       template: componentLazyTemplate,
       templateType: `Lazy "${componentName}.lazy.js"`,
@@ -84,6 +75,13 @@ export function generateComponent(componentName, cmd, componentConfig) {
       componentName,
     });
   }
+
+  componentTemplates.push({
+    template: jsTemplate,
+    templateType: `Component "${componentName}.js"`,
+    componentPath: `${componentPathDir}/${componentName}.js`,
+    componentName,
+  });
 
   generateComponentTemplates(componentTemplates);
 }
