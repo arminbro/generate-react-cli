@@ -66,11 +66,12 @@ export async function getCLIConfigFile() {
     try {
       accessSync('./generate-react-cli.json', constants.R_OK);
       const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
+      const missingConfigQuestions = deepKeys(grcConfigTemplateFile)
+        .filter(question => !deepKeys(currentConfigFile).includes(question))
+        .map(missingQuestion => grcConfigQuestions.find(question => missingQuestion === question.name));
 
-      // --- Check to see if the current config file doesn't match the config file template
-
-      if (deepKeys(currentConfigFile).toString() !== deepKeys(grcConfigTemplateFile).toString()) {
-        return await updateCLIConfigFile(currentConfigFile);
+      if (missingConfigQuestions.length) {
+        return await updateCLIConfigFile(missingConfigQuestions, currentConfigFile);
       }
 
       return currentConfigFile;
@@ -135,7 +136,7 @@ async function createCLIConfigFile() {
   }
 }
 
-async function updateCLIConfigFile(currentConfigFile) {
+async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
   try {
     console.log('');
     console.log(
@@ -156,10 +157,6 @@ async function updateCLIConfigFile(currentConfigFile) {
       )
     );
     console.log('');
-
-    const missingConfigQuestions = deepKeys(grcConfigTemplateFile)
-      .filter(question => !deepKeys(currentConfigFile).includes(question))
-      .map(missingQuestion => grcConfigQuestions.find(question => missingQuestion === question.name));
 
     const answers = await prompt(missingConfigQuestions);
     const updatedAnswers = merge({}, currentConfigFile, answers);
