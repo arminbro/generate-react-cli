@@ -99,34 +99,36 @@ export async function getCLIConfigFile() {
 
 async function createCLIConfigFile() {
   try {
-    console.log('');
+    console.log();
     console.log(
       chalk.cyan(
-        '============================================================================================================================'
-      )
-    );
-    console.log(chalk.cyan("Looks like this is the first time you're running generate-react-cli within this project."));
-    console.log('');
-    console.log(
-      chalk.cyan(
-        'Answer a few questions to customize the generate-react-cli for your project needs (this will create a "generate-react-cli.json" config file).'
+        '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'
       )
     );
     console.log(
+      chalk.cyan("It looks like this is the first time that you're running generate-react-cli within this project.")
+    );
+    console.log();
+    console.log(
       chalk.cyan(
-        '============================================================================================================================'
+        'Answer a few questions to customize generate-react-cli for your project needs (this will create a "generate-react-cli.json" config file on the root level of this project).'
       )
     );
-    console.log('');
+    console.log(
+      chalk.cyan(
+        '--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'
+      )
+    );
+    console.log();
 
     const answers = await prompt(grcConfigQuestions);
 
     outputFileSync('generate-react-cli.json', JSON.stringify(answers, null, 2));
 
-    console.log('');
+    console.log();
     console.log(
       chalk.cyan(
-        'A config file ("generate-react-cli.json") was successfully created on the root level of your project.'
+        'A config file ("generate-react-cli.json") has successfully created on the root level of your project.'
       )
     );
 
@@ -139,7 +141,7 @@ async function createCLIConfigFile() {
 
     return answers;
   } catch (e) {
-    console.error(chalk.red.bold('ERROR: Could not create "generate-react-cli.json" config file.'));
+    console.error(chalk.red.bold('ERROR: Could not create a "generate-react-cli.json" config file.'));
   }
 }
 
@@ -148,7 +150,7 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
     console.log('');
     console.log(
       chalk.cyan(
-        '============================================================================================================================'
+        '------------------------------------------------------------------------------------------------------------------------------'
       )
     );
     console.log(
@@ -160,7 +162,7 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
     console.log(chalk.cyan('Please answer a few questions to update the "generate-react-cli.json" config file.'));
     console.log(
       chalk.cyan(
-        '============================================================================================================================'
+        '------------------------------------------------------------------------------------------------------------------------------'
       )
     );
     console.log('');
@@ -170,15 +172,15 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
 
     outputFileSync('generate-react-cli.json', JSON.stringify(updatedAnswers, null, 2));
 
-    console.log('');
-    console.log(chalk.cyan('The ("generate-react-cli.json") was successfully updated for this project.'));
+    console.log();
+    console.log(chalk.cyan('The ("generate-react-cli.json") has successfully updated for this project.'));
 
-    console.log('');
+    console.log();
     console.log(chalk.cyan('You can always go back and manually update it as needed.'));
-    console.log('');
+    console.log();
     console.log(chalk.cyan('Happy Hacking!'));
-    console.log('');
-    console.log('');
+    console.log();
+    console.log();
 
     return updatedAnswers;
   } catch (e) {
