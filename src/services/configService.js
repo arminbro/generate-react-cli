@@ -164,7 +164,7 @@ export async function getCLIConfigFile() {
       const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
 
       /**
-       *  Check to see if there's a difference between grcConfigQuestions & currentConfigFile.
+       *  Check to see if there's a difference between grcConfigQuestions and the currentConfigFile.
        *  If there is, update the currentConfigFile with the missingConfigQuestions.
        */
 

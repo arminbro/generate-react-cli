@@ -1,14 +1,9 @@
 import chalk from 'chalk';
-import { generateComponentTemplates, getTestingLibraryTemplate } from '../services/templateService';
-import componentJsTemplate from '../templates/components/componentJsTemplate';
-import componentLazyTemplate from '../templates/components/componentLazyTemplate';
-import componentCssTemplate from '../templates/components/componentCssTemplate';
-import componentStoryTemplate from '../templates/components/componentStoryTemplate';
+import { componentTemplateTypes, generateComponentTemplates, getComponentTemplate } from '../services/templateService';
 
 export function generateComponent(componentName, cmd, componentConfig) {
   const componentTemplates = [];
-  const componentPathDir = `${cmd.path}/${componentName}`;
-  let jsTemplate = componentJsTemplate;
+  const componentTemplateTypeList = Object.values(componentTemplateTypes);
 
   // --- Make sure component name is valid.
 
@@ -22,71 +17,21 @@ export function generateComponent(componentName, cmd, componentConfig) {
     return;
   }
 
-  // --- If test library is not Testing Library. Remove data-testid from jsTemplate
+  // --- Iterate through componentTemplateTypeList and build a list of componentTemplates.
 
-  if (componentConfig.test.library !== 'Testing Library') {
-    jsTemplate = jsTemplate.replace(` data-testid="TemplateName"`, '');
-  }
+  for (let i = 0; i < componentTemplateTypeList.length; i += 1) {
+    const componentTemplateType = componentTemplateTypeList[i];
 
-  if (cmd.withStyle) {
-    const module = componentConfig.css.module ? '.module' : '';
-    const cssPath = `${componentName}${module}.${componentConfig.css.preprocessor}`;
+    // --- Only get template if component option (withStyle, withTest, etc..) is true, or if template type is "component"
 
-    // --- If the css module is true make sure to update the jsTemplate accordingly
+    if (cmd[componentTemplateType] || componentTemplateType === componentTemplateTypes.COMPONENT) {
+      const template = getComponentTemplate(cmd, componentConfig, componentName, componentTemplateType);
 
-    if (module.length) {
-      jsTemplate = jsTemplate.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
-    } else {
-      jsTemplate = jsTemplate.replace(`{styles.TemplateName}`, `"${componentName}"`);
-      jsTemplate = jsTemplate.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
+      if (template) {
+        componentTemplates.push(template);
+      }
     }
-
-    componentTemplates.push({
-      template: componentCssTemplate,
-      templateType: `Stylesheet "${cssPath}"`,
-      componentPath: `${componentPathDir}/${cssPath}`,
-      componentName,
-    });
-  } else {
-    // --- If no stylesheet remove className attribute and style import from jsTemplate
-
-    jsTemplate = jsTemplate.replace(`className={styles.TemplateName} `, '');
-    jsTemplate = jsTemplate.replace(`import styles from './TemplateName.module.css';`, '');
   }
-
-  if (cmd.withTest) {
-    componentTemplates.push({
-      template: getTestingLibraryTemplate(componentName, componentConfig),
-      templateType: `Test "${componentName}.test.js"`,
-      componentPath: `${componentPathDir}/${componentName}.test.js`,
-      componentName,
-    });
-  }
-
-  if (cmd.withStory) {
-    componentTemplates.push({
-      template: componentStoryTemplate,
-      templateType: `Story "${componentName}.stories.js"`,
-      componentPath: `${componentPathDir}/${componentName}.stories.js`,
-      componentName,
-    });
-  }
-
-  if (cmd.withLazy) {
-    componentTemplates.push({
-      template: componentLazyTemplate,
-      templateType: `Lazy "${componentName}.lazy.js"`,
-      componentPath: `${componentPathDir}/${componentName}.lazy.js`,
-      componentName,
-    });
-  }
-
-  componentTemplates.push({
-    template: jsTemplate,
-    templateType: `Component "${componentName}.js"`,
-    componentPath: `${componentPathDir}/${componentName}.js`,
-    componentName,
-  });
 
   generateComponentTemplates(componentTemplates);
 }
