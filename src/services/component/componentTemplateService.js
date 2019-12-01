@@ -2,13 +2,13 @@ import { existsSync, outputFileSync } from 'fs-extra';
 import chalk from 'chalk';
 import replace from 'replace';
 import { camelCase } from 'lodash-es';
-import componentJsTemplate from '../../templates/components/componentJsTemplate';
-import componentCssTemplate from '../../templates/components/componentCssTemplate';
-import componentLazyTemplate from '../../templates/components/componentLazyTemplate';
-import componentStoryTemplate from '../../templates/components/componentStoryTemplate';
-import componentTestEnzymeTemplate from '../../templates/components/componentTestEnzymeTemplate';
-import componentTestDefaultTemplate from '../../templates/components/componentTestDefaultTemplate';
-import componentTestTestingLibraryTemplate from '../../templates/components/componentTestTestingLibraryTemplate';
+import componentJsTemplate from '../../templates/component/componentJsTemplate';
+import componentCssTemplate from '../../templates/component/componentCssTemplate';
+import componentLazyTemplate from '../../templates/component/componentLazyTemplate';
+import componentStoryTemplate from '../../templates/component/componentStoryTemplate';
+import componentTestEnzymeTemplate from '../../templates/component/componentTestEnzymeTemplate';
+import componentTestDefaultTemplate from '../../templates/component/componentTestDefaultTemplate';
+import componentTestTestingLibraryTemplate from '../../templates/component/componentTestTestingLibraryTemplate';
 
 // private
 
