@@ -54,47 +54,6 @@ const grcConfigQuestions = [
   },
 ];
 
-// public
-
-export async function getCLIConfigFile() {
-  // --- Make sure the cli commands are running from the root level of the project
-
-  try {
-    accessSync('./package.json', constants.R_OK);
-
-    // --- Check to see if the config file exists
-
-    try {
-      accessSync('./generate-react-cli.json', constants.R_OK);
-      const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
-
-      /**
-       *  Check to see if there's a difference between grcConfigQuestions & currentConfigFile.
-       *  If there is, update the currentConfigFile with the missingConfigQuestions.
-       */
-
-      const missingConfigQuestions = grcConfigQuestions.filter(
-        question => !deepKeys(currentConfigFile).includes(question.name)
-      );
-
-      if (missingConfigQuestions.length) {
-        return await updateCLIConfigFile(missingConfigQuestions, currentConfigFile);
-      }
-
-      return currentConfigFile;
-    } catch (e) {
-      return await createCLIConfigFile();
-    }
-  } catch (error) {
-    console.error(
-      chalk.red.bold(
-        "ERROR: Please make sure that you're running the generate-react-cli commands from the root level of your React project"
-      )
-    );
-    process.exit(1);
-  }
-}
-
 // private
 
 async function createCLIConfigFile() {
@@ -142,6 +101,7 @@ async function createCLIConfigFile() {
     return answers;
   } catch (e) {
     console.error(chalk.red.bold('ERROR: Could not create a "generate-react-cli.json" config file.'));
+    return e;
   }
 }
 
@@ -185,5 +145,47 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
     return updatedAnswers;
   } catch (e) {
     console.error(chalk.red.bold('ERROR: Could not update the "generate-react-cli.json" config file.'));
+    return e;
+  }
+}
+
+// public
+
+export async function getCLIConfigFile() {
+  // --- Make sure the cli commands are running from the root level of the project
+
+  try {
+    accessSync('./package.json', constants.R_OK);
+
+    // --- Check to see if the config file exists
+
+    try {
+      accessSync('./generate-react-cli.json', constants.R_OK);
+      const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
+
+      /**
+       *  Check to see if there's a difference between grcConfigQuestions & currentConfigFile.
+       *  If there is, update the currentConfigFile with the missingConfigQuestions.
+       */
+
+      const missingConfigQuestions = grcConfigQuestions.filter(
+        question => !deepKeys(currentConfigFile).includes(question.name)
+      );
+
+      if (missingConfigQuestions.length) {
+        return await updateCLIConfigFile(missingConfigQuestions, currentConfigFile);
+      }
+
+      return currentConfigFile;
+    } catch (e) {
+      return await createCLIConfigFile();
+    }
+  } catch (error) {
+    console.error(
+      chalk.red.bold(
+        "ERROR: Please make sure that you're running the generate-react-cli commands from the root level of your React project"
+      )
+    );
+    return process.exit(1);
   }
 }

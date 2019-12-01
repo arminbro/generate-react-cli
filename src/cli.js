@@ -6,7 +6,7 @@ import { getCLIConfigFile } from './services/configService';
 
 let commandNotFound = true;
 
-export default async function cli(args) {
+export async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
   const { component } = cliConfigFile;
 
