@@ -1,5 +1,9 @@
 import chalk from 'chalk';
-import { componentTemplateTypes, generateComponentTemplates, getComponentTemplate } from '../services/templateService';
+import {
+  componentTemplateTypes,
+  generateComponentTemplates,
+  getComponentTemplate,
+} from '../../services/component/componentTemplateService';
 
 export function generateComponent(componentName, cmd, componentConfig) {
   const componentTemplates = [];

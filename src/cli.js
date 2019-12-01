@@ -1,8 +1,8 @@
 import program from 'commander';
 import chalk from 'chalk';
 import pkg from '../package.json';
-import { generateComponent } from './actions/componentActions';
-import { getCLIConfigFile } from './services/configService';
+import { generateComponent } from './actions/component/componentActions';
+import { getCLIConfigFile } from './services/grcConfig/grcConfigService';
 
 let commandNotFound = true;
 

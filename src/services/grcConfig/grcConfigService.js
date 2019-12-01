@@ -4,6 +4,8 @@ import { prompt } from 'inquirer';
 import { merge } from 'lodash-es';
 import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
 
+// private
+
 // --- Generate React Config file questions.
 
 const grcConfigQuestions = [
@@ -53,8 +55,6 @@ const grcConfigQuestions = [
       'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each component you generate?',
   },
 ];
-
-// private
 
 async function createCLIConfigFile() {
   try {
