@@ -6,7 +6,7 @@ import { getCLIConfigFile } from './services/grcConfig/grcConfigService';
 
 export async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
-  const { component: componentConfig, usesTypeScript } = cliConfigFile;
+  const { component } = cliConfigFile;
   let commandNotFound = true;
 
   program.version(pkg.version);
@@ -17,21 +17,21 @@ export async function cli(args) {
     .command('component <name>')
     .alias('c')
 
-    .option('-p, --path <path>', 'Path of where the component will get genereted in.', componentConfig.path)
+    .option('-p, --path <path>', 'The path where the component will get genereted in.', component.path)
 
-    .option('--withStyle', 'With corresponding test file.', componentConfig.css.withStyle)
+    .option('--withStyle', 'With corresponding test file.', component.css.withStyle)
     .option('--no-withStyle', 'Without corresponding test file.')
 
-    .option('--withTest', 'With corresponding test file.', componentConfig.test.withTest)
+    .option('--withTest', 'With corresponding test file.', component.test.withTest)
     .option('--no-withTest', 'Without corresponding test file.')
 
-    .option('--withStory', 'With corresponding story file.', componentConfig.withStory)
+    .option('--withStory', 'With corresponding story file.', component.withStory)
     .option('--no-withStory', 'Without corresponding story file.')
 
-    .option('--withLazy', 'With corresponding lazy file.', componentConfig.withLazy)
+    .option('--withLazy', 'With corresponding lazy file.', component.withLazy)
     .option('--no-withLazy', 'Without corresponding lazy file.')
 
-    .action((componentName, cmd) => generateComponent(cmd, componentConfig, componentName, usesTypeScript))
+    .action((componentName, cmd) => generateComponent(cmd, cliConfigFile, componentName))
     .action(() => {
       commandNotFound = false;
     });

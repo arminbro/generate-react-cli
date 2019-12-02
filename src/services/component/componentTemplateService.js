@@ -14,21 +14,22 @@ import componentTestTestingLibraryTemplate from '../../templates/component/compo
 
 // private
 
-function getComponentScriptTemplate({ cmd, componentConfig, componentName, componentPathDir, usesTypeScript }) {
+function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
+  const { component, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
 
   // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
 
-  if (componentConfig.test.library !== 'Testing Library' || !cmd.withTest) {
+  if (component.test.library !== 'Testing Library' || !cmd.withTest) {
     template = template.replace(` data-testid="TemplateName"`, '');
   }
 
   // --- If it has a corresponding stylesheet
 
   if (cmd.withStyle) {
-    const module = componentConfig.css.module ? '.module' : '';
-    const cssPath = `${componentName}${module}.${componentConfig.css.preprocessor}`;
+    const module = component.css.module ? '.module' : '';
+    const cssPath = `${componentName}${module}.${component.css.preprocessor}`;
 
     // --- If the css module is true make sure to update the template accordingly
 
@@ -53,9 +54,10 @@ function getComponentScriptTemplate({ cmd, componentConfig, componentName, compo
   };
 }
 
-function getComponentStyleTemplate({ componentConfig, componentName, componentPathDir }) {
-  const module = componentConfig.css.module ? '.module' : '';
-  const cssPath = `${componentName}${module}.${componentConfig.css.preprocessor}`;
+function getComponentStyleTemplate({ cliConfigFile, componentName, componentPathDir }) {
+  const { component } = cliConfigFile;
+  const module = component.css.module ? '.module' : '';
+  const cssPath = `${componentName}${module}.${component.css.preprocessor}`;
 
   return {
     template: componentCssTemplate,
@@ -65,15 +67,16 @@ function getComponentStyleTemplate({ componentConfig, componentName, componentPa
   };
 }
 
-function getComponentTestTemplate({ componentConfig, componentName, componentPathDir, usesTypeScript }) {
+function getComponentTestTemplate({ cliConfigFile, componentName, componentPathDir }) {
+  const { component, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
   // --- Get test template based on test library type
 
-  if (componentConfig.test.library === 'Enzyme') {
+  if (component.test.library === 'Enzyme') {
     template = componentTestEnzymeTemplate;
-  } else if (componentConfig.test.library === 'Testing Library') {
+  } else if (component.test.library === 'Testing Library') {
     template = componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName));
   } else {
     template = componentTestDefaultTemplate;
@@ -87,7 +90,8 @@ function getComponentTestTemplate({ componentConfig, componentName, componentPat
   };
 }
 
-function getComponentStoryTemplate({ componentName, componentPathDir, usesTypeScript }) {
+function getComponentStoryTemplate({ cliConfigFile, componentName, componentPathDir }) {
+  const { usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
 
   return {
@@ -98,7 +102,8 @@ function getComponentStoryTemplate({ componentName, componentPathDir, usesTypeSc
   };
 }
 
-function getComponentLazyTemplate({ componentName, componentPathDir, usesTypeScript }) {
+function getComponentLazyTemplate({ cliConfigFile, componentName, componentPathDir }) {
+  const { usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
 
   return {
@@ -152,7 +157,7 @@ export function generateComponentTemplates(componentTemplates) {
   }
 }
 
-export function getComponentTemplate(cmd, componentConfig, componentName, templateType, usesTypeScript) {
+export function getComponentTemplate(cmd, cliConfigFile, componentName, templateType) {
   const componentPathDir = `${cmd.path}/${componentName}`;
   const templateMap = {
     [componentTemplateTypes.STYLE]: getComponentStyleTemplate,
@@ -163,7 +168,7 @@ export function getComponentTemplate(cmd, componentConfig, componentName, templa
   };
 
   if (templateMap[templateType]) {
-    return templateMap[templateType]({ cmd, componentConfig, componentName, componentPathDir, usesTypeScript });
+    return templateMap[templateType]({ cmd, cliConfigFile, componentName, componentPathDir });
   }
 
   return null;

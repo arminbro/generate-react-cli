@@ -5,7 +5,7 @@ import {
   getComponentTemplate,
 } from '../../services/component/componentTemplateService';
 
-export function generateComponent(cmd, componentConfig, componentName, usesTypeScript) {
+export function generateComponent(cmd, cliConfigFile, componentName) {
   const componentTemplates = [];
   const componentTemplateTypeList = Object.values(componentTemplateTypes);
 
@@ -29,7 +29,7 @@ export function generateComponent(cmd, componentConfig, componentName, usesTypeS
     // --- Only get template if component option (withStyle, withTest, etc..) is true, or if template type is "component"
 
     if (cmd[componentTemplateType] || componentTemplateType === componentTemplateTypes.COMPONENT) {
-      const template = getComponentTemplate(cmd, componentConfig, componentName, componentTemplateType, usesTypeScript);
+      const template = getComponentTemplate(cmd, cliConfigFile, componentName, componentTemplateType);
 
       if (template) {
         componentTemplates.push(template);
