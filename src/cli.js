@@ -4,11 +4,10 @@ import pkg from '../package.json';
 import { generateComponent } from './actions/component/componentActions';
 import { getCLIConfigFile } from './services/grcConfig/grcConfigService';
 
-let commandNotFound = true;
-
 export async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
-  const { component } = cliConfigFile;
+  const { component: componentConfig, usesTypeScript } = cliConfigFile;
+  let commandNotFound = true;
 
   program.version(pkg.version);
 
@@ -18,21 +17,21 @@ export async function cli(args) {
     .command('component <name>')
     .alias('c')
 
-    .option('-p, --path <path>', 'Path of where the component will get genereted in.', component.path)
+    .option('-p, --path <path>', 'Path of where the component will get genereted in.', componentConfig.path)
 
-    .option('--withStyle', 'With corresponding test file.', component.css.withStyle)
+    .option('--withStyle', 'With corresponding test file.', componentConfig.css.withStyle)
     .option('--no-withStyle', 'Without corresponding test file.')
 
-    .option('--withTest', 'With corresponding test file.', component.test.withTest)
+    .option('--withTest', 'With corresponding test file.', componentConfig.test.withTest)
     .option('--no-withTest', 'Without corresponding test file.')
 
-    .option('--withStory', 'With corresponding story file.', component.withStory)
+    .option('--withStory', 'With corresponding story file.', componentConfig.withStory)
     .option('--no-withStory', 'Without corresponding story file.')
 
-    .option('--withLazy', 'With corresponding lazy file.', component.withLazy)
+    .option('--withLazy', 'With corresponding lazy file.', componentConfig.withLazy)
     .option('--no-withLazy', 'Without corresponding lazy file.')
 
-    .action((componentName, cmd) => generateComponent(componentName, cmd, component))
+    .action((componentName, cmd) => generateComponent(cmd, componentConfig, componentName, usesTypeScript))
     .action(() => {
       commandNotFound = false;
     });

@@ -16,15 +16,20 @@ const grcConfigQuestions = [
     default: () => 'src/components',
   },
   {
+    type: 'confirm',
+    name: 'usesTypeScript',
+    message: 'Does this project use TypeScript?',
+  },
+  {
     type: 'list',
     name: 'component.css.preprocessor',
-    message: 'Does your project use a CSS Preprocessor?',
+    message: 'Does this project use a CSS Preprocessor?',
     choices: ['css', 'scss', 'less', 'styl'],
   },
   {
     type: 'confirm',
     name: 'component.css.module',
-    message: 'Does your project use CSS modules?',
+    message: 'Does this project use CSS modules?',
   },
   {
     type: 'confirm',
