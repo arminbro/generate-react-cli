@@ -1,11 +1,11 @@
-import chalk from 'chalk';
-import {
+const chalk = require('chalk');
+const {
   componentTemplateTypes,
   generateComponentTemplates,
   getComponentTemplate,
-} from '../../services/component/componentTemplateService';
+} = require('../services/componentTemplateService');
 
-export function generateComponent(cmd, cliConfigFile, componentName) {
+function generateComponent(cmd, cliConfigFile, componentName) {
   const componentTemplates = [];
   const componentTemplateTypeList = Object.values(componentTemplateTypes);
 
@@ -39,3 +39,7 @@ export function generateComponent(cmd, cliConfigFile, componentName) {
 
   generateComponentTemplates(componentTemplates);
 }
+
+module.exports = {
+  generateComponent,
+};

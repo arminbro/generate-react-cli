@@ -1,4 +1,4 @@
-export default `import React, { lazy, Suspense } from 'react';
+module.exports = `import React, { lazy, Suspense } from 'react';
 
 const LazyTemplateName = lazy(() => import('./TemplateName'));
 

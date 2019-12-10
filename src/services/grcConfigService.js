@@ -1,8 +1,8 @@
-import chalk from 'chalk';
-import deepKeys from 'deep-keys';
-import { prompt } from 'inquirer';
-import { merge } from 'lodash-es';
-import { accessSync, constants, outputFileSync, readFileSync } from 'fs-extra';
+const chalk = require('chalk');
+const deepKeys = require('deep-keys');
+const { prompt } = require('inquirer');
+const { merge } = require('lodash');
+const { accessSync, constants, outputFileSync, readFileSync } = require('fs-extra');
 
 // private
 
@@ -156,7 +156,7 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
 
 // public
 
-export async function getCLIConfigFile() {
+async function getCLIConfigFile() {
   // --- Make sure the cli commands are running from the root level of the project
 
   try {
@@ -194,3 +194,7 @@ export async function getCLIConfigFile() {
     return process.exit(1);
   }
 }
+
+module.exports = {
+  getCLIConfigFile,
+};

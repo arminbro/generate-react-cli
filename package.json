@@ -2,16 +2,23 @@
   "name": "generate-react-cli",
   "version": "1.7.5",
   "description": "A simple React CLI to generate components instantly and more.",
-  "main": "src/index.js",
+  "repository": "https://github.com/arminbro/generate-react-cli",
+  "bugs": "https://github.com/arminbro/generate-react-cli/issues",
+  "author": "Armin Broubakarian",
+  "license": "MIT",
+  "main": "bin/generate-react",
   "bin": {
     "generate-react": "bin/generate-react",
     "g-r": "bin/generate-react"
   },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "cli",
@@ -19,25 +26,22 @@
     "build-tools",
     "generate-react-cli"
   ],
-  "author": "Armin Broubakarian",
-  "license": "MIT",
+  "engines": {
+    "node": ">=8.x",
+    "npm": ">= 5.x"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "watch:test": "npm run test -- --watch"
+  },
   "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
     "deep-keys": "^0.5.0",
-    "esm": "^3.2.25",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.0",
-    "lodash-es": "^4.17.15",
+    "lodash": "^4.17.15",
     "replace": "^1.1.1"
-  },
-  "files": [
-    "bin/",
-    "src/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/arminbro/generate-react-cli"
   },
   "devDependencies": {
     "eslint": "^6.7.2",
@@ -47,8 +51,23 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.1.0",
+    "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
   },
   "husky": {
     "hooks": {

@@ -1,10 +1,10 @@
-import program from 'commander';
-import chalk from 'chalk';
-import pkg from '../package.json';
-import { generateComponent } from './actions/component/componentActions';
-import { getCLIConfigFile } from './services/grcConfig/grcConfigService';
+const program = require('commander');
+const chalk = require('chalk');
+const pkg = require('../package.json');
+const { generateComponent } = require('./actions/componentActions');
+const { getCLIConfigFile } = require('./services/grcConfigService');
 
-export async function cli(args) {
+module.exports = async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
   const { component } = cliConfigFile;
   let commandNotFound = true;
@@ -43,4 +43,4 @@ export async function cli(args) {
     console.log(`Run ${chalk.green('generate-react --help')} to see a list of the commmands you can run.`);
     process.exit(1);
   }
-}
+};

@@ -1,16 +1,16 @@
-import { existsSync, outputFileSync } from 'fs-extra';
-import chalk from 'chalk';
-import replace from 'replace';
-import { camelCase } from 'lodash-es';
-import componentJsTemplate from '../../templates/component/componentJsTemplate';
-import componentTsTemplate from '../../templates/component/componentTsTemplate';
-import componentCssTemplate from '../../templates/component/componentCssTemplate';
-import componentLazyTemplate from '../../templates/component/componentLazyTemplate';
-import componentTsLazyTemplate from '../../templates/component/componentTsLazyTemplate';
-import componentStoryTemplate from '../../templates/component/componentStoryTemplate';
-import componentTestEnzymeTemplate from '../../templates/component/componentTestEnzymeTemplate';
-import componentTestDefaultTemplate from '../../templates/component/componentTestDefaultTemplate';
-import componentTestTestingLibraryTemplate from '../../templates/component/componentTestTestingLibraryTemplate';
+const chalk = require('chalk');
+const replace = require('replace');
+const { camelCase } = require('lodash');
+const { existsSync, outputFileSync } = require('fs-extra');
+const componentJsTemplate = require('../templates/component/componentJsTemplate');
+const componentTsTemplate = require('../templates/component/componentTsTemplate');
+const componentCssTemplate = require('../templates/component/componentCssTemplate');
+const componentLazyTemplate = require('../templates/component/componentLazyTemplate');
+const componentTsLazyTemplate = require('../templates/component/componentTsLazyTemplate');
+const componentStoryTemplate = require('../templates/component/componentStoryTemplate');
+const componentTestEnzymeTemplate = require('../templates/component/componentTestEnzymeTemplate');
+const componentTestDefaultTemplate = require('../templates/component/componentTestDefaultTemplate');
+const componentTestTestingLibraryTemplate = require('../templates/component/componentTestTestingLibraryTemplate');
 
 // private
 
@@ -118,7 +118,7 @@ function getComponentLazyTemplate({ cliConfigFile, componentName, componentPathD
 
 // --- Template Types
 
-export const componentTemplateTypes = {
+const componentTemplateTypes = {
   STYLE: 'withStyle',
   TEST: 'withTest',
   STORY: 'withStory',
@@ -126,7 +126,7 @@ export const componentTemplateTypes = {
   COMPONENT: 'component',
 };
 
-export function generateComponentTemplates(componentTemplates) {
+function generateComponentTemplates(componentTemplates) {
   for (let i = 0; i < componentTemplates.length; i += 1) {
     const { template, templateType, componentPath, componentName } = componentTemplates[i];
 
@@ -157,7 +157,7 @@ export function generateComponentTemplates(componentTemplates) {
   }
 }
 
-export function getComponentTemplate(cmd, cliConfigFile, componentName, templateType) {
+function getComponentTemplate(cmd, cliConfigFile, componentName, templateType) {
   const componentPathDir = `${cmd.path}/${componentName}`;
   const templateMap = {
     [componentTemplateTypes.STYLE]: getComponentStyleTemplate,
@@ -173,3 +173,9 @@ export function getComponentTemplate(cmd, cliConfigFile, componentName, template
 
   return null;
 }
+
+module.exports = {
+  componentTemplateTypes,
+  generateComponentTemplates,
+  getComponentTemplate,
+};

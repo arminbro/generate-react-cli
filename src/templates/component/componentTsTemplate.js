@@ -1,4 +1,4 @@
-export default `import React from 'react';
+module.exports = `import React from 'react';
 import styles from './TemplateName.module.css';
 
 const TemplateName: React.FC = () => (

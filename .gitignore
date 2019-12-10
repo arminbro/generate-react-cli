@@ -3,9 +3,8 @@
 # dependencies
 /node_modules
 
-# local testing
-src/components
-generate-react-cli.json
+# jest test coverage
+/coverage
 
 # ide
 .idea
