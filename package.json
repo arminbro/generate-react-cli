@@ -34,6 +34,7 @@
     "maintained node versions"
   ],
   "scripts": {
+    "commit": "npx git-cz",
     "prebuild": "rimraf dist",
     "build": "babel src --out-dir dist --ignore 'src/**/*.test.js'",
     "build:watch": "npm run build -- --watch",
@@ -92,6 +93,11 @@
         "lines": 0,
         "statements": 0
       }
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
     }
   },
   "commitlint": {
