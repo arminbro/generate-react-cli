@@ -7,3 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 - add TypeScript support ([8d13018](https://github.com/arminbro/generate-react-cli/commit/8d13018fa22042b9ac058cc4b332583d4d8abf80))
+
+- make stylesheets optional by adding “withStyle” option
+
+- improve developer experience when updating (“generate-react-cli.json”) the config file. The CLI will only inquire about the new missing properties in the config file the next time generate-react-cli is ran.
