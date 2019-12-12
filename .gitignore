@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# build directory
+/dist
+
 # jest test coverage
 /coverage
 

@@ -1,4 +1,4 @@
-const cli = require('../src/cli');
+const cli = require('./cli');
 
 describe('cli', () => {
   it('should be defined.', () => {

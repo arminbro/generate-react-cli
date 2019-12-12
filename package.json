@@ -13,7 +13,7 @@
   },
   "files": [
     "bin/",
-    "src/",
+    "dist/",
     "README.md",
     "LICENSE"
   ],
@@ -30,9 +30,15 @@
     "node": ">=8.x",
     "npm": ">= 5.x"
   },
+  "browserslist": [
+    "maintained node versions"
+  ],
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "babel src --out-dir dist --ignore 'src/**/*.test.js'",
+    "build:watch": "npm run build -- --watch",
     "test": "jest --coverage",
-    "watch:test": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
     "chalk": "^3.0.0",
@@ -44,16 +50,35 @@
     "replace": "^1.1.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1"
+    "pretty-quick": "^2.0.1",
+    "rimraf": "^3.0.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ]
   },
   "jest": {
     "testEnvironment": "node",
@@ -69,9 +94,15 @@
       }
     }
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
 }

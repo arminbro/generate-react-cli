@@ -2,7 +2,7 @@ const {
   componentTemplateTypes,
   generateComponentTemplates,
   getComponentTemplate,
-} = require('../../src/services/componentTemplateService');
+} = require('./componentTemplateService');
 
 describe('componentTemplateService', () => {
   it('componentTemplateTypes should be defined.', () => {

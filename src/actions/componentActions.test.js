@@ -1,4 +1,4 @@
-const { generateComponent } = require('../../src/actions/componentActions');
+const { generateComponent } = require('./componentActions');
 
 describe('componentActions', () => {
   it('generateComponent should be defined.', () => {

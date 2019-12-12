@@ -1,4 +1,4 @@
-const { getCLIConfigFile } = require('../../src/services/grcConfigService');
+const { getCLIConfigFile } = require('./grcConfigService');
 
 describe('componentTemplateService', () => {
   it('getCLIConfigFile should be defined.', () => {
