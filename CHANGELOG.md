@@ -194,7 +194,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 - add repository to package.json
 
-## 1.1.0 (2019-08-03)
+## 1.1.0 (2019-08-04)
 
 ### Features
 
@@ -202,4 +202,4 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Chores
 
-- create and update readme
+- add readme
