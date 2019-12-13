@@ -3,7 +3,7 @@
 [![dependencies](https://david-dm.org/arminbro/generate-react-cli.svg)](https://david-dm.org/arminbro/generate-react-cli)
 [![License](https://img.shields.io/npm/l/express.svg)](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE)
 
-<p align="center"><img src="src/assets/component-cmd.gif?raw=true"/></p>
+<p align="center"><img src="docs/assets/component-cmd.gif?raw=true"/></p>
 
 ## Why?
 
@@ -20,17 +20,18 @@ It does, however, have an opinion on how component files are structured. It foll
 - Now supports React TypeScript projects.
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
 
-## You can install it globally like this using npm:
+## You can install it globally and run it like this using npm:
 
-`npm i -g generate-react-cli`
+```
+ npm i -g generate-react-cli
+ generate-react component Box
+```
 
-`generate-react component Box`
-
-## Or you can just run it using [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) like this:
+## Or you can just run it using npx like this:
 
 `npx generate-react-cli component Box`
 
-(npx is a package runner tool that comes with npm 5.2+ and higher)
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher)_
 
 ## Config File
 
