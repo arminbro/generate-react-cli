@@ -47,7 +47,7 @@ When you run generate-react-cli within your project the first time, it will ask 
     "path": "src/components",
     "css": {
       "preprocessor": "css",
-      "module": true,
+      "module": false,
       "withStyle": true
     },
     "test": {
@@ -84,13 +84,13 @@ This command will create a folder with your component name within your default (
 
 #### Options
 
-You can also override the generate-react-cli default config options for one-off commands. So for example, let's say in one of your projects you have set _withTest_ to be `true` in your generate-react-cli config file as your default. You can override it for that one-off command like this:
+You can also override the generate-react-cli default config options for one-off commands. So for example, let's say in one of your projects you have set **withTest** to be `true` in your generate-react-cli config file as your default. You can override it for that one-off command like this:
 
 ```
  npx generate-react-cli c Box --no-withTest
 ```
 
-Or vice versa, if you have set _withTest_ to be `false` you can do this:
+Or vice versa, if you have set **withTest** to be `false` you can do this:
 
 ```
  npx generate-react-cli c Box --withTest
