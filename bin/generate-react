@@ -25,4 +25,4 @@ if (isNotValidNodeVersion()) {
   process.exit(1);
 }
 
-require('../dist/cli')(process.argv);
+require('../src/cli')(process.argv);
