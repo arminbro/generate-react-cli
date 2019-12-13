@@ -9,18 +9,13 @@
 
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
-[Create React App](https://create-react-app.dev/) and [Gatsby](https://www.gatsbyjs.org/) do a great job of initializing new projects, setting up the development environment, and optimizing the app for production use. Still, they don't have a way to generate new components similar to what [Angular CLI](https://cli.angular.io/) offers, and that's because they both try to stay as non-opinionated as possible and allow the developer to make those decisions. One example would be grouping by features vs. grouping by file type when creating components.
-
-Generate React CLI focuses on generating new components by running a simple command. It also doesn't care if you run it in an existing [CRA](https://create-react-app.dev/), [Gatsby](https://www.gatsbyjs.org/), or a custom React project you built on your own.
-
-It does, however, have an opinion on how component files are structured. It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the component name. We feel this approach provides a better developer experience.
-
 **_A few notes:_**
 
 - Now supports React TypeScript projects.
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
+- It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the component name. We feel this approach provides a better developer experience.
 
-## You can install it globally and run it like this using npm:
+## You can install it globally and run it using npm:
 
 ```
  npm i -g generate-react-cli
@@ -84,7 +79,7 @@ This command will create a folder with your component name within your default (
 
 #### Options
 
-You can also override the generate-react-cli default config options for one-off commands. So for example, let's say in one of your projects you have set **withTest** to be `true` in your generate-react-cli config file as your default. You can override it for that one-off command like this:
+You can also override the generate-react-cli default config options for one-off commands. So for example, let's say you have set **withTest** to be `true` in your generate-react-cli config file. You can override it for that one-off command like this:
 
 ```
  npx generate-react-cli c Box --no-withTest
@@ -96,7 +91,7 @@ Or vice versa, if you have set **withTest** to be `false` you can do this:
  npx generate-react-cli c Box --withTest
 ```
 
-Otherwise, if you don't pass any options, it will just use the default ones from the generate-react-cli config file you have set.
+Otherwise, if you don't pass any options, it will just use the default values from the generate-react-cli config file you have set.
 
 | Parameter          | Description                                                                                                                                                                                             |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -110,5 +105,6 @@ Otherwise, if you don't pass any options, it will just use the default ones from
 | **--withLazy**     | Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables [code splitting](https://reactjs.org/docs/code-splitting.html#code-splitting)) with this component. |
 | **--no-withLazy**  | Creates a component without the lazy file.                                                                                                                                                              |
 
-<br>
-Have fun!
+## License
+
+Generate React CLI is open source software [licensed as MIT](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE).
