@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file.
 
 ## [2.0.0](https://github.com/arminbro/generate-react-cli/compare/v1.8.0...v2.0.0) (2019-12-13)
 
@@ -10,19 +10,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-- 🎸 make sure user is running Node 8 or higher ([fe5dba1](https://github.com/arminbro/generate-react-cli/commit/fe5dba19e68cb8914db4ee4fc1f93fbdd808e355))
-
-* 💡 component command has a few option updates ([67579d3](https://github.com/arminbro/generate-react-cli/commit/67579d3724af1108932670b87dc7084f9b22cbe8))
-
-## 1.8.0 (2019-12-12)
-
-### Features
-
 - add TypeScript support ([8d13018](https://github.com/arminbro/generate-react-cli/commit/8d13018fa22042b9ac058cc4b332583d4d8abf80))
 
 - make stylesheets optional by adding “withStyle” option
 
 - improve developer experience when updating (“generate-react-cli.json”) the config file. The CLI will only inquire about the new missing properties in the config file the next time generate-react-cli is ran.
+
+- 🎸 make sure user is running Node 8 or higher ([fe5dba1](https://github.com/arminbro/generate-react-cli/commit/fe5dba19e68cb8914db4ee4fc1f93fbdd808e355))
+
+* 💡 component command has a few option updates ([67579d3](https://github.com/arminbro/generate-react-cli/commit/67579d3724af1108932670b87dc7084f9b22cbe8))
 
 ## 1.7.5 (2019-11-24)
 
