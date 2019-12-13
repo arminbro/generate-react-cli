@@ -40,7 +40,7 @@ const grcConfigQuestions = [
     type: 'list',
     name: 'component.test.library',
     message: 'What testing component library does your project use?',
-    choices: ['Enzyme', 'Testing Library', 'None'],
+    choices: ['Testing Library', 'Enzyme', 'None'],
   },
   {
     type: 'confirm',
