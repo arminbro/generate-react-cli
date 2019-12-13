@@ -1,4 +1,4 @@
-export default `import React from 'react';
+module.exports = `import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import TemplateName from './TemplateName';

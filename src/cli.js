@@ -1,39 +1,40 @@
-import program from 'commander';
-import chalk from 'chalk';
-import pkg from '../package.json';
-import { generateComponent } from './actions/componentActions';
-import { getCLIConfigFile } from './services/configService';
+const program = require('commander');
+const chalk = require('chalk');
+const pkg = require('../package.json');
+const { generateComponent } = require('./actions/componentActions');
+const { getCLIConfigFile } = require('./services/grcConfigService');
 
-let commandNotFound = true;
-
-export async function cli(args) {
+module.exports = async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
   const { component } = cliConfigFile;
+  let commandNotFound = true;
 
   program.version(pkg.version);
 
-  // Generate Component
+  // --- Generate Component
+
   program
     .command('component <name>')
     .alias('c')
-    .option('-p, --path <path>', 'With specified path value', component.path || './src/components')
-    .option(
-      '-t, --withTest <withTest>',
-      'Would you like to create a corresponding test file with this component?',
-      component.test.withTest
-    )
-    .option(
-      '-s, --withStory <withStory>',
-      'Would you like to create a corresponding story file with this component?',
-      component.withStory
-    )
-    .option(
-      '-l, --withLazy <withLazy>',
-      'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with this component?',
-      component.withLazy
-    )
-    .action((componentName, cmd) => generateComponent(componentName, cmd, component))
-    .action(() => (commandNotFound = false));
+
+    .option('-p, --path <path>', 'The path where the component will get genereted in.', component.path)
+
+    .option('--withStyle', 'With corresponding test file.', component.css.withStyle)
+    .option('--no-withStyle', 'Without corresponding test file.')
+
+    .option('--withTest', 'With corresponding test file.', component.test.withTest)
+    .option('--no-withTest', 'Without corresponding test file.')
+
+    .option('--withStory', 'With corresponding story file.', component.withStory)
+    .option('--no-withStory', 'Without corresponding story file.')
+
+    .option('--withLazy', 'With corresponding lazy file.', component.withLazy)
+    .option('--no-withLazy', 'Without corresponding lazy file.')
+
+    .action((componentName, cmd) => generateComponent(cmd, cliConfigFile, componentName))
+    .action(() => {
+      commandNotFound = false;
+    });
 
   program.parse(args);
 
@@ -42,4 +43,4 @@ export async function cli(args) {
     console.log(`Run ${chalk.green('generate-react --help')} to see a list of the commmands you can run.`);
     process.exit(1);
   }
-}
+};
