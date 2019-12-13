@@ -29,7 +29,9 @@ It does, however, have an opinion on how component files are structured. It foll
 
 ## Or you can just run it using npx like this:
 
-`npx generate-react-cli component Box`
+```
+ npx generate-react-cli component Box
+```
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher)_
 
@@ -82,10 +84,15 @@ This command will create a folder with your component name within your default (
 
 You can also override the generate-react-cli default config options for one-off commands. So for example, let's say in one of your projects you have set _withTest_ to be `true` in your generate-react-cli config file as your default. You can override it for that one-off command like this:
 
-`npx generate-react-cli c Box --no-withTest`
+```
+ npx generate-react-cli c Box --no-withTest
+```
 
 Or vice versa, if you have set _withTest_ to be `false` you can do this:
-`npx generate-react-cli c Box --withTest`
+
+```
+ npx generate-react-cli c Box --withTest
+```
 
 Otherwise, if you don't pass any options, it will just use the default ones from the generate-react-cli config file you have set.
 
