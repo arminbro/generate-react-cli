@@ -65,7 +65,9 @@ When you run generate-react-cli within your project the first time, it will ask 
 
 ### Generate Component
 
-`npx generate-react-cli component Box`
+```
+ npx generate-react-cli component Box
+```
 
 This command will create a folder with your component name within your default (e.g. **src/components**) directory, and its corresponding files.
 
