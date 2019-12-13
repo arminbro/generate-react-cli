@@ -11,7 +11,7 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 **_A few notes:_**
 
-- Now supports React TypeScript projects.
+- Now supports React [TypeScript](https://www.typescriptlang.org/) projects.
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
 - It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the component name. We feel this approach provides a better developer experience.
 
