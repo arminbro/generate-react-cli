@@ -15,6 +15,7 @@
     "bin/",
     "src/",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "publishConfig": {
