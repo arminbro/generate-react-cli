@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/arminbro/generate-react-cli/compare/v1.8.0...v2.0.0) (2019-12-13)
+
+### ⚠ BREAKING CHANGES
+
+- new command option parameters
+
+### Features
+
+- 🎸 make sure user is running Node 8 or higher ([fe5dba1](https://github.com/arminbro/generate-react-cli/commit/fe5dba19e68cb8914db4ee4fc1f93fbdd808e355))
+
+* 💡 component command has a few option updates ([67579d3](https://github.com/arminbro/generate-react-cli/commit/67579d3724af1108932670b87dc7084f9b22cbe8))
+
 ## 1.8.0 (2019-12-12)
 
 ### Features
