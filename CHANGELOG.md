@@ -22,6 +22,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 * 💡 component command has a few option updates ([67579d3](https://github.com/arminbro/generate-react-cli/commit/67579d3724af1108932670b87dc7084f9b22cbe8))
 
+## 1.8.0 (2019-12-12)
+
+- testing standard-version
+
 ## 1.7.5 (2019-11-24)
 
 ### Chores
