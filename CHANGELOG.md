@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/arminbro/generate-react-cli/compare/v2.0.2...v3.0.0) (2019-12-14)
+
+### ⚠ BREAKING CHANGES
+
+- Update the way option values are passed in the component command. For
+  example if you wanted or didn't want a corresponding test file, the old
+  syntax looked like this: --withTest or --no-withTest. Now with the new
+  syntax you just do this --withTest=true or --withTest=false this applies
+  to all the other component options (withStyle, withStory, withLazy).
+
+- 💄 Update component command options ([c870c7c](https://github.com/arminbro/generate-react-cli/commit/c870c7c5544640e23848f4f22b883e2d0ee755e4))
+
 ### [2.0.2](https://github.com/arminbro/generate-react-cli/compare/v2.0.1...v2.0.2) (2019-12-13)
 
 ### [2.0.1](https://github.com/arminbro/generate-react-cli/compare/v2.0.0...v2.0.1) (2019-12-13)
