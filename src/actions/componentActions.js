@@ -28,7 +28,10 @@ function generateComponent(cmd, cliConfigFile, componentName) {
 
     // --- Only get template if component option (withStyle, withTest, etc..) is true, or if template type is "component"
 
-    if (cmd[componentTemplateType] || componentTemplateType === componentTemplateTypes.COMPONENT) {
+    if (
+      (cmd[componentTemplateType] && cmd[componentTemplateType].toString() === 'true') ||
+      componentTemplateType === componentTemplateTypes.COMPONENT
+    ) {
       const template = getComponentTemplate(cmd, cliConfigFile, componentName, componentTemplateType);
 
       if (template) {

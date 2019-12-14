@@ -92,7 +92,7 @@ async function createCLIConfigFile() {
     console.log();
     console.log(
       chalk.cyan(
-        'A config file ("generate-react-cli.json") has successfully created on the root level of your project.'
+        'The "generate-react-cli.json" config file has been successfully created on the root level of your project.'
       )
     );
 

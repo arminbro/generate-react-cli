@@ -3,7 +3,7 @@
 [![dependencies](https://david-dm.org/arminbro/generate-react-cli.svg)](https://david-dm.org/arminbro/generate-react-cli)
 [![License](https://img.shields.io/npm/l/express.svg)](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE)
 
-<p align="center"><img src="docs/assets/component-cmd.gif?raw=true"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/component-cmd.gif?raw=true"/></p>
 
 ## Why?
 
@@ -79,31 +79,66 @@ This command will create a folder with your component name within your default (
 
 #### Options
 
-You can also override the generate-react-cli default config options for one-off commands. So for example, let's say you have set **withTest** to be `true` in your generate-react-cli config file. You can override it for that one-off command like this:
+You can also override some of the generate-react-cli default config options for one-off commands. So for example, let's say you have set **withTest** to be `true` in your generate-react-cli config file. You can override it for that one-off command like this:
 
 ```
- npx generate-react-cli c Box --no-withTest
+ npx generate-react-cli c Box --withTest=false
 ```
 
 Or vice versa, if you have set **withTest** to be `false` you can do this:
 
 ```
- npx generate-react-cli c Box --withTest
+ npx generate-react-cli c Box --withTest=true
 ```
 
 Otherwise, if you don't pass any options, it will just use the default values from the generate-react-cli config file you have set.
 
-| Parameter          | Description                                                                                                                                                                                             |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **--path**         | Value of the path where you want the component to be generated in (e.g. **src/pages**).                                                                                                                 |
-| **--withStyle**    | Creates a corresponding stylesheet file with this component.                                                                                                                                            |
-| **--no-withStyle** | Creates component without the stylesheet file.                                                                                                                                                          |
-| **--withTest**     | Creates a corresponding test file with this component.                                                                                                                                                  |
-| **--no-withTest**  | Creates a component without the test file.                                                                                                                                                              |
-| **--withStory**    | Creates a corresponding story file with this component.                                                                                                                                                 |
-| **--no-withStory** | Creates component without the story file.                                                                                                                                                               |
-| **--withLazy**     | Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables [code splitting](https://reactjs.org/docs/code-splitting.html#code-splitting)) with this component. |
-| **--no-withLazy**  | Creates a component without the lazy file.                                                                                                                                                              |
+<table>
+  <tr align="left">
+    <th>Options</th>
+    <th>Description</th>
+    <th>Value Type</th>
+  </tr>
+  <tr>
+    <td width="20%"><b>--path</b></td>
+    <td width="60%">
+      Value of the path where you want the component to be generated in (e.g. **src/pages**).  
+    </td>
+    <td width="20%">String</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withStyle</b></td>
+    <td width="60%">
+      Creates a corresponding stylesheet file with this component.    
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withTest</b></td>
+    <td width="60%">
+      Creates a corresponding test file with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withStory</b></td>
+    <td width="60%">
+      Creates a corresponding story file with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withLazy</b></td>
+    <td width="60%">
+      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+</table>
 
 ## License
 

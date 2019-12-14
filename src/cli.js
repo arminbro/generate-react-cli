@@ -18,18 +18,10 @@ module.exports = async function cli(args) {
     .alias('c')
 
     .option('-p, --path <path>', 'The path where the component will get genereted in.', component.path)
-
-    .option('--withStyle', 'With corresponding test file.', component.css.withStyle)
-    .option('--no-withStyle', 'Without corresponding test file.')
-
-    .option('--withTest', 'With corresponding test file.', component.test.withTest)
-    .option('--no-withTest', 'Without corresponding test file.')
-
-    .option('--withStory', 'With corresponding story file.', component.withStory)
-    .option('--no-withStory', 'Without corresponding story file.')
-
-    .option('--withLazy', 'With corresponding lazy file.', component.withLazy)
-    .option('--no-withLazy', 'Without corresponding lazy file.')
+    .option('--withStyle <withStyle>', 'With corresponding stylesheet file.', component.css.withStyle)
+    .option('--withTest <withTest>', 'With corresponding test file.', component.test.withTest)
+    .option('--withStory <withStory>', 'With corresponding story file.', component.withStory)
+    .option('--withLazy <withLazy>', 'With corresponding lazy file.', component.withLazy)
 
     .action((componentName, cmd) => generateComponent(cmd, cliConfigFile, componentName))
     .action(() => {
