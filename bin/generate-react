@@ -5,12 +5,12 @@ const isNotValidNodeVersion = () => {
   const semver = currentNodeVersion.split('.');
   const major = semver[0];
 
-  if (major < 8) {
+  if (major < 10) {
     console.error(
       // eslint-disable-next-line
       'You are running Node ' +
         currentNodeVersion +
-        ' Generate React CLI requires Node 8 or higher. Please update your version of Node.'
+        ' Generate React CLI requires Node 10 or higher. Please update your version of Node.'
     );
 
     return true;
@@ -19,7 +19,7 @@ const isNotValidNodeVersion = () => {
   return false;
 };
 
-// --- Check if user is running Node 8 or higher.
+// --- Check if user is running Node 10 or higher.
 
 if (isNotValidNodeVersion()) {
   process.exit(1);
