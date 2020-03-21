@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/arminbro/generate-react-cli/compare/v3.0.2...v4.0.0) (2020-03-21)
+
+### ⚠ BREAKING CHANGES
+
+- 🧨 Generate React CLI requires Node 10 or higher
+
+- 🤖 Generate React CLI requires Node 10 or higher ([bd745f6](https://github.com/arminbro/generate-react-cli/commit/bd745f659d0e538e7abfb875cd1e160c5c6b064c))
+
 ### [3.0.2](https://github.com/arminbro/generate-react-cli/compare/v3.0.1...v3.0.2) (2020-03-21)
 
 ### [3.0.1](https://github.com/arminbro/generate-react-cli/compare/v3.0.0...v3.0.1) (2020-03-14)
