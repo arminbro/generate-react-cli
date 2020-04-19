@@ -6,9 +6,38 @@ const { accessSync, constants, outputFileSync, readFileSync } = require('fs-extr
 
 // private
 
-// --- Generate React Config file questions.
+// Generate React Config file questions.
 
-const grcConfigQuestions = [
+// --- project level questions.
+
+const projectLevelQuestions = [
+  {
+    type: 'confirm',
+    name: 'usesTypeScript',
+    message: 'Does this project use TypeScript?',
+  },
+  {
+    type: 'confirm',
+    name: 'usesCssModule',
+    message: 'Does this project use CSS modules?',
+  },
+  {
+    type: 'list',
+    name: 'cssPreprocessor',
+    message: 'Does this project use a CSS Preprocessor?',
+    choices: ['css', 'scss', 'less', 'styl'],
+  },
+  {
+    type: 'list',
+    name: 'testLibrary',
+    message: 'What testing library does your project use?',
+    choices: ['Testing Library', 'Enzyme', 'None'],
+  },
+];
+
+// --- component level questions.
+
+const componentLevelQuestions = [
   {
     type: 'input',
     name: 'component.path',
@@ -17,41 +46,18 @@ const grcConfigQuestions = [
   },
   {
     type: 'confirm',
-    name: 'usesTypeScript',
-    message: 'Does this project use TypeScript?',
-  },
-  {
-    type: 'list',
-    name: 'component.css.preprocessor',
-    message: 'Does this project use a CSS Preprocessor?',
-    choices: ['css', 'scss', 'less', 'styl'],
-  },
-  {
-    type: 'confirm',
-    name: 'component.css.module',
-    message: 'Does this project use CSS modules?',
-  },
-  {
-    type: 'confirm',
-    name: 'component.css.withStyle',
+    name: 'component.withStyle',
     message: 'Would you like to create a corresponding stylesheet file with each component you generate?',
   },
   {
-    type: 'list',
-    name: 'component.test.library',
-    message: 'What testing component library does your project use?',
-    choices: ['Testing Library', 'Enzyme', 'None'],
-  },
-  {
     type: 'confirm',
-    name: 'component.test.withTest',
+    name: 'component.withTest',
     message: 'Would you like to create a corresponding test file with each component you generate?',
   },
   {
     type: 'confirm',
     name: 'component.withStory',
-    message:
-      'Does your project use Storybook and would you like to create a corresponding story with each component you generate?',
+    message: 'Would you like to create a corresponding story with each component you generate?',
   },
   {
     type: 'confirm',
@@ -60,6 +66,42 @@ const grcConfigQuestions = [
       'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each component you generate?',
   },
 ];
+
+// --- page level questions.
+
+const pageLevelQuestions = [
+  {
+    type: 'input',
+    name: 'page.path',
+    message: 'Set the default path directory to where your pages will be generated in?',
+    default: () => 'src/pages',
+  },
+  {
+    type: 'confirm',
+    name: 'page.withStyle',
+    message: 'Would you like to create a corresponding stylesheet file with each page you generate?',
+  },
+  {
+    type: 'confirm',
+    name: 'page.withTest',
+    message: 'Would you like to create a corresponding test file with each page you generate?',
+  },
+  {
+    type: 'confirm',
+    name: 'page.withStory',
+    message: 'Would you like to create a corresponding story with each page you generate?',
+  },
+  {
+    type: 'confirm',
+    name: 'page.withLazy',
+    message:
+      'Would you like to create a corresponding lazy file (a file that lazy-loads your page out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each page you generate?',
+  },
+];
+
+// --- merge all questions together.
+
+const grcConfigQuestions = [...projectLevelQuestions, ...componentLevelQuestions, ...pageLevelQuestions];
 
 async function createCLIConfigFile() {
   try {
@@ -154,6 +196,47 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
   }
 }
 
+function cleanOldPropsFromCLIConfigFile(currentConfigFile) {
+  // new updated config file instance
+
+  const updatedConfigFile = { ...currentConfigFile };
+
+  // new component config instance
+
+  const component = {
+    path: currentConfigFile.component.path,
+    withLazy: currentConfigFile.component.withLazy,
+    withStory: currentConfigFile.component.withStory,
+  };
+
+  // get old component css property values and reassign them to new properties
+
+  if (currentConfigFile.component.css) {
+    component.withStyle = currentConfigFile.component.css.withStyle;
+    updatedConfigFile.usesCssModule = currentConfigFile.component.css.module;
+    updatedConfigFile.cssPreprocessor = currentConfigFile.component.css.preprocessor;
+  }
+
+  // get old component test property values and reassign them to new properties
+
+  if (currentConfigFile.component.test) {
+    component.withTest = currentConfigFile.component.test.withTest;
+    updatedConfigFile.testLibrary = currentConfigFile.component.test.library;
+  }
+
+  // reassign new component config instance to updatedConfigFile
+
+  updatedConfigFile.component = component;
+
+  // update generate-react-cli.json with the updatedConfigFile
+
+  outputFileSync('./generate-react-cli.json', JSON.stringify(updatedConfigFile, null, 2));
+
+  // return updatedConfigFile
+
+  return updatedConfigFile;
+}
+
 // public
 
 async function getCLIConfigFile() {
@@ -166,7 +249,13 @@ async function getCLIConfigFile() {
 
     try {
       accessSync('./generate-react-cli.json', constants.R_OK);
-      const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
+      let currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
+
+      // --- Check to see if there are old properties in the component object and clean them up if there are
+
+      if (currentConfigFile.component.css || currentConfigFile.component.test) {
+        currentConfigFile = cleanOldPropsFromCLIConfigFile(currentConfigFile);
+      }
 
       /**
        *  Check to see if there's a difference between grcConfigQuestions and the currentConfigFile.
@@ -174,7 +263,7 @@ async function getCLIConfigFile() {
        */
 
       const missingConfigQuestions = grcConfigQuestions.filter(
-        question => !deepKeys(currentConfigFile).includes(question.name)
+        (question) => !deepKeys(currentConfigFile).includes(question.name)
       );
 
       if (missingConfigQuestions.length) {

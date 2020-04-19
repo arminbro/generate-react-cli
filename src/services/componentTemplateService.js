@@ -15,21 +15,21 @@ const componentTestTestingLibraryTemplate = require('../templates/component/comp
 // private
 
 function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
-  const { component, usesTypeScript } = cliConfigFile;
+  const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
 
   // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
 
-  if (component.test.library !== 'Testing Library' || !cmd.withTest) {
+  if (testLibrary !== 'Testing Library' || !cmd.withTest) {
     template = template.replace(` data-testid="TemplateName"`, '');
   }
 
   // --- If it has a corresponding stylesheet
 
   if (cmd.withStyle) {
-    const module = component.css.module ? '.module' : '';
-    const cssPath = `${componentName}${module}.${component.css.preprocessor}`;
+    const module = usesCssModule ? '.module' : '';
+    const cssPath = `${componentName}${module}.${cssPreprocessor}`;
 
     // --- If the css module is true make sure to update the template accordingly
 
@@ -55,9 +55,9 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
 }
 
 function getComponentStyleTemplate({ cliConfigFile, componentName, componentPathDir }) {
-  const { component } = cliConfigFile;
-  const module = component.css.module ? '.module' : '';
-  const cssPath = `${componentName}${module}.${component.css.preprocessor}`;
+  const { cssPreprocessor, usesCssModule } = cliConfigFile;
+  const module = usesCssModule ? '.module' : '';
+  const cssPath = `${componentName}${module}.${cssPreprocessor}`;
 
   return {
     template: componentCssTemplate,
@@ -68,15 +68,15 @@ function getComponentStyleTemplate({ cliConfigFile, componentName, componentPath
 }
 
 function getComponentTestTemplate({ cliConfigFile, componentName, componentPathDir }) {
-  const { component, usesTypeScript } = cliConfigFile;
+  const { testLibrary, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
   // --- Get test template based on test library type
 
-  if (component.test.library === 'Enzyme') {
+  if (testLibrary === 'Enzyme') {
     template = componentTestEnzymeTemplate;
-  } else if (component.test.library === 'Testing Library') {
+  } else if (testLibrary === 'Testing Library') {
     template = componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName));
   } else {
     template = componentTestDefaultTemplate;
@@ -126,6 +126,16 @@ const componentTemplateTypes = {
   COMPONENT: 'component',
 };
 
+// --- Template Map
+
+const templateMap = {
+  [componentTemplateTypes.STYLE]: getComponentStyleTemplate,
+  [componentTemplateTypes.TEST]: getComponentTestTemplate,
+  [componentTemplateTypes.STORY]: getComponentStoryTemplate,
+  [componentTemplateTypes.LAZY]: getComponentLazyTemplate,
+  [componentTemplateTypes.COMPONENT]: getComponentScriptTemplate,
+};
+
 function generateComponentTemplates(componentTemplates) {
   for (let i = 0; i < componentTemplates.length; i += 1) {
     const { template, templateType, componentPath, componentName } = componentTemplates[i];
@@ -159,13 +169,6 @@ function generateComponentTemplates(componentTemplates) {
 
 function getComponentTemplate(cmd, cliConfigFile, componentName, templateType) {
   const componentPathDir = `${cmd.path}/${componentName}`;
-  const templateMap = {
-    [componentTemplateTypes.STYLE]: getComponentStyleTemplate,
-    [componentTemplateTypes.TEST]: getComponentTestTemplate,
-    [componentTemplateTypes.STORY]: getComponentStoryTemplate,
-    [componentTemplateTypes.LAZY]: getComponentLazyTemplate,
-    [componentTemplateTypes.COMPONENT]: getComponentScriptTemplate,
-  };
 
   if (templateMap[templateType]) {
     return templateMap[templateType]({ cmd, cliConfigFile, componentName, componentPathDir });
