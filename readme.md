@@ -38,21 +38,24 @@ When you run generate-react-cli within your project the first time, it will ask 
 
 ```json
 {
+  "usesTypeScript": false,
+  "usesCssModule": true,
+  "cssPreprocessor": "scss",
+  "testLibrary": "Testing Library",
   "component": {
     "path": "src/components",
-    "css": {
-      "preprocessor": "css",
-      "module": false,
-      "withStyle": true
-    },
-    "test": {
-      "library": "Testing Library",
-      "withTest": true
-    },
-    "withStory": false,
+    "withStyle": true,
+    "withTest": true,
+    "withStory": true,
     "withLazy": false
   },
-  "usesTypeScript": false
+  "page": {
+    "path": "src/pages",
+    "withStyle": true,
+    "withTest": true,
+    "withStory": false,
+    "withLazy": true
+  }
 }
 ```
 
@@ -79,16 +82,16 @@ This command will create a folder with your component name within your default (
 
 #### Options
 
-You can also override some of the generate-react-cli default config options for one-off commands. So for example, let's say you have set **withTest** to be `true` in your generate-react-cli config file. You can override it for that one-off command like this:
+You can also override some of the generate-react-cli default component config options using one-off commands. So for example, let's say you have set **withTest** to be `true` in the component config property. You can override it like this:
 
 ```
- npx generate-react-cli c Box --withTest=false
+ npx generate-react-cli component Box --withTest=false
 ```
 
 Or vice versa, if you have set **withTest** to be `false` you can do this:
 
 ```
- npx generate-react-cli c Box --withTest=true
+ npx generate-react-cli component Box --withTest=true
 ```
 
 Otherwise, if you don't pass any options, it will just use the default values from the generate-react-cli config file you have set.
@@ -135,6 +138,88 @@ Otherwise, if you don't pass any options, it will just use the default values fr
     <td width="20%"><b>--withLazy</b></td>
     <td width="60%">
       Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+</table>
+
+### Generate Page
+
+```
+ npx generate-react-cli page HomePage
+```
+
+This command will create a folder with your page name within your default (e.g. **src/pages**) directory, and its corresponding files.
+
+#### **Example of the page files structure**
+
+```
+|-- /src
+    |-- /pages
+        |-- /HomePage
+            |-- HomePage.js
+            |-- HomePage.css
+            |-- HomePage.test.js
+```
+
+#### Options
+
+You can also override some of the generate-react-cli default page config options using one-off commands. So for example, let's say you have set **withTest** to be `true` in the page config property. You can override it like this:
+
+```
+ npx generate-react-cli page HomePage --withTest=false
+```
+
+Or vice versa, if you have set **withTest** to be `false` you can do this:
+
+```
+ npx generate-react-cli page HomePage --withTest=true
+```
+
+Otherwise, if you don't pass any options, it will just use the default values from the generate-react-cli config file you have set.
+
+<table>
+  <tr align="left">
+    <th>Options</th>
+    <th>Description</th>
+    <th>Value Type</th>
+  </tr>
+  <tr>
+    <td width="20%"><b>--path</b></td>
+    <td width="60%">
+      Value of the path where you want the page to be generated in (e.g. <b>src/pages</b>).  
+    </td>
+    <td width="20%">String</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withStyle</b></td>
+    <td width="60%">
+      Creates a corresponding stylesheet file with this page.    
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withTest</b></td>
+    <td width="60%">
+      Creates a corresponding test file with this page.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withStory</b></td>
+    <td width="60%">
+      Creates a corresponding story file with this page.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withLazy</b></td>
+    <td width="60%">
+      Creates a corresponding lazy file (a file that lazy-loads your page out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this page.      
     </td>
     <td width="20%">Boolean</td>
   </tr>
