@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/arminbro/generate-react-cli/compare/v4.0.2...v4.1.0) (2020-04-20)
+
+### Features
+
+- 🎸 add new page command ([3a441de](https://github.com/arminbro/generate-react-cli/commit/3a441dede662bf6a3d65c67072b50900ece46879)), closes [#10](https://github.com/arminbro/generate-react-cli/issues/10)
+
 ### [4.0.2](https://github.com/arminbro/generate-react-cli/compare/v4.0.1...v4.0.2) (2020-04-05)
 
 ### Bug Fixes
