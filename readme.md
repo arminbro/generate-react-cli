@@ -3,7 +3,9 @@
 [![dependencies](https://david-dm.org/arminbro/generate-react-cli.svg)](https://david-dm.org/arminbro/generate-react-cli)
 [![License](https://img.shields.io/npm/l/express.svg)](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE)
 
-![generate-react-cli](./docs/assets/generate-react-cli.svg)
+<p align="center"> 
+  <img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/generate-react-cli.svg?raw=true"/>
+</p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/component-cmd.gif?raw=true"/></p>
 
