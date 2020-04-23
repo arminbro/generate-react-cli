@@ -7,8 +7,6 @@
   <img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/generate-react-cli.svg?raw=true"/>
 </p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/component-cmd.gif?raw=true"/></p>
-
 ## Why?
 
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
