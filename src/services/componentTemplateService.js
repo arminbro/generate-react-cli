@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const replace = require('replace');
 const { camelCase } = require('lodash');
-const { existsSync, outputFileSync } = require('fs-extra');
+const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
 const componentJsTemplate = require('../templates/component/componentJsTemplate');
 const componentTsTemplate = require('../templates/component/componentTsTemplate');
 const componentCssTemplate = require('../templates/component/componentCssTemplate');
@@ -14,36 +14,70 @@ const componentTestTestingLibraryTemplate = require('../templates/component/comp
 
 // private
 
+function loadCustomTemplate(templatePath) {
+  // --- Try loading custom template
+
+  try {
+    const template = readFileSync(templatePath, 'utf8');
+
+    return template;
+  } catch (e) {
+    console.error(
+      chalk.red(
+        `
+        ERROR: The custom template path of "${templatePath}" does not exist. 
+        Please make sure you're pointing to the right custom template path in your generate-react-cli.json config file.
+        `
+      )
+    );
+
+    return process.exit(1);
+  }
+}
+
 function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
+  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
-  let template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
+  let template = null;
 
-  // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
+  // Check for a custom component template.
 
-  if (testLibrary !== 'Testing Library' || !cmd.withTest) {
-    template = template.replace(` data-testid="TemplateName"`, '');
-  }
+  if (customTemplates && customTemplates.component) {
+    // --- Load and use the custom component template
 
-  // --- If it has a corresponding stylesheet
-
-  if (cmd.withStyle) {
-    const module = usesCssModule ? '.module' : '';
-    const cssPath = `${componentName}${module}.${cssPreprocessor}`;
-
-    // --- If the css module is true make sure to update the template accordingly
-
-    if (module.length) {
-      template = template.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
-    } else {
-      template = template.replace(`{styles.TemplateName}`, `"${componentName}"`);
-      template = template.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
-    }
+    template = loadCustomTemplate(customTemplates.component);
   } else {
-    // --- If no stylesheet, remove className attribute and style import from jsTemplate
+    // --- Else use GRC built-in component template
 
-    template = template.replace(`className={styles.TemplateName} `, '');
-    template = template.replace(`import styles from './TemplateName.module.css';`, '');
+    template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
+
+    // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
+
+    if (testLibrary !== 'Testing Library' || !cmd.withTest) {
+      template = template.replace(` data-testid="TemplateName"`, '');
+    }
+
+    // --- If it has a corresponding stylesheet
+
+    if (cmd.withStyle) {
+      const module = usesCssModule ? '.module' : '';
+      const cssPath = `${componentName}${module}.${cssPreprocessor}`;
+
+      // --- If the css module is true make sure to update the template accordingly
+
+      if (module.length) {
+        template = template.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
+      } else {
+        template = template.replace(`{styles.TemplateName}`, `"${componentName}"`);
+        template = template.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
+      }
+    } else {
+      // --- If no stylesheet, remove className attribute and style import from jsTemplate
+
+      template = template.replace(`className={styles.TemplateName} `, '');
+      template = template.replace(`import styles from './TemplateName.module.css';`, '');
+    }
   }
 
   return {
@@ -54,27 +88,48 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
   };
 }
 
-function getComponentStyleTemplate({ cliConfigFile, componentName, componentPathDir }) {
+function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
+  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
   const { cssPreprocessor, usesCssModule } = cliConfigFile;
   const module = usesCssModule ? '.module' : '';
   const cssPath = `${componentName}${module}.${cssPreprocessor}`;
+  let template = null;
+
+  // Check for a custom style template.
+
+  if (customTemplates && customTemplates.style) {
+    // --- Load and use the custom style template
+
+    template = loadCustomTemplate(customTemplates.style);
+  } else {
+    // --- Else use GRC built-in style template
+
+    template = componentCssTemplate;
+  }
 
   return {
-    template: componentCssTemplate,
+    template,
     templateType: `Stylesheet "${cssPath}"`,
     componentPath: `${componentPathDir}/${cssPath}`,
     componentName,
   };
 }
 
-function getComponentTestTemplate({ cliConfigFile, componentName, componentPathDir }) {
+function getComponentTestTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
+  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
   const { testLibrary, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
-  // --- Get test template based on test library type
+  // Check for a custom test template.
 
-  if (testLibrary === 'Enzyme') {
+  if (customTemplates && customTemplates.test) {
+    // --- Load and use the custom test template
+
+    template = loadCustomTemplate(customTemplates.test);
+  } else if (testLibrary === 'Enzyme') {
+    // --- Else use GRC built-in test template based on test library type
+
     template = componentTestEnzymeTemplate;
   } else if (testLibrary === 'Testing Library') {
     template = componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName));
@@ -90,24 +145,52 @@ function getComponentTestTemplate({ cliConfigFile, componentName, componentPathD
   };
 }
 
-function getComponentStoryTemplate({ cliConfigFile, componentName, componentPathDir }) {
+function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
+  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let template = null;
+
+  // Check for a custom story template.
+
+  if (customTemplates && customTemplates.story) {
+    // --- Load and use the custom story template
+
+    template = loadCustomTemplate(customTemplates.story);
+  } else {
+    // --- Else use GRC built-in story template
+
+    template = componentStoryTemplate;
+  }
 
   return {
-    template: componentStoryTemplate,
+    template,
     templateType: `Story "${componentName}.stories.${fileExtension}"`,
     componentPath: `${componentPathDir}/${componentName}.stories.${fileExtension}`,
     componentName,
   };
 }
 
-function getComponentLazyTemplate({ cliConfigFile, componentName, componentPathDir }) {
+function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
+  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let template = null;
+
+  // Check for a custom lazy template.
+
+  if (customTemplates && customTemplates.lazy) {
+    // --- Load and use the custom lazy template
+
+    template = loadCustomTemplate(customTemplates.lazy);
+  } else {
+    // --- Else use GRC built-in lazy template
+
+    template = usesTypeScript ? componentTsLazyTemplate : componentLazyTemplate;
+  }
 
   return {
-    template: usesTypeScript ? componentTsLazyTemplate : componentLazyTemplate,
+    template,
     templateType: `Lazy "${componentName}.lazy.${fileExtension}"`,
     componentPath: `${componentPathDir}/${componentName}.lazy.${fileExtension}`,
     componentName,
