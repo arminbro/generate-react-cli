@@ -68,7 +68,7 @@ You can now create custom templates that Generate React CLI can use instead of t
 
 Both the `component` and `page` properties (within the **generate-react-cli.json** config file) can accept an optional `customTemplates` object property.
 
-### e.g. of the `customTemplates` object.
+### e.g. of the `customTemplates` object
 
 The keys represent the type of templates, and the values are the paths that point to where your custom template lives in your project/system.
 
@@ -119,7 +119,7 @@ Notice in the `page.customTemplates` that we only specified the "test" custom te
 
 ### e.g. of a custom component template file
 
-`templates/component/component.js`
+_templates/component/component.js_
 
 ```jsx
 import React from 'react';
@@ -127,7 +127,7 @@ import styles from './TemplateName.module.css';
 
 const TemplateName = () => (
   <div className={styles.TemplateName} data-testid="TemplateName">
-    <h1>TemplateName of component</h1>
+    <h1>TemplateName component</h1>
   </div>
 );
 
@@ -138,7 +138,7 @@ export default TemplateName;
 
 ### e.g. of a custom test template file
 
-`templates/component/test.js`
+_templates/component/test.js_
 
 ```jsx
 import React from 'react';
