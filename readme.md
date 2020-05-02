@@ -37,7 +37,7 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 
 When you run generate-react-cli within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
 
-### e.g. of the **generate-react-cli.json** config file
+### Example of the **generate-react-cli.json** config file:
 
 ```json
 {
@@ -64,13 +64,11 @@ When you run generate-react-cli within your project the first time, it will ask 
 
 ## Custom Templates
 
-You can now create custom templates that Generate React CLI can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components and pages that you want to generate.
+You can now create custom templates that Generate React CLI can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components and pages you want to generate.
 
 Both the `component` and `page` properties (within the **generate-react-cli.json** config file) can accept an optional `customTemplates` object property.
 
-### e.g. of the `customTemplates` object
-
-The keys represent the type of templates, and the values are the paths that point to where your custom template lives in your project/system.
+### Example of the `customTemplates` object:
 
 ```json
 "customTemplates": {
@@ -82,7 +80,9 @@ The keys represent the type of templates, and the values are the paths that poin
 },
 ```
 
-### e.g. of using the `customTemplates` property in the generate-react-cli.json config file
+The keys represent the type of templates, and the values are the paths that point to where your custom template lives in your project/system.
+
+### Example of using the `customTemplates` property in the generate-react-cli.json config file:
 
 ```json
 {
@@ -115,9 +115,9 @@ The keys represent the type of templates, and the values are the paths that poin
 }
 ```
 
-Notice in the `page.customTemplates` that we only specified the "test" custom template type. That's because all the custom template types are optional. If you don't set the other types, the CLI will default to using the built-in templates that it comes with.
+Notice in the `page.customTemplates` that we only specified the "test" custom template type. That's because all the custom template types are optional. If you don't set the other types, the CLI will default to using the built-in templates it comes with.
 
-### e.g. of a custom component template file
+### Example of a custom component template file:
 
 ```jsx
 // templates/component/component.js
@@ -136,7 +136,7 @@ export default TemplateName;
 
 **Important** - Make sure to use the `TemplateName` keyword in your templates. The CLI will use this keyword to replace it with your component name.
 
-### e.g. of a custom test template file
+### Example of a custom test template file:
 
 ```jsx
 // templates/component/test.js
