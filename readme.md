@@ -13,7 +13,8 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 **_A few notes:_**
 
-- Now supports React [TypeScript](https://www.typescriptlang.org/) projects.
+- Now supports custom templates 🎉 [read more](#custom-templates)
+- Now supports React [TypeScript](https://www.typescriptlang.org/) projects 🎉
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
 - It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the component name. We feel this approach provides a better developer experience.
 
@@ -36,7 +37,7 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 
 When you run generate-react-cli within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
 
-### e.g. **generate-react-cli.json**
+### e.g. of the **generate-react-cli.json** config file
 
 ```json
 {
@@ -59,6 +60,96 @@ When you run generate-react-cli within your project the first time, it will ask 
     "withLazy": true
   }
 }
+```
+
+## Custom Templates
+
+You can now create custom templates that Generate React CLI can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components and pages that you want to generate.
+
+Both the `component` and `page` properties (within the **generate-react-cli.json** config file) can accept an optional `customTemplates` object property.
+
+### e.g. of the `customTemplates` object.
+
+The keys represent the type of templates, and the values are the paths that point to where your custom template lives in your project/system.
+
+```json
+  "customTemplates": {
+    "component": "templates/component.js",
+    "lazy":  "templates/lazy.js",
+    "story":  "templates/story.js",
+    "style": "templates/style.scss",
+    "test":  "templates/test.js"
+  },
+```
+
+### e.g. of using the `customTemplates` property in the **generate-react-cli.json** config file
+
+```json
+{
+  "usesTypeScript": false,
+  "usesCssModule": true,
+  "cssPreprocessor": "scss",
+  "testLibrary": "Testing Library",
+  "component": {
+    "customTemplates": {
+      "component": "templates/component/component.js",
+      "style": "templates/component/style.scss",
+      "test": "templates/component/test.js"
+    },
+    "path": "src/components",
+    "withStyle": true,
+    "withTest": true,
+    "withStory": true,
+    "withLazy": false
+  },
+  "page": {
+    "customTemplates": {
+      "test": "templates/page/test.js"
+    },
+    "path": "src/pages",
+    "withStyle": true,
+    "withTest": true,
+    "withStory": false,
+    "withLazy": true
+  }
+}
+```
+
+Notice in the `page.customTemplates` that we only specified the "test" custom template type. That's because all the custom template types are optional. If you don't set the other types, the CLI will default to using the built-in templates that it comes with.
+
+### e.g. of a custom component template file
+
+`templates/component/component.js`
+
+```jsx
+import React from 'react';
+import styles from './TemplateName.module.css';
+
+const TemplateName = () => (
+  <div className={styles.TemplateName} data-testid="TemplateName">
+    <h1>TemplateName of component</h1>
+  </div>
+);
+
+export default TemplateName;
+```
+
+**Important** Make sure to use the `TemplateName` keyword in your templates. The CLI will use this keyword to replace it with your component name.
+
+### e.g. of a custom test template file
+
+`templates/component/test.js`
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TemplateName from './TemplateName';
+
+it('It should mount', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<TemplateName />, div);
+  ReactDOM.unmountComponentAtNode(div);
+});
 ```
 
 ## Usage
