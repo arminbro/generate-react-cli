@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/arminbro/generate-react-cli/compare/v4.1.1...v4.2.0) (2020-05-02)
+
+### Features
+
+- 🎸 Allow custom file templates ([6104241](https://github.com/arminbro/generate-react-cli/commit/610424136989b1f18de1e6fa9a04084114cde64b)), closes [#12](https://github.com/arminbro/generate-react-cli/issues/12)
+
 ### [4.1.1](https://github.com/arminbro/generate-react-cli/compare/v4.1.0...v4.1.1) (2020-04-23)
 
 ## [4.1.0](https://github.com/arminbro/generate-react-cli/compare/v4.0.2...v4.1.0) (2020-04-20)
