@@ -119,9 +119,9 @@ Notice in the `page.customTemplates` that we only specified the "test" custom te
 
 ### e.g. of a custom component template file
 
-_templates/component/component.js_
-
 ```jsx
+// templates/component/component.js
+
 import React from 'react';
 import styles from './TemplateName.module.css';
 
@@ -138,9 +138,9 @@ export default TemplateName;
 
 ### e.g. of a custom test template file
 
-_templates/component/test.js_
-
 ```jsx
+// templates/component/test.js
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TemplateName from './TemplateName';
