@@ -80,7 +80,7 @@ Both the `component` and `page` properties (within the **generate-react-cli.json
 },
 ```
 
-The keys represent the type of templates, and the values are the paths that point to where your custom template lives in your project/system.
+The keys represent the type of template, and the values are the paths that point to where your custom template lives in your project/system.
 
 ### Example of using the `customTemplates` property in the generate-react-cli.json config file:
 
