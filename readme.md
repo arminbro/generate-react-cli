@@ -73,16 +73,16 @@ Both the `component` and `page` properties (within the **generate-react-cli.json
 The keys represent the type of templates, and the values are the paths that point to where your custom template lives in your project/system.
 
 ```json
-  "customTemplates": {
-    "component": "templates/component.js",
-    "lazy":  "templates/lazy.js",
-    "story":  "templates/story.js",
-    "style": "templates/style.scss",
-    "test":  "templates/test.js"
-  },
+"customTemplates": {
+  "component": "templates/component.js",
+  "lazy":  "templates/lazy.js",
+  "story":  "templates/story.js",
+  "style": "templates/style.scss",
+  "test":  "templates/test.js"
+},
 ```
 
-### e.g. of using the `customTemplates` property in the **generate-react-cli.json** config file
+### e.g. of using the `customTemplates` property in the generate-react-cli.json config file
 
 ```json
 {
@@ -134,7 +134,7 @@ const TemplateName = () => (
 export default TemplateName;
 ```
 
-**Important** Make sure to use the `TemplateName` keyword in your templates. The CLI will use this keyword to replace it with your component name.
+**Important** - Make sure to use the `TemplateName` keyword in your templates. The CLI will use this keyword to replace it with your component name.
 
 ### e.g. of a custom test template file
 
