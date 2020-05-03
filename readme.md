@@ -222,7 +222,7 @@ Otherwise, if you don't pass any options, it will just use the default values fr
   <tr>
     <td width="20%"><b>--withStory</b></td>
     <td width="60%">
-      Creates a corresponding [storybook](https://storybook.js.org) story file with this component.      
+      Creates a corresponding (<a href="https://storybook.js.org">storybook</a>) story file with this component.      
     </td>
     <td width="20%">Boolean</td>
   </tr>
@@ -304,7 +304,7 @@ Otherwise, if you don't pass any options, it will just use the default values fr
   <tr>
     <td width="20%"><b>--withStory</b></td>
     <td width="60%">
-      Creates a corresponding [storybook](https://storybook.js.org) story file with this page.
+      Creates a corresponding (<a href="https://storybook.js.org">storybook</a>) story file with this page.
     </td>
     <td width="20%">Boolean</td>
   </tr>
