@@ -13,6 +13,7 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 **_A few notes:_**
 
+- Now supports custom component commands ([read more](#custom-component-commands)). 🎉
 - Now supports custom templates ([read more](#custom-templates)). 🎉
 - Supports React [TypeScript](https://www.typescriptlang.org/) projects.
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
