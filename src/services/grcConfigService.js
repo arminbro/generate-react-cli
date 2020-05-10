@@ -67,41 +67,9 @@ const componentLevelQuestions = [
   },
 ];
 
-// --- page level questions.
-
-const pageLevelQuestions = [
-  {
-    type: 'input',
-    name: 'page.path',
-    message: 'Set the default path directory to where your pages will be generated in?',
-    default: () => 'src/pages',
-  },
-  {
-    type: 'confirm',
-    name: 'page.withStyle',
-    message: 'Would you like to create a corresponding stylesheet file with each page you generate?',
-  },
-  {
-    type: 'confirm',
-    name: 'page.withTest',
-    message: 'Would you like to create a corresponding test file with each page you generate?',
-  },
-  {
-    type: 'confirm',
-    name: 'page.withStory',
-    message: 'Would you like to create a corresponding story with each page you generate?',
-  },
-  {
-    type: 'confirm',
-    name: 'page.withLazy',
-    message:
-      'Would you like to create a corresponding lazy file (a file that lazy-loads your page out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each page you generate?',
-  },
-];
-
 // --- merge all questions together.
 
-const grcConfigQuestions = [...projectLevelQuestions, ...componentLevelQuestions, ...pageLevelQuestions];
+const grcConfigQuestions = [...projectLevelQuestions, ...componentLevelQuestions];
 
 async function createCLIConfigFile() {
   try {

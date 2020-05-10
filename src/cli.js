@@ -5,44 +5,42 @@ const { getCLIConfigFile } = require('./services/grcConfigService');
 
 module.exports = async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
-  const { component, page } = cliConfigFile;
 
   program.version(pkg.version);
 
-  // --- Generate component command
+  // --- Generate component commands
 
-  program
-    .command('component <name>')
-    .alias('c')
+  Object.keys(cliConfigFile).forEach((configKey) => {
+    const configValue = cliConfigFile[configKey];
 
-    .option('-p, --path <path>', 'The path where the component will get genereted in.', component.path)
-    .option('--withStyle <withStyle>', 'With corresponding stylesheet file.', component.withStyle)
-    .option('--withTest <withTest>', 'With corresponding test file.', component.withTest)
-    .option('--withStory <withStory>', 'With corresponding story file.', component.withStory)
-    .option('--withLazy <withLazy>', 'With corresponding lazy file.', component.withLazy)
+    /**
+     *  Check if each configValue is a component config
+     *  and if it is, register it as a component command.
+     */
 
-    .action((componentName, cmd) => generateComponent(cmd, cliConfigFile, componentName));
+    if (
+      typeof configValue === 'object' &&
+      configValue.path !== undefined &&
+      configValue.withLazy !== undefined &&
+      configValue.withStory !== undefined &&
+      configValue.withStyle !== undefined &&
+      configValue.withTest !== undefined
+    ) {
+      const commandName = configKey;
+      const commandOptions = configValue;
 
-  // --- Generate page command
+      program
+        .command(`${commandName} <name>`)
 
-  /**
-   * We can continue using the generateComponent method to generate pages.
-   * Afterall a page is a component at the end of the day.
-   *
-   * Eventually, if a page needs additional logic, we can create a new generatePage method.
-   */
+        .option('-p, --path <path>', 'The path where the component will get genereted in.', commandOptions.path)
+        .option('--withStyle <withStyle>', 'With corresponding stylesheet file.', commandOptions.withStyle)
+        .option('--withTest <withTest>', 'With corresponding test file.', commandOptions.withTest)
+        .option('--withStory <withStory>', 'With corresponding story file.', commandOptions.withStory)
+        .option('--withLazy <withLazy>', 'With corresponding lazy file.', commandOptions.withLazy)
 
-  program
-    .command('page <name>')
-    .alias('p')
-
-    .option('-p, --path <path>', 'The path where the page will get genereted in.', page.path)
-    .option('--withStyle <withStyle>', 'With corresponding stylesheet file.', page.withStyle)
-    .option('--withTest <withTest>', 'With corresponding test file.', page.withTest)
-    .option('--withStory <withStory>', 'With corresponding story file.', page.withStory)
-    .option('--withLazy <withLazy>', 'With corresponding lazy file.', page.withLazy)
-
-    .action((pageName, cmd) => generateComponent(cmd, cliConfigFile, pageName));
+        .action((componentName, cmd) => generateComponent(cmd, cliConfigFile, componentName));
+    }
+  });
 
   program.parse(args);
 };
