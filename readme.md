@@ -249,7 +249,7 @@ Otherwise, if you don't pass any options, it will just use the default values fr
   <tr>
     <td width="20%"><b>--path</b></td>
     <td width="60%">
-      Value of the path where you want the component to be generated in (e.g. <b>src/pages</b>).  
+      Value of the path where you want the component to be generated in (e.g. <b>src/components</b>).  
     </td>
     <td width="20%">String</td>
   </tr>
