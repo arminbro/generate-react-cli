@@ -21,14 +21,14 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 ## You can install it globally and run it using npm:
 
 ```
- npm i -g generate-react-cli
- generate-react component Box
+  npm i -g generate-react-cli
+  generate-react component Box
 ```
 
 ## Or you can just run it using npx like this:
 
 ```
- npx generate-react-cli component Box
+  npx generate-react-cli component Box
 ```
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher)_
@@ -98,14 +98,20 @@ Make sure to include the required properties listed below when creating the cust
 The required properties are as follows:
 
 - path
+- withLazy
+- withStory
 - withStyle
 - withTest
-- withStory
-- withLazy
 
 Once you have done that, you should be able to run the custom component commands like this:
-`npx generate-react-cli page HomePage`
-`npx generate-react-cli layout BoxLayout`
+
+```
+  npx generate-react-cli page HomePage
+```
+
+```
+  npx generate-react-cli layout BoxLayout
+```
 
 ## Custom Templates
 
@@ -202,7 +208,7 @@ it('It should mount', () => {
 ### Generate Component
 
 ```
- npx generate-react-cli component Box
+  npx generate-react-cli component Box
 ```
 
 This command will create a folder with your component name within your default (e.g. **src/components**) directory, and its corresponding files.
@@ -223,13 +229,13 @@ This command will create a folder with your component name within your default (
 You can also override some of the generate-react-cli default component config options using one-off commands. So for example, let's say you have set **withTest** to be `true` in the component config property. You can override it like this:
 
 ```
- npx generate-react-cli component Box --withTest=false
+  npx generate-react-cli component Box --withTest=false
 ```
 
 Or vice versa, if you have set **withTest** to be `false` you can do this:
 
 ```
- npx generate-react-cli component Box --withTest=true
+  npx generate-react-cli component Box --withTest=true
 ```
 
 Otherwise, if you don't pass any options, it will just use the default values from the generate-react-cli config file you have set.
