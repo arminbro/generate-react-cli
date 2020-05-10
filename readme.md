@@ -75,7 +75,7 @@ You can do so by extending the **generate-react-cli.json** config file like this
     "withStory": false,
     "withStyle": true,
     "withTest": true
-  }
+  },
   "page": {
     "path": "src/pages",
     "withLazy": true,
@@ -83,7 +83,7 @@ You can do so by extending the **generate-react-cli.json** config file like this
     "withStyle": true,
     "withTest": true
   },
-    "layout": {
+  "layout": {
     "path": "src/layout",
     "withLazy": false,
     "withStory": false,
