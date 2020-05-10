@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/arminbro/generate-react-cli/compare/v4.2.2...v4.3.0) (2020-05-10)
+
+### Features
+
+- 🎸 Make 'GRC' more configurable (multi component commands) ([59f1622](https://github.com/arminbro/generate-react-cli/commit/59f1622dc6c6ca5a2b42d870b02c265694bc10eb)), closes [#14](https://github.com/arminbro/generate-react-cli/issues/14)
+
 ### [4.2.2](https://github.com/arminbro/generate-react-cli/compare/v4.2.1...v4.2.2) (2020-05-03)
 
 ### [4.2.1](https://github.com/arminbro/generate-react-cli/compare/v4.2.0...v4.2.1) (2020-05-03)
