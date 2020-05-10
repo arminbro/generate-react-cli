@@ -98,11 +98,52 @@ Make sure to include the required properties listed below when creating the cust
 
 The required properties are as follows:
 
-- path
-- withLazy
-- withStory
-- withStyle
-- withTest
+<table>
+  <tr align="left">
+    <th>Options</th>
+    <th>Description</th>
+    <th>Value Type</th>
+  </tr>
+  <tr>
+    <td width="20%"><b>--path</b></td>
+    <td width="60%">
+      Value of the path where you want the component to be generated in (e.g. <b>src/components</b>).  
+    </td>
+    <td width="20%">String</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withLazy</b></td>
+    <td width="60%">
+      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withStory</b></td>
+    <td width="60%">
+      Creates a corresponding (<a href="https://storybook.js.org">storybook</a>) story file with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withStyle</b></td>
+    <td width="60%">
+      Creates a corresponding stylesheet file with this component.    
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withTest</b></td>
+    <td width="60%">
+      Creates a corresponding test file with this component.      
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+</table>
 
 Once you have done that, you should be able to run the custom component commands like this:
 
@@ -113,6 +154,8 @@ Once you have done that, you should be able to run the custom component commands
 ```
   npx generate-react-cli layout BoxLayout
 ```
+
+You can also pass the same [options](#options) to your custom component commands as you would for the default **component** command that comes with GRC.
 
 ## Custom Templates
 
@@ -256,17 +299,9 @@ Otherwise, if you don't pass any options, it will just use the default values fr
   </tr>
 
   <tr>
-    <td width="20%"><b>--withStyle</b></td>
+    <td width="20%"><b>--withLazy</b></td>
     <td width="60%">
-      Creates a corresponding stylesheet file with this component.    
-    </td>
-    <td width="20%">Boolean</td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--withTest</b></td>
-    <td width="60%">
-      Creates a corresponding test file with this component.      
+      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.      
     </td>
     <td width="20%">Boolean</td>
   </tr>
@@ -280,9 +315,17 @@ Otherwise, if you don't pass any options, it will just use the default values fr
   </tr>
 
   <tr>
-    <td width="20%"><b>--withLazy</b></td>
+    <td width="20%"><b>--withStyle</b></td>
     <td width="60%">
-      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.      
+      Creates a corresponding stylesheet file with this component.    
+    </td>
+    <td width="20%">Boolean</td>
+  </tr>
+
+  <tr>
+    <td width="20%"><b>--withTest</b></td>
+    <td width="60%">
+      Creates a corresponding test file with this component.      
     </td>
     <td width="20%">Boolean</td>
   </tr>
