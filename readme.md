@@ -58,9 +58,9 @@ When you run generate-react-cli within your project the first time, it will ask 
 
 ### Custom component commands:
 
-By default, GRC comes with the one **component** command out of the box.
+By default, GRC comes with one **component** command out of the box.
 
-What if you wanted to generate components with your own custom commands like for example **page** or **layout** that have their own set of component config rules?
+What if you wanted to generate components with your own custom commands, like for example **page** or **layout** that have their own set of component config rules?
 
 You can do so by extending the **generate-react-cli.json** config file like this.
 
