@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.3](https://github.com/arminbro/generate-react-cli/compare/v4.3.2...v4.3.3) (2020-05-10)
+
 ### [4.3.2](https://github.com/arminbro/generate-react-cli/compare/v4.3.1...v4.3.2) (2020-05-10)
 
 ### [4.3.1](https://github.com/arminbro/generate-react-cli/compare/v4.3.0...v4.3.1) (2020-05-10)
