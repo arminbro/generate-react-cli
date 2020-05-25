@@ -17,16 +17,9 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 - Now supports custom component templates ([read more](#custom-component-templates)). 🎉
 - Supports React [TypeScript](https://www.typescriptlang.org/) projects.
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
-- It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the component name. We feel this approach provides a better developer experience.
+- It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the feature name. We feel this approach provides a better developer experience.
 
-## You can install it globally and run it using npm:
-
-```
-  npm i -g generate-react-cli
-  generate-react component Box
-```
-
-## Or you can just run it using npx like this:
+## you can run it using npx like this:
 
 ```
   npx generate-react-cli component Box
@@ -36,7 +29,7 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 
 ## Config File
 
-When you run generate-react-cli within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
+When you run GRC within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
 
 ### Example of the **generate-react-cli.json** config file:
 
@@ -58,7 +51,7 @@ When you run generate-react-cli within your project the first time, it will ask 
 }
 ```
 
-## Generate Component
+## Generate Components
 
 ```
   npx generate-react-cli component Box
@@ -79,7 +72,7 @@ This command will create a folder with your component name within your default (
 
 ### Options
 
-You can also override some of the generate-react-cli default component config options using one-off commands. So for example, let's say you have set **withTest** to be `true` in the component config property. You can override it like this:
+You can also override some of the GRC component config rules using one-off commands. So for example, let's say you have set **withTest** to be `true` in the `component.default` property. You can override it like this:
 
 ```
   npx generate-react-cli component Box --withTest=false
@@ -91,7 +84,7 @@ Or vice versa, if you have set **withTest** to be `false` you can do this:
   npx generate-react-cli component Box --withTest=true
 ```
 
-Otherwise, if you don't pass any options, it will just use the default values that you have set in the generate-react-cli config file under `component.default`.
+Otherwise, if you don't pass any options, it will just use the default values that you have set in the GRC config file under `component.default`.
 
 <table>
   <tr align="left">
@@ -157,9 +150,9 @@ Otherwise, if you don't pass any options, it will just use the default values th
 
 ### Custom component types:
 
-By default, GRC will use `component.default` configuration rules when running the component command out of the box.
+By default, GRC will use the `component.default` configuration rules when running the component command out of the box.
 
-What if you wanted to generate components that have their own set of config rules (e.g., **page** or **layout**)?
+What if you wanted to generate other types of components that have their own set of config rules (e.g., **page** or **layout**)?
 
 You can do so by extending the **generate-react-cli.json** config file like this.
 
@@ -195,7 +188,7 @@ You can do so by extending the **generate-react-cli.json** config file like this
 }
 ```
 
-You should now be able to run your custom component types like this:
+You can now generate a component with your custom component types like this:
 
 ```
   npx generate-react-cli component HomePage --type=page
@@ -205,11 +198,11 @@ You should now be able to run your custom component types like this:
   npx generate-react-cli component BoxLayout --type=layout
 ```
 
-You can also pass the same [options](#options) to your custom component types as you would for the default component.
+You can also pass the same [options](#options) to your custom component types as you would for the default component type.
 
 ### Custom component Templates
 
-You can also create your own custom templates that Generate React CLI can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components that you want to generate.
+You can also create your own custom templates that GRC can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components that you want to generate.
 
 There is an optional `customTemplates` object that you can pass to the `component.default` or any of your custom component types within your **generate-react-cli.json** config file.
 
@@ -262,7 +255,7 @@ The keys represent the type of template, and the values are the paths that point
 }
 ```
 
-Notice in the `page.customTemplates` that we only specified the "test" custom template type. That's because all the custom template types are optional. If you don't set the other types, the CLI will default to using the built-in templates it comes with.
+Notice in the `page.customTemplates` that we only specified the `test` custom template type. That's because all the custom template types are optional. If you don't set the other types, GRC will default to using the built-in templates it comes with.
 
 #### Example of a custom component template file:
 
@@ -281,7 +274,7 @@ const TemplateName = () => (
 export default TemplateName;
 ```
 
-**Important** - Make sure to use the `TemplateName` keyword in your templates. The CLI will use this keyword to replace it with your component name.
+**Important** - Make sure to use the `TemplateName` keyword in your templates. GRC will use this keyword to replace it with your component name.
 
 #### Example of a custom test template file:
 
