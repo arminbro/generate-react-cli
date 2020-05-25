@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/arminbro/generate-react-cli/compare/v4.3.3...v5.0.0) (2020-05-25)
+
+### ⚠ BREAKING CHANGES
+
+- 🧨 This new "type" option will replace the custom component commands that
+  you run. Meaning you now can pass the custom component as type option
+  (e.g npx generate-react-cli component HomePage --type=page ) that you
+  have configured in your GRC config file.
+
+### Features
+
+- 🎸 Add a new "type" option to the component command ([1a5ce6a](https://github.com/arminbro/generate-react-cli/commit/1a5ce6a3c9d8d19937b201ed8fb1bc5ec6c4fae9))
+
 ### [4.3.3](https://github.com/arminbro/generate-react-cli/compare/v4.3.2...v4.3.3) (2020-05-10)
 
 ### [4.3.2](https://github.com/arminbro/generate-react-cli/compare/v4.3.1...v4.3.2) (2020-05-10)
