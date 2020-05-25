@@ -25,8 +25,8 @@ function loadCustomTemplate(templatePath) {
     console.error(
       chalk.red(
         `
-        ERROR: The custom template path of "${templatePath}" does not exist. 
-        Please make sure you're pointing to the right custom template path in your generate-react-cli.json config file.
+ERROR: The custom template path of "${templatePath}" does not exist. 
+Please make sure you're pointing to the right custom template path in your generate-react-cli.json config file.
         `
       )
     );
@@ -37,7 +37,7 @@ function loadCustomTemplate(templatePath) {
 
 function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
+  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
@@ -75,7 +75,7 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
     } else {
       // --- If no stylesheet, remove className attribute and style import from jsTemplate
 
-      template = template.replace(`className={styles.TemplateName} `, '');
+      template = template.replace(` className={styles.TemplateName}`, '');
       template = template.replace(`import styles from './TemplateName.module.css';`, '');
     }
   }
@@ -89,7 +89,7 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
 }
 
 function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
-  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
+  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
   const { cssPreprocessor, usesCssModule } = cliConfigFile;
   const module = usesCssModule ? '.module' : '';
   const cssPath = `${componentName}${module}.${cssPreprocessor}`;
@@ -116,7 +116,7 @@ function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componen
 }
 
 function getComponentTestTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
-  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
+  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
   const { testLibrary, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
@@ -147,7 +147,7 @@ function getComponentTestTemplate({ cliConfigFile, cmd, componentName, component
 
 function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
+  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
@@ -173,7 +173,7 @@ function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componen
 
 function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile[cmd['_name']]; // get config property by command name
+  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 

@@ -4,8 +4,6 @@ const { prompt } = require('inquirer');
 const { merge } = require('lodash');
 const { accessSync, constants, outputFileSync, readFileSync } = require('fs-extra');
 
-// private
-
 // Generate React Config file questions.
 
 // --- project level questions.
@@ -40,28 +38,28 @@ const projectLevelQuestions = [
 const componentLevelQuestions = [
   {
     type: 'input',
-    name: 'component.path',
+    name: 'component.default.path',
     message: 'Set the default path directory to where your components will be generated in?',
     default: () => 'src/components',
   },
   {
     type: 'confirm',
-    name: 'component.withStyle',
+    name: 'component.default.withStyle',
     message: 'Would you like to create a corresponding stylesheet file with each component you generate?',
   },
   {
     type: 'confirm',
-    name: 'component.withTest',
+    name: 'component.default.withTest',
     message: 'Would you like to create a corresponding test file with each component you generate?',
   },
   {
     type: 'confirm',
-    name: 'component.withStory',
+    name: 'component.default.withStory',
     message: 'Would you like to create a corresponding story with each component you generate?',
   },
   {
     type: 'confirm',
-    name: 'component.withLazy',
+    name: 'component.default.withLazy',
     message:
       'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each component you generate?',
   },
@@ -164,49 +162,6 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
   }
 }
 
-function cleanOldPropsFromCLIConfigFile(currentConfigFile) {
-  // new updated config file instance
-
-  const updatedConfigFile = { ...currentConfigFile };
-
-  // new component config instance
-
-  const component = {
-    path: currentConfigFile.component.path,
-    withLazy: currentConfigFile.component.withLazy,
-    withStory: currentConfigFile.component.withStory,
-  };
-
-  // get old component css property values and reassign them to new properties
-
-  if (currentConfigFile.component.css) {
-    component.withStyle = currentConfigFile.component.css.withStyle;
-    updatedConfigFile.usesCssModule = currentConfigFile.component.css.module;
-    updatedConfigFile.cssPreprocessor = currentConfigFile.component.css.preprocessor;
-  }
-
-  // get old component test property values and reassign them to new properties
-
-  if (currentConfigFile.component.test) {
-    component.withTest = currentConfigFile.component.test.withTest;
-    updatedConfigFile.testLibrary = currentConfigFile.component.test.library;
-  }
-
-  // reassign new component config instance to updatedConfigFile
-
-  updatedConfigFile.component = component;
-
-  // update generate-react-cli.json with the updatedConfigFile
-
-  outputFileSync('./generate-react-cli.json', JSON.stringify(updatedConfigFile, null, 2));
-
-  // return updatedConfigFile
-
-  return updatedConfigFile;
-}
-
-// public
-
 async function getCLIConfigFile() {
   // --- Make sure the cli commands are running from the root level of the project
 
@@ -217,13 +172,7 @@ async function getCLIConfigFile() {
 
     try {
       accessSync('./generate-react-cli.json', constants.R_OK);
-      let currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
-
-      // --- Check to see if there are old properties in the component object and clean them up if there are
-
-      if (currentConfigFile.component.css || currentConfigFile.component.test) {
-        currentConfigFile = cleanOldPropsFromCLIConfigFile(currentConfigFile);
-      }
+      const currentConfigFile = JSON.parse(readFileSync('./generate-react-cli.json'));
 
       /**
        *  Check to see if there's a difference between grcConfigQuestions and the currentConfigFile.
@@ -253,5 +202,6 @@ async function getCLIConfigFile() {
 }
 
 module.exports = {
+  componentLevelQuestions,
   getCLIConfigFile,
 };

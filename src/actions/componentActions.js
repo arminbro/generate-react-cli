@@ -7,7 +7,6 @@ const {
 
 function generateComponent(cmd, cliConfigFile, componentName) {
   const componentTemplates = [];
-  const componentTemplateTypeList = Object.values(componentTemplateTypes);
 
   // --- Make sure component name is valid.
 
@@ -21,11 +20,9 @@ function generateComponent(cmd, cliConfigFile, componentName) {
     return;
   }
 
-  // --- Iterate through componentTemplateTypeList and build a list of componentTemplates.
+  // --- Iterate through componentTemplateTypes and build a list of componentTemplates.
 
-  for (let i = 0; i < componentTemplateTypeList.length; i += 1) {
-    const componentTemplateType = componentTemplateTypeList[i];
-
+  Object.values(componentTemplateTypes).forEach((componentTemplateType) => {
     // --- Only get template if component option (withStyle, withTest, etc..) is true, or if template type is "component"
 
     if (
@@ -38,7 +35,7 @@ function generateComponent(cmd, cliConfigFile, componentName) {
         componentTemplates.push(template);
       }
     }
-  }
+  });
 
   generateComponentTemplates(componentTemplates);
 }
