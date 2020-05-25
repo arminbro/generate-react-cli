@@ -37,7 +37,7 @@ Please make sure you're pointing to the right custom template path in your gener
 
 function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
@@ -89,7 +89,7 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
 }
 
 function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
-  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   const { cssPreprocessor, usesCssModule } = cliConfigFile;
   const module = usesCssModule ? '.module' : '';
   const cssPath = `${componentName}${module}.${cssPreprocessor}`;
@@ -116,7 +116,7 @@ function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componen
 }
 
 function getComponentTestTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
-  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   const { testLibrary, usesTypeScript } = cliConfigFile;
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
@@ -147,7 +147,7 @@ function getComponentTestTemplate({ cliConfigFile, cmd, componentName, component
 
 function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
@@ -173,7 +173,7 @@ function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componen
 
 function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.component[cmd.type] || cliConfigFile.component.default; // get customTemplates from the component type, otherwise use default
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   const fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
