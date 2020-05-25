@@ -19,13 +19,13 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
 - It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the feature name. We feel this approach provides a better developer experience.
 
-## you can run it using npx like this:
+## You can run it using npx like this:
 
 ```
   npx generate-react-cli component Box
 ```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+ and higher)_
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+)_
 
 ## Config File
 
@@ -59,7 +59,7 @@ When you run GRC within your project the first time, it will ask you a series of
 
 This command will create a folder with your component name within your default (e.g. **src/components**) directory, and its corresponding files.
 
-### **Example of the component files structure**
+### Example of the component files structure:
 
 ```
 |-- /src
@@ -188,7 +188,7 @@ You can do so by extending the **generate-react-cli.json** config file like this
 }
 ```
 
-You can now generate a component with your custom component types like this:
+Now you can generate a component with your custom component types like this:
 
 ```
   npx generate-react-cli component HomePage --type=page
@@ -200,7 +200,7 @@ You can now generate a component with your custom component types like this:
 
 You can also pass the same [options](#options) to your custom component types as you would for the default component type.
 
-### Custom component Templates
+### Custom component templates
 
 You can also create your own custom templates that GRC can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components that you want to generate.
 
@@ -220,7 +220,7 @@ There is an optional `customTemplates` object that you can pass to the `componen
 
 The keys represent the type of template, and the values are the paths that point to where your custom template lives in your project/system.
 
-### Example of using the optional `customTemplates` object within your generate-react-cli.json config file:
+### Example of using the `customTemplates` object within your generate-react-cli.json config file:
 
 ```json
 {
