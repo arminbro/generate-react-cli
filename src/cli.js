@@ -13,7 +13,7 @@ module.exports = async function cli(args) {
   // --- Generate component
 
   if (isComponentCmd) {
-    const hasComponentTypeOption = args.find((arg) => arg.includes('type'));
+    const hasComponentTypeOption = args.find((arg) => arg.includes('--type'));
     let component = null;
 
     if (hasComponentTypeOption) {

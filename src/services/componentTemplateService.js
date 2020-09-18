@@ -1,7 +1,9 @@
 const chalk = require('chalk');
+const path = require('path');
 const replace = require('replace');
 const { camelCase } = require('lodash');
 const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
+
 const componentJsTemplate = require('../templates/component/componentJsTemplate');
 const componentTsTemplate = require('../templates/component/componentTsTemplate');
 const componentCssTemplate = require('../templates/component/componentCssTemplate');
@@ -19,8 +21,9 @@ function loadCustomTemplate(templatePath) {
 
   try {
     const template = readFileSync(templatePath, 'utf8');
+    const templateFileExtension = path.extname(templatePath).split('.')[1];
 
-    return template;
+    return { template, templateFileExtension };
   } catch (e) {
     console.error(
       chalk.red(
@@ -38,7 +41,7 @@ Please make sure you're pointing to the right custom template path in your gener
 function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
-  const fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
   // Check for a custom component template.
@@ -46,7 +49,10 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
   if (customTemplates && customTemplates.component) {
     // --- Load and use the custom component template
 
-    template = loadCustomTemplate(customTemplates.component);
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.component);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
   } else {
     // --- Else use GRC built-in component template
 
@@ -100,7 +106,9 @@ function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componen
   if (customTemplates && customTemplates.style) {
     // --- Load and use the custom style template
 
-    template = loadCustomTemplate(customTemplates.style);
+    const { template: loadedTemplate } = loadCustomTemplate(customTemplates.style);
+
+    template = loadedTemplate;
   } else {
     // --- Else use GRC built-in style template
 
@@ -118,7 +126,7 @@ function getComponentStyleTemplate({ cliConfigFile, cmd, componentName, componen
 function getComponentTestTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { customTemplates } = cliConfigFile.component[cmd.type];
   const { testLibrary, usesTypeScript } = cliConfigFile;
-  const fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
   // Check for a custom test template.
@@ -126,7 +134,10 @@ function getComponentTestTemplate({ cliConfigFile, cmd, componentName, component
   if (customTemplates && customTemplates.test) {
     // --- Load and use the custom test template
 
-    template = loadCustomTemplate(customTemplates.test);
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.test);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
   } else if (testLibrary === 'Enzyme') {
     // --- Else use GRC built-in test template based on test library type
 
@@ -148,7 +159,7 @@ function getComponentTestTemplate({ cliConfigFile, cmd, componentName, component
 function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
-  const fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
   // Check for a custom story template.
@@ -156,7 +167,10 @@ function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componen
   if (customTemplates && customTemplates.story) {
     // --- Load and use the custom story template
 
-    template = loadCustomTemplate(customTemplates.story);
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.story);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
   } else {
     // --- Else use GRC built-in story template
 
@@ -174,7 +188,7 @@ function getComponentStoryTemplate({ cliConfigFile, cmd, componentName, componen
 function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
-  const fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
   // Check for a custom lazy template.
@@ -182,7 +196,10 @@ function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, component
   if (customTemplates && customTemplates.lazy) {
     // --- Load and use the custom lazy template
 
-    template = loadCustomTemplate(customTemplates.lazy);
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.lazy);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
   } else {
     // --- Else use GRC built-in lazy template
 
