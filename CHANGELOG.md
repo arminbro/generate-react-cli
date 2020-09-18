@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/arminbro/generate-react-cli/compare/v5.0.1...v5.1.0) (2020-09-18)
+
+### Features
+
+- 🎸 Support for custom extension via custom templates ([7f989a6](https://github.com/arminbro/generate-react-cli/commit/7f989a61702f8ff0e612845bafed79146e6a01ef)), closes [#18](https://github.com/arminbro/generate-react-cli/issues/18) [#19](https://github.com/arminbro/generate-react-cli/issues/19) [#25](https://github.com/arminbro/generate-react-cli/issues/25)
+
 ### [5.0.1](https://github.com/arminbro/generate-react-cli/compare/v5.0.0...v5.0.1) (2020-06-24)
 
 ## [5.0.0](https://github.com/arminbro/generate-react-cli/compare/v4.3.3...v5.0.0) (2020-05-25)
