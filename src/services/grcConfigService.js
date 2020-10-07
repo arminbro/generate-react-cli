@@ -63,6 +63,11 @@ const componentLevelQuestions = [
     message:
       'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each component you generate?',
   },
+  {
+    type: 'confirm',
+    name: 'component.default.withResource',
+    message: 'Would you like to create a corresponding resource file with each component you generate?',
+  },
 ];
 
 // --- merge all questions together.

@@ -73,6 +73,7 @@ Otherwise you won't be able to use your "${chalk.bold(componentType)}" component
       .option('--withTest <withTest>', 'With corresponding test file.', component.withTest)
       .option('--withStory <withStory>', 'With corresponding story file.', component.withStory)
       .option('--withLazy <withLazy>', 'With corresponding lazy file.', component.withLazy)
+      .option('--withResource <withResource>', 'With corresponding resource file.', component.withResource)
       .option(
         '--type <type>',
         'You can pass a component type that you have configured in your GRC config file.',

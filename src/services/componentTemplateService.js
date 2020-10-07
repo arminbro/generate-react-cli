@@ -7,6 +7,7 @@ const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
 const componentJsTemplate = require('../templates/component/componentJsTemplate');
 const componentTsTemplate = require('../templates/component/componentTsTemplate');
 const componentCssTemplate = require('../templates/component/componentCssTemplate');
+const componentResourceTemplate = require('../templates/component/componentResourceTemplate');
 const componentLazyTemplate = require('../templates/component/componentLazyTemplate');
 const componentTsLazyTemplate = require('../templates/component/componentTsLazyTemplate');
 const componentStoryTemplate = require('../templates/component/componentStoryTemplate');
@@ -214,6 +215,32 @@ function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, component
   };
 }
 
+function getComponentResourceTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
+  const { customTemplates } = cliConfigFile.component[cmd.type];
+
+  let fileExtension = 'json';
+  let template = null;
+
+  if (customTemplates && customTemplates.resource) {
+    // --- Load and use the custom resource template
+
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.resource);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
+  } else {
+    // --- Else use GRC built-in Resource template
+
+    template = componentResourceTemplate;
+  }
+
+  return {
+    template,
+    templateType: `Resource "${componentName}.resource.${fileExtension}"`,
+    componentPath: `${componentPathDir}/${componentName}.resource.${fileExtension}`,
+    componentName,
+  };
+}
 // public
 
 // --- Template Types
@@ -224,6 +251,7 @@ const componentTemplateTypes = {
   STORY: 'withStory',
   LAZY: 'withLazy',
   COMPONENT: 'component',
+  RESOURCE: 'withResource',
 };
 
 // --- Template Map
@@ -234,6 +262,7 @@ const templateMap = {
   [componentTemplateTypes.STORY]: getComponentStoryTemplate,
   [componentTemplateTypes.LAZY]: getComponentLazyTemplate,
   [componentTemplateTypes.COMPONENT]: getComponentScriptTemplate,
+  [componentTemplateTypes.RESOURCE]: getComponentResourceTemplate,
 };
 
 function generateComponentTemplates(componentTemplates) {
