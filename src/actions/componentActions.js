@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const { upperFirst } = require('lodash');
 const {
   componentTemplateTypes,
   generateComponentTemplates,
@@ -29,7 +30,7 @@ function generateComponent(cmd, cliConfigFile, componentName) {
       (cmd[componentTemplateType] && cmd[componentTemplateType].toString() === 'true') ||
       componentTemplateType === componentTemplateTypes.COMPONENT
     ) {
-      const template = getComponentTemplate(cmd, cliConfigFile, componentName, componentTemplateType);
+      const template = getComponentTemplate(cmd, cliConfigFile, upperFirst(componentName), componentTemplateType);
 
       if (template) {
         componentTemplates.push(template);
