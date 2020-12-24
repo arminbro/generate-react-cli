@@ -23,6 +23,9 @@ function generateComponent(cmd, cliConfigFile, componentName) {
 
   // --- Iterate through componentTemplateTypes and build a list of componentTemplates.
 
+  // console.log(componentTemplateTypes);
+  // return;
+
   Object.values(componentTemplateTypes).forEach((componentTemplateType) => {
     // --- Only get template if component option (withStyle, withTest, etc..) is true, or if template type is "component"
 

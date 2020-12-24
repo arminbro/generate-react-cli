@@ -7,6 +7,7 @@ const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
 const componentJsTemplate = require('../templates/component/componentJsTemplate');
 const componentTsTemplate = require('../templates/component/componentTsTemplate');
 const componentCssTemplate = require('../templates/component/componentCssTemplate');
+const componentIndexTemplate = require('../templates/component/componentIndexTemplate');
 const componentLazyTemplate = require('../templates/component/componentLazyTemplate');
 const componentTsLazyTemplate = require('../templates/component/componentTsLazyTemplate');
 const componentStoryTemplate = require('../templates/component/componentStoryTemplate');
@@ -214,6 +215,36 @@ function getComponentLazyTemplate({ cliConfigFile, cmd, componentName, component
   };
 }
 
+function getComponentIndexTemplate({ cliConfigFile, cmd, componentName, componentPathDir }) {
+  const { usesTypeScript } = cliConfigFile;
+  const { customTemplates } = cliConfigFile.component[cmd.type];
+
+  let fileExtension = usesTypeScript ? 'ts' : 'js';
+  let template = null;
+
+  // Check for a custom index template.
+
+  if (customTemplates && customTemplates.lazy) {
+    // --- Load and use the custom lazy template
+
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.lazy);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
+  } else {
+    // --- Else use GRC built-in lazy template
+
+    template = componentIndexTemplate;
+  }
+
+  return {
+    template,
+    templateType: `Index "index.${fileExtension}"`,
+    componentPath: `${componentPathDir}/index.${fileExtension}`,
+    componentName,
+  };
+}
+
 // public
 
 // --- Template Types
@@ -223,6 +254,7 @@ const componentTemplateTypes = {
   TEST: 'withTest',
   STORY: 'withStory',
   LAZY: 'withLazy',
+  INDEX: 'withIndex',
   COMPONENT: 'component',
 };
 
@@ -233,6 +265,7 @@ const templateMap = {
   [componentTemplateTypes.TEST]: getComponentTestTemplate,
   [componentTemplateTypes.STORY]: getComponentStoryTemplate,
   [componentTemplateTypes.LAZY]: getComponentLazyTemplate,
+  [componentTemplateTypes.INDEX]: getComponentIndexTemplate,
   [componentTemplateTypes.COMPONENT]: getComponentScriptTemplate,
 };
 

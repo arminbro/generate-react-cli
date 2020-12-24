@@ -54,6 +54,11 @@ const componentLevelQuestions = [
   },
   {
     type: 'confirm',
+    name: 'component.default.withIndex',
+    message: 'Would you like to create a corresponding index file with each component you generate?',
+  },
+  {
+    type: 'confirm',
     name: 'component.default.withStory',
     message: 'Would you like to create a corresponding story with each component you generate?',
   },
