@@ -13,6 +13,7 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 **_A few notes:_**
 
+- Now supports index file. 🎉
 - Now supports custom component types ([read more](#custom-component-types)). 🎉
 - Now supports custom component templates ([read more](#custom-component-templates)). 🎉
 - Supports React [TypeScript](https://www.typescriptlang.org/) projects.
@@ -42,6 +43,7 @@ When you run GRC within your project the first time, it will ask you a series of
   "component": {
     "default": {
       "path": "src/components",
+      "withIndex": true,
       "withLazy": false,
       "withStory": false,
       "withStyle": true,
@@ -68,6 +70,7 @@ This command will create a folder with your component name within your default (
             |-- Box.js
             |-- Box.css
             |-- Box.test.js
+            |-- index.js
 ```
 
 ### Options
@@ -119,6 +122,15 @@ Otherwise, if you don't pass any options, it will just use the default values th
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withLazy<code></td>
   </tr>
+  
+  <tr>
+    <td width="20%"><b>--withIndex</b></td>
+    <td width="60%">
+      Creates a corresponding index file (a file that exports your component for short imports.      
+    </td>
+    <td width="20%">Boolean</td>
+    <td width="20%"><code>component.default.withIndex<code></td>
+  </tr>
 
   <tr>
     <td width="20%"><b>--withStory</b></td>
@@ -165,6 +177,7 @@ You can do so by extending the **generate-react-cli.json** config file like this
   "component": {
     "default": {
       "path": "src/components",
+      "withIndex": true,
       "withLazy": false,
       "withStory": false,
       "withStyle": true,
