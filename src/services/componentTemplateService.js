@@ -224,10 +224,10 @@ function getComponentIndexTemplate({ cliConfigFile, cmd, componentName, componen
 
   // Check for a custom index template.
 
-  if (customTemplates && customTemplates.lazy) {
+  if (customTemplates && customTemplates.index) {
     // --- Load and use the custom lazy template
 
-    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.lazy);
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.index);
 
     template = loadedTemplate;
     fileExtension = templateFileExtension;
