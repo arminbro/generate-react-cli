@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 - allow generation of multiple components at once ([18cd5f0](https://github.com/arminbro/generate-react-cli/commit/18cd5f070c3007947011699d7186b8e259e27b05))
 
+### Bug Fixes
+
+- 🐛 react components must start with a upper case letter. ([4c3bddd](https://github.com/arminbro/generate-react-cli/commit/4c3bdddf9e93c10905f28d6b4babe77fdbf10c4f))
+
 ## [5.1.0](https://github.com/arminbro/generate-react-cli/compare/v5.0.1...v5.1.0) (2020-09-18)
 
 ### Features
