@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.2.0](https://github.com/arminbro/generate-react-cli/compare/v5.1.0...v5.2.0) (2021-01-05)
+
+### Features
+
+- allow generation of multiple components at once ([18cd5f0](https://github.com/arminbro/generate-react-cli/commit/18cd5f070c3007947011699d7186b8e259e27b05))
+
 ## [5.1.0](https://github.com/arminbro/generate-react-cli/compare/v5.0.1...v5.1.0) (2020-09-18)
 
 ### Features
