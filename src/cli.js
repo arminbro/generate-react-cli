@@ -65,10 +65,10 @@ Otherwise you won't be able to use your "${chalk.bold(componentType)}" component
     }
 
     program
-      .command('component <name>')
+      .command('component [names...]')
       .alias('c')
 
-      .option('-p, --path <path>', 'The path where the component will get genereted in.', component.path)
+      .option('-p, --path <path>', 'The path where the component will get generated in.', component.path)
       .option('--withStyle <withStyle>', 'With corresponding stylesheet file.', component.withStyle)
       .option('--withTest <withTest>', 'With corresponding test file.', component.withTest)
       .option('--withStory <withStory>', 'With corresponding story file.', component.withStory)
@@ -79,7 +79,9 @@ Otherwise you won't be able to use your "${chalk.bold(componentType)}" component
         'default'
       )
 
-      .action((componentName, cmd) => generateComponent(cmd, cliConfigFile, componentName));
+      .action((componentNames, cmd) =>
+        componentNames.forEach((componentName) => generateComponent(cmd, cliConfigFile, componentName))
+      );
   }
 
   program.parse(args);
