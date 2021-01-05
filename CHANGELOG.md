@@ -2,13 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [5.2.1](https://github.com/arminbro/generate-react-cli/compare/v5.2.0...v5.2.1) (2021-01-05)
-
-### Bug Fixes
-
-- changelog ([401dbf8](https://github.com/arminbro/generate-react-cli/commit/401dbf831a12f0610eaea4456e934ea99c5a0992))
-
-## [5.2.0](https://github.com/arminbro/generate-react-cli/compare/v5.1.0...v5.2.0) (2021-01-05)
+## [5.2.1](https://github.com/arminbro/generate-react-cli/compare/v5.1.0...v5.2.0) (2021-01-05)
 
 ### Features
 
