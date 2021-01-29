@@ -122,7 +122,7 @@ function getReducerScriptTemplate({ cmd, cliConfigFile, componentName, component
 
   return {
     template,
-    templateType: `Component "${componentName}.${fileExtension}"`,
+    templateType: `Reducer "${componentName}/reducer.${fileExtension}"`,
     componentPath: `${componentPathDir}/reducer.${fileExtension}`,
     componentName,
   };
@@ -154,7 +154,7 @@ function getActionScriptTemplate({ cmd, cliConfigFile, componentName, componentP
 
   return {
     template,
-    templateType: `Component "${componentName}.${fileExtension}"`,
+    templateType: `Action "${componentName}/action.${fileExtension}"`,
     componentPath: `${componentPathDir}/action.${fileExtension}`,
     componentName,
   };
