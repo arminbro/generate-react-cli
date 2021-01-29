@@ -98,7 +98,7 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
 
 function getReducerTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.reducer[cmd.type];
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   let fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
@@ -130,7 +130,7 @@ function getReducerTemplate({ cmd, cliConfigFile, componentName, componentPathDi
 
 function getActionTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.action[cmd.type];
+  const { customTemplates } = cliConfigFile.component[cmd.type];
   let fileExtension = usesTypeScript ? 'tsx' : 'js';
   let template = null;
 
