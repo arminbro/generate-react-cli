@@ -96,7 +96,7 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
   };
 }
 
-function getReducerScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
+function getReducerTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.reducer[cmd.type];
   let fileExtension = usesTypeScript ? 'tsx' : 'js';
@@ -128,7 +128,7 @@ function getReducerScriptTemplate({ cmd, cliConfigFile, componentName, component
   };
 }
 
-function getActionScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
+function getActionTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.action[cmd.type];
   let fileExtension = usesTypeScript ? 'tsx' : 'js';
@@ -302,8 +302,8 @@ const templateMap = {
   [componentTemplateTypes.STORY]: getComponentStoryTemplate,
   [componentTemplateTypes.LAZY]: getComponentLazyTemplate,
   [componentTemplateTypes.COMPONENT]: getComponentScriptTemplate,
-  [componentTemplateTypes.REDUCER]: getReducerScriptTemplate,
-  [componentTemplateTypes.ACTION]: getActionScriptTemplate,
+  [componentTemplateTypes.REDUCER]: getReducerTemplate,
+  [componentTemplateTypes.ACTION]: getActionTemplate,
 };
 
 function generateComponentTemplates(componentTemplates) {
