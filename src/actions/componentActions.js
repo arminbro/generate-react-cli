@@ -30,7 +30,7 @@ function generateComponent(cmd, cliConfigFile, componentName) {
       (cmd[componentTemplateType] && cmd[componentTemplateType].toString() === 'true') ||
       componentTemplateType === componentTemplateTypes.COMPONENT
     ) {
-      const template = getComponentTemplate(cmd, cliConfigFile, upperFirst(componentName), componentTemplateType);
+      const template = getComponentTemplate(cmd, cliConfigFile, componentName, componentTemplateType);
 
       if (template) {
         componentTemplates.push(template);
