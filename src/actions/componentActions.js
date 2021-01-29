@@ -1,5 +1,4 @@
 const chalk = require('chalk');
-const { upperFirst } = require('lodash');
 const {
   componentTemplateTypes,
   generateComponentTemplates,

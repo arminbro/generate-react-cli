@@ -13,6 +13,8 @@ const componentStoryTemplate = require('../templates/component/componentStoryTem
 const componentTestEnzymeTemplate = require('../templates/component/componentTestEnzymeTemplate');
 const componentTestDefaultTemplate = require('../templates/component/componentTestDefaultTemplate');
 const componentTestTestingLibraryTemplate = require('../templates/component/componentTestTestingLibraryTemplate');
+const reducerTsTemplate = require('../templates/component/reducerTsTemplate');
+const actionTsTemplate = require('../templates/component/actionTsTemplate');
 
 // private
 
@@ -89,7 +91,71 @@ function getComponentScriptTemplate({ cmd, cliConfigFile, componentName, compone
   return {
     template,
     templateType: `Component "${componentName}.${fileExtension}"`,
-    componentPath: `${componentPathDir}/${componentName}.${fileExtension}`,
+    componentPath: `${componentPathDir}/index.${fileExtension}`,
+    componentName,
+  };
+}
+
+function getReducerScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
+  const { usesTypeScript } = cliConfigFile;
+  const { customTemplates } = cliConfigFile.reducer[cmd.type];
+  let fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let template = null;
+
+  // Check for a custom component template.
+
+  if (customTemplates && customTemplates.reducer) {
+    // --- Load and use the custom component template
+
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.reducer);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
+  } else {
+    // --- Else use GRC built-in component template
+
+    template = usesTypeScript ? reducerTsTemplate : componentJsTemplate;
+
+    template = template.replace(` className={styles.TemplateName}`, '');
+    template = template.replace(`import styles from './TemplateName.module.css';`, '');
+  }
+
+  return {
+    template,
+    templateType: `Component "${componentName}.${fileExtension}"`,
+    componentPath: `${componentPathDir}/reducer.${fileExtension}`,
+    componentName,
+  };
+}
+
+function getActionScriptTemplate({ cmd, cliConfigFile, componentName, componentPathDir }) {
+  const { usesTypeScript } = cliConfigFile;
+  const { customTemplates } = cliConfigFile.action[cmd.type];
+  let fileExtension = usesTypeScript ? 'tsx' : 'js';
+  let template = null;
+
+  // Check for a custom action template.
+
+  if (customTemplates && customTemplates.action) {
+    // --- Load and use the custom action template
+
+    const { template: loadedTemplate, templateFileExtension } = loadCustomTemplate(customTemplates.action);
+
+    template = loadedTemplate;
+    fileExtension = templateFileExtension;
+  } else {
+    // --- Else use GRC built-in component template
+
+    template = usesTypeScript ? actionTsTemplate : componentJsTemplate;
+
+    template = template.replace(` className={styles.TemplateName}`, '');
+    template = template.replace(`import styles from './TemplateName.module.css';`, '');
+  }
+
+  return {
+    template,
+    templateType: `Component "${componentName}.${fileExtension}"`,
+    componentPath: `${componentPathDir}/action.${fileExtension}`,
     componentName,
   };
 }
@@ -224,6 +290,8 @@ const componentTemplateTypes = {
   STORY: 'withStory',
   LAZY: 'withLazy',
   COMPONENT: 'component',
+  REDUCER: 'reducer',
+  ACTION: 'action',
 };
 
 // --- Template Map
@@ -234,6 +302,8 @@ const templateMap = {
   [componentTemplateTypes.STORY]: getComponentStoryTemplate,
   [componentTemplateTypes.LAZY]: getComponentLazyTemplate,
   [componentTemplateTypes.COMPONENT]: getComponentScriptTemplate,
+  [componentTemplateTypes.REDUCER]: getReducerScriptTemplate,
+  [componentTemplateTypes.ACTION]: getActionScriptTemplate,
 };
 
 function generateComponentTemplates(componentTemplates) {
