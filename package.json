@@ -8,8 +8,7 @@
   "license": "MIT",
   "main": "bin/generate-react",
   "bin": {
-    "generate-react": "bin/generate-react",
-    "g-r": "bin/generate-react"
+    "generate-react": "bin/generate-react"
   },
   "files": [
     "bin/",
@@ -35,17 +34,12 @@
     "maintained node versions"
   ],
   "scripts": {
-    "cm": "npx git-cz",
-    "prebuild": "rimraf dist",
-    "build": "babel src --out-dir dist --ignore 'src/**/*.test.js'",
-    "build:watch": "npm run build -- --watch",
-    "test": "jest --coverage",
-    "test:watch": "npm run test -- --watch",
+    "commit": "npx cz",
     "release": "standard-version"
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "commander": "^6.2.1",
+    "commander": "^7.1.0",
     "deep-keys": "^0.5.0",
     "fs-extra": "^9.0.1",
     "inquirer": "^7.3.3",
@@ -53,65 +47,18 @@
     "replace": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.17.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "husky": "^4.3.6",
-    "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "pretty-quick": "^3.1.0",
+    "prettier": "2.2.1",
     "rimraf": "^3.0.2",
     "standard-version": "^9.1.0"
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": true
-          }
-        }
-      ]
-    ]
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "collectCoverageFrom": [
-      "src/**/*.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 0,
-        "functions": 0,
-        "lines": 0,
-        "statements": 0
-      }
-    }
-  },
   "config": {
     "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
