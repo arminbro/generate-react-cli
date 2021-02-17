@@ -1,3 +1,5 @@
+const { upperFirst } = require('lodash');
+
 const {
   generateComponent,
   getComponentByType,
@@ -35,7 +37,7 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
   // Component command action.
 
   componentCommand.action((componentNames, cmd) =>
-    componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile))
+    componentNames.forEach((componentName) => generateComponent(upperFirst(componentName), cmd, cliConfigFile))
   );
 }
 
