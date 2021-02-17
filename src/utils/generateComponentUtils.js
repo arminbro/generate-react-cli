@@ -52,12 +52,12 @@ function getCorrespondingComponentFileTypes(component) {
   return Object.keys(component).filter((key) => key.split('with').length > 1);
 }
 
-function getCustomTemplate(templatePath) {
+function getCustomTemplate(componentName, templatePath) {
   // --- Try loading custom template
 
   try {
     const template = readFileSync(templatePath, 'utf8');
-    const filename = path.basename(templatePath);
+    const filename = path.basename(templatePath).replace('TemplateName', componentName);
 
     return { template, filename };
   } catch (e) {
@@ -85,7 +85,10 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   if (customTemplates && customTemplates.component) {
     // --- Load and use the custom component template
 
-    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(customTemplates.component);
+    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+      componentName,
+      customTemplates.component
+    );
 
     template = customTemplate;
     filename = customTemplateFilename;
@@ -140,7 +143,10 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   if (customTemplates && customTemplates.style) {
     // --- Load and use the custom style template
 
-    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(customTemplates.style);
+    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+      componentName,
+      customTemplates.style
+    );
 
     template = customTemplate;
     filename = customTemplateFilename;
@@ -173,7 +179,10 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
   if (customTemplates && customTemplates.test) {
     // --- Load and use the custom test template
 
-    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(customTemplates.test);
+    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+      componentName,
+      customTemplates.test
+    );
 
     template = customTemplate;
     filename = customTemplateFilename;
@@ -209,7 +218,10 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   if (customTemplates && customTemplates.story) {
     // --- Load and use the custom story template
 
-    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(customTemplates.story);
+    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+      componentName,
+      customTemplates.story
+    );
 
     template = customTemplate;
     filename = customTemplateFilename;
@@ -238,7 +250,10 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   if (customTemplates && customTemplates.lazy) {
     // --- Load and use the custom lazy template
 
-    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(customTemplates.lazy);
+    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+      componentName,
+      customTemplates.lazy
+    );
 
     template = customTemplate;
     filename = customTemplateFilename;
@@ -268,7 +283,7 @@ function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, compon
     console.error(
       chalk.red(
         `
-ERROR: A corresponding custom component file requires a valid custom template. 
+ERROR: Custom component files require a valid custom template. 
 Please make sure you're pointing to the right custom template path in your generate-react-cli.json config file.
         `
       )
@@ -279,7 +294,10 @@ Please make sure you're pointing to the right custom template path in your gener
 
   // --- Load and use the custom component template.
 
-  const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(customTemplates[fileType]);
+  const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+    componentName,
+    customTemplates[fileType]
+  );
 
   template = customTemplate;
   filename = customTemplateFilename;
