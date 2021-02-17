@@ -298,8 +298,7 @@ GRC comes with corresponding built-in files for a given component. (I.E. `withSt
 
 What if you wanted to add your custom files of your own?
 
-For example, let's say you wanted to add an `index.js` file for each component, so you can don't have to add the additional component name with each import (import Logo from './components/Box/Box'
-).
+For example, let's say you wanted to add an `index.js` file for each component, so you don't have to add the additional component name with each import (I.E. `import Logo from './components/Box'` instead of `import Logo from './components/Box/Box'`).
 
 Or maybe you need an additional style file for your component stories.
 
@@ -329,9 +328,21 @@ You can do so by editing your **generate-react-cli.json** like so.
 }
 ```
 
+```jsx
+// templates/default/index.js
+
+export { default } from './TemplateName';
+```
+
+```css
+/* templates/default/TemplateName.stories.css */
+
+.TemplateName {}
+```
+
 In this case we added a `withIndex` & `withStoryStyle` to the `component.default`. Note: You can add custom files to any of your custom component types.
 
-You should also note that we added. `index` and `storyStyle` to our `customTemplates` object. That's because custom files require custom templates. Otherwise, you will get an error when you generate a component.
+You should also note that we added. `index` and `storyStyle` to our `customTemplates` section. That's because custom files require custom templates. Otherwise, you will get an error when you generate a component.
 
 Also, we used the `TemplateName` keyword for the `storyStyle` custom file. GRC will generate this corresponding file and replace `TemplateName` with the component name.
 
