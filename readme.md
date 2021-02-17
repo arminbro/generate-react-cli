@@ -302,7 +302,7 @@ For example, let's say you wanted to add an `index.js` file for each component, 
 
 Or maybe you need an additional style file for your component stories.
 
-You can do so by editing your **generate-react-cli.json** like so.
+You can do so by editing your **generate-react-cli.json** config file like so.
 
 ```json
 {
