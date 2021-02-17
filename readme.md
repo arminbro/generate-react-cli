@@ -261,7 +261,7 @@ Notice in the `page.customTemplates` that we only specified the `test` custom te
 #### Example of a custom component template file:
 
 ```jsx
-// templates/component/component.js
+// templates/component/TemplateName.js
 
 import React from 'react';
 import styles from './TemplateName.module.css';
@@ -280,7 +280,7 @@ export default TemplateName;
 #### Example of a custom test template file:
 
 ```jsx
-// templates/component/test.js
+// templates/component/TemplateName.test.js
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -294,11 +294,11 @@ it('It should mount', () => {
 ```
 
 ### Custom component files
-GRC comes with corresponding built-in files for a given component. (i.e., `withStyle`, `withTest`, `withStory`, and `withLazy`).
+GRC comes with corresponding built-in files for a given component if you need them (i.e., `withStyle`, `withTest`, `withStory`, and `withLazy`).
 
 What if you wanted to add custom files of your own?
 
-For example, let's say you wanted to add an `index.js` file for each component, so you don't have to add the additional component name with each import (i.e., `import Logo from './components/Box'` instead of `import Logo from './components/Box/Box'`).
+For example, let's say you wanted to add an `index.js` file for each component, so you don't have to add the additional component name with each import (i.e., `import Box from './components/Box'` instead of `import Box from './components/Box/Box'`).
 
 Or maybe you need an additional style file for your component stories.
 
@@ -342,7 +342,7 @@ export { default } from './TemplateName';
 
 In this case, we added a `withIndex` & `withStoryStyle` to the `component.default`. Note: You can add custom files to any of your custom component types.
 
-You should also note that we added `index` and `storyStyle` to our `customTemplates` section. That's because custom files require custom templates. Otherwise, you will get an error when you generate a component.
+You should also see that we added `index` and `storyStyle` to our `customTemplates` object. That's because custom files require custom templates. Otherwise, you will get an error when you generate a component.
 
 Also, we used the `TemplateName` keyword for the `storyStyle` custom file. GRC will generate this corresponding file and replace `TemplateName` with the component name.
 
