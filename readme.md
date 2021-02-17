@@ -32,7 +32,7 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 
 When you run GRC within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
 
-### Example of the **generate-react-cli.json** config file:
+#### Example of the **generate-react-cli.json** config file:
 
 ```json
 {
@@ -60,7 +60,7 @@ When you run GRC within your project the first time, it will ask you a series of
 
 This command will create a folder with your component name within your default (e.g. **src/components**) directory, and its corresponding files.
 
-### Example of the component files structure:
+#### Example of the component files structure:
 
 ```
 |-- /src
