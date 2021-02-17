@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/arminbro/generate-react-cli/compare/v5.2.3...v6.0.0) (2021-02-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* You will need to use the "TemplateName" keyword as your custom template filename if
+you want the CLI to replace it with the component name.
+
+### Features
+
+* custom component files ([6373a91](https://github.com/arminbro/generate-react-cli/commit/6373a912d725581571c2cdf01cf9062f3965c06f)), closes [#21](https://github.com/arminbro/generate-react-cli/issues/21) [#22](https://github.com/arminbro/generate-react-cli/issues/22) [#27](https://github.com/arminbro/generate-react-cli/issues/27) [#34](https://github.com/arminbro/generate-react-cli/issues/34) [#36](https://github.com/arminbro/generate-react-cli/issues/36) [#37](https://github.com/arminbro/generate-react-cli/issues/37) [#39](https://github.com/arminbro/generate-react-cli/issues/39)
+
+
+### Bug Fixes
+
+* use "TemplateName" keyword for custom templates ([73a308f](https://github.com/arminbro/generate-react-cli/commit/73a308fe38e660f57cde102d3a5ded64c5339fc7))
+* use lodash upperFirst to force component name start with uppercase ([e401caf](https://github.com/arminbro/generate-react-cli/commit/e401cafa0e35c85db8d4c26dad5f2425f4269980))
+
 ### [5.2.3](https://github.com/arminbro/generate-react-cli/compare/v5.2.2...v5.2.3) (2021-01-05)
 
 ### [5.2.2](https://github.com/arminbro/generate-react-cli/compare/v5.2.1...v5.2.2) (2021-01-05)
