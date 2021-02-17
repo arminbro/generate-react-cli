@@ -15,6 +15,7 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 - Now supports custom component types ([read more](#custom-component-types)). 🎉
 - Now supports custom component templates ([read more](#custom-component-templates)). 🎉
+- Now supports custom component files ([read more](#custom-component-files)). 🎉
 - Supports React [TypeScript](https://www.typescriptlang.org/) projects.
 - Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
 - It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the feature name. We feel this approach provides a better developer experience.
@@ -210,15 +211,15 @@ There is an optional `customTemplates` object that you can pass to the `componen
 
 ```json
 "customTemplates": {
-  "component": "templates/component.js",
-  "lazy":  "templates/lazy.js",
-  "story":  "templates/story.js",
-  "style": "templates/style.scss",
-  "test":  "templates/test.js"
+  "component": "templates/TemplateName.js",
+  "lazy":  "templates/TemplateName.lazy.js",
+  "story":  "templates/TemplateName.story.js",
+  "style": "templates/TemplateName.style.scss",
+  "test":  "templates/TemplateName.test.js"
 },
 ```
 
-The keys represent the type of template, and the values are the paths that point to where your custom template lives in your project/system.
+The keys represent the type of file, and the values are the paths that point to where your custom template lives in your project/system. Please note the `TemplateName` keyword in the template filename. GRC will use this keyword and replace it with your component name as the filename.
 
 ### Example of using the `customTemplates` object within your generate-react-cli.json config file:
 
@@ -231,9 +232,9 @@ The keys represent the type of template, and the values are the paths that point
   "component": {
     "default": {
       "customTemplates": {
-        "component": "templates/component/component.js",
-        "style": "templates/component/style.scss",
-        "test": "templates/component/test.js"
+        "component": "templates/component/TemplateName.js",
+        "style": "templates/component/TemplateName.style.scss",
+        "test": "templates/component/TemplateName.test.js"
       },
       "path": "src/components",
       "withStyle": true,
@@ -243,7 +244,7 @@ The keys represent the type of template, and the values are the paths that point
     },
     "page": {
       "customTemplates": {
-        "test": "templates/page/test.js"
+        "test": "templates/page/TemplateName.test.js"
       },
       "path": "src/pages",
       "withLazy": true,
@@ -274,7 +275,7 @@ const TemplateName = () => (
 export default TemplateName;
 ```
 
-**Important** - Make sure to use the `TemplateName` keyword in your templates. GRC will use this keyword to replace it with your component name.
+**Important** - Make sure to use the `TemplateName` keyword in your templates as well. GRC will also use this keyword to replace it with your component name.
 
 #### Example of a custom test template file:
 
@@ -291,6 +292,48 @@ it('It should mount', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 ```
+
+### Custom component files
+GRC comes with corresponding built-in files for a given component. (I.E. `withStyle`, `withTest`, `withStory`, and `withLazy`).
+
+What if you wanted to add your custom files of your own?
+
+For example, let's say you wanted to add an `index.js` file for each component, so you can don't have to add the additional component name with each import (import Logo from './components/Box/Box'
+).
+
+Or maybe you need an additional style file for your component stories.
+
+You can do so by editing your **generate-react-cli.json** like so.
+
+```json
+{
+  "usesTypeScript": false,
+  "usesCssModule": false,
+  "cssPreprocessor": "css",
+  "testLibrary": "Testing Library",
+  "component": {
+    "default": {
+      "path": "src/components",
+      "withStyle": true,
+      "withTest": true,
+      "withStory": true,
+      "withLazy": false,
+      "withIndex": true,
+      "withStoryStyle": true,
+      "customTemplates": {
+        "index": "templates/default/index.js",
+        "storyStyle": "templates/default/TemplateName.stories.css"
+      }
+    }
+  }
+}
+```
+
+In this case we added a `withIndex` & `withStoryStyle` to the `component.default`. Note: You can add custom files to any of your custom component types.
+
+You should also note that we added. `index` and `storyStyle` to our `customTemplates` object. That's because custom files require custom templates. Otherwise, you will get an error when you generate a component.
+
+Also, we used the `TemplateName` keyword for the `storyStyle` custom file. GRC will generate this corresponding file and replace `TemplateName` with the component name.
 
 ## License
 

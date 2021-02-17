@@ -273,7 +273,7 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
 
 function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, componentFileType }) {
   const { customTemplates } = cliConfigFile.component[cmd.type];
-  const fileType = componentFileType.split('with')[1].toLowerCase();
+  const fileType = camelCase(componentFileType.split('with')[1]);
   let filename = null;
   let template = null;
 
