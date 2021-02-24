@@ -11,6 +11,8 @@
 
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
+A short [article](https://dev.to/arminbro/generate-react-cli-1ooh) that goes a little deeper into why we created GRC if you have the time.
+
 **_A few notes:_**
 
 - Now supports custom component types ([read more](#custom-component-types)). 🎉
