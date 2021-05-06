@@ -34,15 +34,15 @@
     "maintained node versions"
   ],
   "scripts": {
-    "commit": "npx cz",
+    "commit": "npx git-cz",
     "release": "standard-version"
   },
   "dependencies": {
     "chalk": "^4.1.0",
     "commander": "^7.1.0",
     "deep-keys": "^0.5.0",
-    "fs-extra": "^9.0.1",
-    "inquirer": "^7.3.3",
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.0.0",
     "lodash": "^4.17.20",
     "replace": "^1.2.0"
   },
@@ -50,7 +50,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "2.2.1",
     "rimraf": "^3.0.2",
