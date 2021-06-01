@@ -201,7 +201,7 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}/${componentName}/__tests__/${filename}`,
     filename,
     template,
   };
@@ -233,7 +233,7 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}/${componentName}/__stories__/${filename}`,
     filename,
     template,
   };
