@@ -194,7 +194,7 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
 
       template = componentTestEnzymeTemplate;
     } else if (testLibrary === 'Testing Library') {
-      template = componentTestTestingLibraryTemplate.replace(/#|templateName/g, camelCase(componentName));
+      template = componentTestTestingLibraryTemplate;
     } else {
       template = componentTestDefaultTemplate;
     }
