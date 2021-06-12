@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.1](https://github.com/arminbro/generate-react-cli/compare/v7.0.0...v7.0.1) (2021-06-12)
+
+
+### Bug Fixes
+
+* remove camelCase from componentTestTemplateGenerator, it's handled in generateComponent ([7885d22](https://github.com/arminbro/generate-react-cli/commit/7885d22b816de7a60e2adcb3d977c1b541db1ae9)), closes [#43](https://github.com/arminbro/generate-react-cli/issues/43)
+
 ## [7.0.0](https://github.com/arminbro/generate-react-cli/compare/v6.0.2...v7.0.0) (2021-05-06)
 
 
