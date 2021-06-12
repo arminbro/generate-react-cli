@@ -365,6 +365,14 @@ function generateComponent(componentName, cmd, cliConfigFile) {
             silent: true,
           });
 
+          replace({
+            regex: 'templateName',
+            replacement: camelCase(componentName),
+            paths: [componentPath],
+            recursive: false,
+            silent: true,
+          });
+
           console.log(chalk.green(`${filename} was successfully created at ${componentPath}`));
         } catch (error) {
           console.error(chalk.red(`${filename} failed and was not created.`));
