@@ -3,9 +3,11 @@ import TemplateName from './TemplateName';
 
 export default {
   title: "TemplateName",
-  component: TemplateName,
 };
 
-export const Template = TemplateName.bind({});
-Template.args = {};
+export const Default = () => <TemplateName />;
+
+Default.story = {
+  name: 'default',
+};
 `;
