@@ -1,7 +1,11 @@
 module.exports = `/* eslint-disable */
-import React from 'react';
-import { storiesOf } from '@storybook/react';
 import TemplateName from './TemplateName';
 
-storiesOf('TemplateName', module).add('default', () => <TemplateName />);
+export default {
+  title: "TemplateName",
+  component: TemplateName,
+};
+
+export const Template = TemplateName.bind({});
+Template.args = {};
 `;
