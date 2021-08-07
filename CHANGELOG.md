@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.4](https://github.com/arminbro/generate-react-cli/compare/v7.0.3...v7.0.4) (2021-08-07)
+
+
+### Bug Fixes
+
+* **story:** use storybook codemod's preferred way ([b694f76](https://github.com/arminbro/generate-react-cli/commit/b694f767d5619b2880f3d8aa143b7e9f2550ff11))
+
 ### [7.0.3](https://github.com/arminbro/generate-react-cli/compare/v7.0.2...v7.0.3) (2021-06-12)
 
 ### [7.0.2](https://github.com/arminbro/generate-react-cli/compare/v7.0.1...v7.0.2) (2021-06-12)
