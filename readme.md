@@ -13,6 +13,8 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 A short [article](https://dev.to/arminbro/generate-react-cli-1ooh) that goes a little deeper into why we created GRC if you have the time.
 
+Suppose you enjoy learning by watching tutorial videos. Here's an excellent [video](https://www.youtube.com/watch?v=NEvnt3MWttY) on how to use GRC by [Eric Murphy](https://www.youtube.com/channel/UC5KDiSAFxrDWhmysBcNqtMA). 
+
 **_A few notes:_**
 
 - Now supports custom component types ([read more](#custom-component-types)). 🎉
