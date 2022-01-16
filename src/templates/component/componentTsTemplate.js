@@ -1,7 +1,9 @@
-module.exports = `import React from 'react';
+module.exports = `import React, { FC } from 'react';
 import styles from './TemplateName.module.css';
 
-const TemplateName = () => (
+interface TemplateNameProps {}
+
+const TemplateName: FC<TemplateNameProps> = () => (
   <div className={styles.TemplateName} data-testid="TemplateName">
     TemplateName Component
   </div>
