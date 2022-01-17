@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.0.5](https://github.com/arminbro/generate-react-cli/compare/v7.0.4...v7.0.5) (2022-01-17)
+
 ### [7.0.4](https://github.com/arminbro/generate-react-cli/compare/v7.0.3...v7.0.4) (2021-08-07)
 
 
