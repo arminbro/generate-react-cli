@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const path = require('path');
 const replace = require('replace');
-const { camelCase } = require('lodash');
+const { camelCase, kebabCase, snakeCase } = require('lodash');
 const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
 
 const componentJsTemplate = require('../templates/component/componentJsTemplate');
@@ -368,6 +368,22 @@ function generateComponent(componentName, cmd, cliConfigFile) {
           replace({
             regex: 'templateName',
             replacement: camelCase(componentName),
+            paths: [componentPath],
+            recursive: false,
+            silent: true,
+          });
+
+          replace({
+            regex: 'template-name',
+            replacement: kebabCase(componentName),
+            paths: [componentPath],
+            recursive: false,
+            silent: true,
+          });
+
+          replace({
+            regex: 'template_name',
+            replacement: snakeCase(componentName),
             paths: [componentPath],
             recursive: false,
             silent: true,
