@@ -355,39 +355,41 @@ function generateComponent(componentName, cmd, cliConfigFile) {
         console.error(chalk.red(`${filename} already exists in this path "${componentPath}".`));
       } else {
         try {
-          outputFileSync(componentPath, template);
+          if (!cmd.dryRun) {
+            outputFileSync(componentPath, template);
 
-          replace({
-            regex: 'TemplateName',
-            replacement: componentName,
-            paths: [componentPath],
-            recursive: false,
-            silent: true,
-          });
+            replace({
+              regex: 'TemplateName',
+              replacement: componentName,
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
 
-          replace({
-            regex: 'templateName',
-            replacement: camelCase(componentName),
-            paths: [componentPath],
-            recursive: false,
-            silent: true,
-          });
+            replace({
+              regex: 'templateName',
+              replacement: camelCase(componentName),
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
 
-          replace({
-            regex: 'template-name',
-            replacement: kebabCase(componentName),
-            paths: [componentPath],
-            recursive: false,
-            silent: true,
-          });
+            replace({
+              regex: 'template-name',
+              replacement: kebabCase(componentName),
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
 
-          replace({
-            regex: 'template_name',
-            replacement: snakeCase(componentName),
-            paths: [componentPath],
-            recursive: false,
-            silent: true,
-          });
+            replace({
+              regex: 'template_name',
+              replacement: snakeCase(componentName),
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
+          }
 
           console.log(chalk.green(`${filename} was successfully created at ${componentPath}`));
         } catch (error) {
@@ -397,6 +399,11 @@ function generateComponent(componentName, cmd, cliConfigFile) {
       }
     }
   });
+
+  if (cmd.dryRun) {
+    console.log()
+    console.log(chalk.yellow(`NOTE: The "dry-run" flag means no changes were made.`))
+  }
 }
 
 module.exports = {
