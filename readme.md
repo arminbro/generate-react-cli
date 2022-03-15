@@ -151,6 +151,14 @@ Otherwise, if you don't pass any options, it will just use the default values th
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withTest<code></td>
   </tr>
+  <tr>
+    <td width="20%"><b>--dry-run</b></td>
+    <td width="60%">
+      Show what will be generated without writing to disk
+    </td>
+    <td width="20%">Boolean</td>
+    <td width="20%"><code>false<code></td>
+  </tr>
 </table>
 
 ### Custom component types:

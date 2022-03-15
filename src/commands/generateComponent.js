@@ -34,6 +34,8 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
     );
   });
 
+  componentCommand.option('--dry-run', 'Show what will be generated without writing to disk')
+
   // Component command action.
 
   componentCommand.action((componentNames, cmd) =>
