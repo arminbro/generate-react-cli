@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.1.0](https://github.com/arminbro/generate-react-cli/compare/v7.0.6...v7.1.0) (2022-03-15)
+
+
+### Features
+
+* adds dry-run flag to preview generated paths without writing files ([483aef2](https://github.com/arminbro/generate-react-cli/commit/483aef285a356bb02727d3c512d2e03e22b6493a))
+
 ### [7.0.6](https://github.com/arminbro/generate-react-cli/compare/v7.0.5...v7.0.6) (2022-02-21)
 
 ### [7.0.5](https://github.com/arminbro/generate-react-cli/compare/v7.0.4...v7.0.5) (2022-01-17)
