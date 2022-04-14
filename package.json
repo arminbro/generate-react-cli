@@ -1,6 +1,6 @@
 {
   "name": "generate-react-cli",
-  "version": "7.1.0",
+  "version": "0.0.0-development",
   "description": "A simple React CLI to generate components instantly and more.",
   "repository": "https://github.com/arminbro/generate-react-cli",
   "bugs": "https://github.com/arminbro/generate-react-cli/issues",
@@ -34,8 +34,7 @@
     "maintained node versions"
   ],
   "scripts": {
-    "commit": "npx git-cz",
-    "release": "standard-version"
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "chalk": "^4.1.2",
@@ -47,18 +46,11 @@
     "replace": "^1.2.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "2.5.1",
-    "rimraf": "^3.0.2",
-    "standard-version": "^9.3.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+    "semantic-release": "^19.0.2"
   }
 }
