@@ -5,20 +5,15 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    runs-on: ${{matrix.os}}
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
+  publish:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version: 16
       - run: npm ci
-      - run: npm test
+      - run: npx semantic-release
+        env:
+        NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
