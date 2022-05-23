@@ -389,6 +389,14 @@ function generateComponent(componentName, cmd, cliConfigFile) {
               recursive: false,
               silent: true,
             });
+
+            replace({
+              regex: 'TEMPLATE_NAME',
+              replacement: snakeCase(componentName).toUpperCase(),
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
           }
 
           console.log(chalk.green(`${filename} was successfully created at ${componentPath}`));
