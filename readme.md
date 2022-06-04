@@ -235,11 +235,12 @@ The keys represent the type of file, and the values are the paths that point to 
 
 You can also use the following keywords, which will be replaced with their corresponding formatted component name:
 
-| Keyword         | Replacement                  |
-|-----------------|------------------------------|
-| `templateName`  | component name in camelCase  |
-| `template-name` | component name in kebab-case |
-| `template_name` | component name in snake_case |
+| Keyword         | Replacement                            |
+|-----------------|----------------------------------------|
+| `templateName`  | component name in camelCase            |
+| `template-name` | component name in kebab-case           |
+| `template_name` | component name in snake_case           |
+| `TEMPLATE_NAME` | component name in uppercase SNAKE_CASE |
 
 #### Example of using the `customTemplates` object within your generate-react-cli.json config file:
 
