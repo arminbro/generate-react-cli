@@ -57,7 +57,12 @@ function getCustomTemplate(componentName, templatePath) {
 
   try {
     const template = readFileSync(templatePath, 'utf8');
-    const filename = path.basename(templatePath).replace('TemplateName', componentName);
+    const filename = path.basename(templatePath)
+			.replace('TemplateName', componentName)
+			.replace('templateName', camelCase(componentName))
+			.replace('template-name', kebabCase(componentName))
+			.replace('template_name', snakeCase(componentName))
+			.replace('TEMPLATE_NAME', snakeCase(componentName).toUpperCase());
 
     return { template, filename };
   } catch (e) {
