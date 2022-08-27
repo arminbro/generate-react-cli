@@ -1,6 +1,6 @@
 {
   "name": "generate-react-cli",
-  "version": "7.2.0",
+  "version": "7.3.0",
   "description": "A simple React CLI to generate components instantly and more.",
   "repository": "https://github.com/arminbro/generate-react-cli",
   "bugs": "https://github.com/arminbro/generate-react-cli/issues",
