@@ -231,7 +231,7 @@ There is an optional `customTemplates` object that you can pass to the `componen
 },
 ```
 
-The keys represent the type of file, and the values are the paths that point to where your custom template lives in your project/system. Please note the `TemplateName` keyword in the template filename. GRC will use this keyword and replace it with your component name (in whichever format the user typed the component name in the command) as the filename.
+The keys represent the type of file, and the values are the paths that point to where your custom template lives in your project/system. Please note the `TemplateName` keyword in the template filename. GRC will use this keyword and replace it with your component name (in whichever format you typed the component name in the command) as the filename.
 
 #### Example of using the `customTemplates` object within your generate-react-cli.json config file:
 
