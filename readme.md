@@ -13,7 +13,7 @@ To help speed up productivity in React projects and stop copying, pasting, and r
 
 A short [article](https://dev.to/arminbro/generate-react-cli-1ooh) that goes a little deeper into why we created GRC if you have the time.
 
-Suppose you enjoy learning by watching tutorial videos. Here's an excellent [video](https://www.youtube.com/watch?v=NEvnt3MWttY) on how to use GRC by [Eric Murphy](https://www.youtube.com/channel/UC5KDiSAFxrDWhmysBcNqtMA). 
+Suppose you enjoy learning by watching tutorial videos. Here's an excellent [video](https://www.youtube.com/watch?v=NEvnt3MWttY) on how to use GRC by [Eric Murphy](https://www.youtube.com/channel/UC5KDiSAFxrDWhmysBcNqtMA).
 
 **_A few notes:_**
 
@@ -231,16 +231,7 @@ There is an optional `customTemplates` object that you can pass to the `componen
 },
 ```
 
-The keys represent the type of file, and the values are the paths that point to where your custom template lives in your project/system. Please note the `TemplateName` keyword in the template filename. GRC will use this keyword and replace it with your component name as the filename.
-
-You can also use the following keywords, which will be replaced with their corresponding formatted component name:
-
-| Keyword         | Replacement                            |
-|-----------------|----------------------------------------|
-| `templateName`  | component name in camelCase            |
-| `template-name` | component name in kebab-case           |
-| `template_name` | component name in snake_case           |
-| `TEMPLATE_NAME` | component name in uppercase SNAKE_CASE |
+The keys represent the type of file, and the values are the paths that point to where your custom template lives in your project/system. Please note the `TemplateName` keyword in the template filename. GRC will use this keyword and replace it with your component name (in whichever format you typed the component name in the command) as the filename.
 
 #### Example of using the `customTemplates` object within your generate-react-cli.json config file:
 
@@ -296,7 +287,16 @@ const TemplateName = () => (
 export default TemplateName;
 ```
 
-**Important** - Make sure to use the `TemplateName` keyword in your templates as well. GRC will also use this keyword to replace it with your component name.
+**Important** - You can also use the following keywords within your custom templates to format the component name in your templates accordingly:
+
+| Keyword         | Replacement                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| `templatename`  | component name in raw case (whichever format the user typed the component name in the command) |
+| `TemplateName`  | component name in PascalCase                                                                   |
+| `templateName`  | component name in camelCase                                                                    |
+| `template-name` | component name in kebab-case                                                                   |
+| `template_name` | component name in snake_case                                                                   |
+| `TEMPLATE_NAME` | component name in uppercase SNAKE_CASE                                                         |
 
 #### Example of a custom test template file:
 
@@ -315,6 +315,7 @@ it('It should mount', () => {
 ```
 
 ### Custom component files
+
 GRC comes with corresponding built-in files for a given component if you need them (i.e., `withStyle`, `withTest`, `withStory`, and `withLazy`).
 
 What if you wanted to add custom files of your own?
@@ -358,7 +359,8 @@ export { default } from './TemplateName';
 ```css
 /* templates/default/TemplateName.stories.css */
 
-.TemplateName {}
+.TemplateName {
+}
 ```
 
 In this case, we added a `withIndex` & `withStoryStyle` to the `component.default`. Note: You can add custom files to any of your custom component types.

@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const path = require('path');
 const replace = require('replace');
-const { camelCase, kebabCase, snakeCase } = require('lodash');
+const { camelCase, kebabCase, snakeCase, upperFirst } = require('lodash');
 const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
 
 const componentJsTemplate = require('../templates/component/componentJsTemplate');
@@ -358,14 +358,25 @@ function generateComponent(componentName, cmd, cliConfigFile) {
           if (!cmd.dryRun) {
             outputFileSync(componentPath, template);
 
+            // Will replace the templatename in whichever format the user typed the component name in the command.
             replace({
-              regex: 'TemplateName',
+              regex: 'templatename',
               replacement: componentName,
               paths: [componentPath],
               recursive: false,
               silent: true,
             });
 
+            // Will replace the TemplateName in PascalCase
+            replace({
+              regex: 'TemplateName',
+              replacement: upperFirst(camelCase(componentName)),
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
+
+            // Will replace the templateName in camelCase
             replace({
               regex: 'templateName',
               replacement: camelCase(componentName),
@@ -374,6 +385,7 @@ function generateComponent(componentName, cmd, cliConfigFile) {
               silent: true,
             });
 
+            // Will replace the template-name in kebab-case
             replace({
               regex: 'template-name',
               replacement: kebabCase(componentName),
@@ -382,6 +394,7 @@ function generateComponent(componentName, cmd, cliConfigFile) {
               silent: true,
             });
 
+            // Will replace the template_name in snake_case
             replace({
               regex: 'template_name',
               replacement: snakeCase(componentName),
@@ -390,6 +403,7 @@ function generateComponent(componentName, cmd, cliConfigFile) {
               silent: true,
             });
 
+            // Will replace the TEMPLATE_NAME in uppercase SNAKE_CASE
             replace({
               regex: 'TEMPLATE_NAME',
               replacement: snakeCase(componentName).toUpperCase(),
@@ -409,8 +423,8 @@ function generateComponent(componentName, cmd, cliConfigFile) {
   });
 
   if (cmd.dryRun) {
-    console.log()
-    console.log(chalk.yellow(`NOTE: The "dry-run" flag means no changes were made.`))
+    console.log();
+    console.log(chalk.yellow(`NOTE: The "dry-run" flag means no changes were made.`));
   }
 }
 
