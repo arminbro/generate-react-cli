@@ -2,10 +2,12 @@ const {
   generateComponent,
   getComponentByType,
   getCorrespondingComponentFileTypes,
+  checkIsFlat,
 } = require('../utils/generateComponentUtils');
 
 function initGenerateComponentCommand(args, cliConfigFile, program) {
   const selectedComponentType = getComponentByType(args, cliConfigFile);
+  const isFlat = checkIsFlat(args);
 
   const componentCommand = program
     .command('component [names...]')
@@ -18,7 +20,8 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
       '--type <type>',
       'You can pass a component type that you have configured in your GRC config file.',
       'default'
-    );
+    )
+    .option('-f, --flat', 'Generate the files in the mentioned path insted of creating new folder for it', false);
 
   // Dynamic component command option defaults.
 
@@ -37,7 +40,7 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
   // Component command action.
 
   componentCommand.action((componentNames, cmd) =>
-    componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile))
+    componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile, isFlat))
   );
 }
 
