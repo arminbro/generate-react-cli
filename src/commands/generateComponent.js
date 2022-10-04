@@ -2,12 +2,10 @@ const {
   generateComponent,
   getComponentByType,
   getCorrespondingComponentFileTypes,
-  checkIsFlat,
 } = require('../utils/generateComponentUtils');
 
 function initGenerateComponentCommand(args, cliConfigFile, program) {
   const selectedComponentType = getComponentByType(args, cliConfigFile);
-  const isFlat = checkIsFlat(args);
 
   const componentCommand = program
     .command('component [names...]')
@@ -40,7 +38,7 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
   // Component command action.
 
   componentCommand.action((componentNames, cmd) =>
-    componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile, isFlat))
+    componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile))
   );
 }
 
