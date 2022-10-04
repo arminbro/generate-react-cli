@@ -18,7 +18,8 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
       '--type <type>',
       'You can pass a component type that you have configured in your GRC config file.',
       'default'
-    );
+    )
+    .option('-f, --flat', 'Generate the files in the mentioned path insted of creating new folder for it', false);
 
   // Dynamic component command option defaults.
 

@@ -127,7 +127,7 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -162,7 +162,7 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -201,7 +201,7 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -233,7 +233,7 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -265,7 +265,7 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   }
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -303,7 +303,7 @@ Please make sure you're pointing to the right custom template path in your gener
   filename = customTemplateFilename;
 
   return {
-    componentPath: `${cmd.path}/${componentName}/${filename}`,
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };

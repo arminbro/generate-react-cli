@@ -159,6 +159,14 @@ Otherwise, if you don't pass any options, it will just use the default values th
     <td width="20%">Boolean</td>
     <td width="20%"><code>false<code></td>
   </tr>
+  <tr>
+    <td width="20%"><b>--flat</b></td>
+    <td width="60%">
+      Generate the files in the mentioned path insted of creating new folder for it
+    </td>
+    <td width="20%">Boolean</td>
+    <td width="20%"><code>false<code></td>
+  </tr>
 </table>
 
 ### Custom component types:
