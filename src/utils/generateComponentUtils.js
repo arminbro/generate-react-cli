@@ -4,7 +4,7 @@ import replace from 'replace';
 import camelCase from 'lodash/camelCase.js';
 import kebabCase from 'lodash/kebabCase.js';
 import snakeCase from 'lodash/snakeCase.js';
-import upperFirst from 'lodash/upperCase.js';
+import startCase from 'lodash/startCase.js';
 import fsExtra from 'fs-extra';
 
 import componentJsTemplate from '../templates/component/componentJsTemplate.js';
@@ -375,7 +375,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the TemplateName in PascalCase
             replace({
               regex: 'TemplateName',
-              replacement: upperFirst(camelCase(componentName)),
+              replacement: startCase(camelCase(componentName)).replace(/ /g, ''),
               paths: [componentPath],
               recursive: false,
               silent: true,
