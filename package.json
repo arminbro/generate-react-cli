@@ -8,8 +8,9 @@
   "license": "MIT",
   "main": "bin/generate-react",
   "bin": {
-    "generate-react": "bin/generate-react"
+    "generate-react": "bin/generate-react.js"
   },
+  "type": "module",
   "files": [
     "bin/",
     "src/",
@@ -37,30 +38,30 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "commander": "^9.0.0",
-    "deep-keys": "^0.5.0",
-    "fs-extra": "^10.0.0",
-    "inquirer": "^8.1.2",
-    "lodash": "^4.17.20",
-    "replace": "^1.2.0"
+    "chalk": "5.1.2",
+    "commander": "9.4.1",
+    "deep-keys": "0.5.0",
+    "fs-extra": "10.1.0",
+    "inquirer": "9.1.4",
+    "lodash": "4.17.21",
+    "replace": "1.2.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.2.1",
-    "@commitlint/config-conventional": "^13.2.0",
-    "@semantic-release/commit-analyzer": "^9.0.1",
-    "@semantic-release/git": "^10.0.0",
-    "@semantic-release/github": "^8.0.1",
-    "@semantic-release/npm": "^8.0.0",
-    "@semantic-release/release-notes-generator": "^10.0.2",
-    "eslint": "^8.7.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^7.0.4",
-    "prettier": "2.5.1",
-    "pretty-quick": "^3.1.3",
-    "semantic-release": "^19.0.3"
+    "@commitlint/cli": "17.1.2",
+    "@commitlint/config-conventional": "17.1.0",
+    "@semantic-release/commit-analyzer": "9.0.2",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "8.0.6",
+    "@semantic-release/npm": "9.0.1",
+    "@semantic-release/release-notes-generator": "10.0.3",
+    "eslint": "8.26.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "8.0.1",
+    "prettier": "2.7.1",
+    "pretty-quick": "3.1.3",
+    "semantic-release": "19.0.5"
   },
   "prettier": {
     "singleQuote": true,
@@ -98,13 +99,18 @@
       "plugin:prettier/recommended"
     ],
     "env": {
-      "commonjs": true,
-      "es2021": true,
+      "commonjs": false,
       "node": true
     },
     "parserOptions": {
-      "ecmaVersion": 12
+      "ecmaVersion": "latest"
     },
-    "rules": {}
+    "rules": {
+      "import/extensions": [
+        {
+          "js": "always"
+        }
+      ]
+    }
   }
 }

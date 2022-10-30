@@ -1,8 +1,12 @@
-const chalk = require('chalk');
-const deepKeys = require('deep-keys');
-const { prompt } = require('inquirer');
-const { merge } = require('lodash');
-const { accessSync, constants, outputFileSync, readFileSync } = require('fs-extra');
+import chalk from 'chalk';
+
+import deepKeys from 'deep-keys';
+import inquirer from 'inquirer';
+import merge from 'lodash/merge.js';
+import fsExtra from 'fs-extra';
+
+const { accessSync, constants, outputFileSync, readFileSync } = fsExtra;
+const { prompt } = inquirer;
 
 // Generate React Config file questions.
 
@@ -35,7 +39,7 @@ const projectLevelQuestions = [
 
 // --- component level questions.
 
-const componentLevelQuestions = [
+export const componentLevelQuestions = [
   {
     type: 'input',
     name: 'component.default.path',
@@ -162,7 +166,7 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
   }
 }
 
-async function getCLIConfigFile() {
+export async function getCLIConfigFile() {
   // --- Make sure the cli commands are running from the root level of the project
 
   try {
@@ -200,8 +204,3 @@ async function getCLIConfigFile() {
     return process.exit(1);
   }
 }
-
-module.exports = {
-  componentLevelQuestions,
-  getCLIConfigFile,
-};

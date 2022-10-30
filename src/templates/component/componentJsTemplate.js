@@ -1,4 +1,4 @@
-module.exports = `import React from 'react';
+export default `import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './TemplateName.module.css';
 

@@ -1,4 +1,4 @@
-module.exports = `import React from 'react';
+export default `import React from 'react';
 import ReactDOM from 'react-dom';
 import TemplateName from './TemplateName';
 
