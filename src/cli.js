@@ -1,11 +1,13 @@
-const program = require('commander');
+import { program } from 'commander';
+import { createRequire } from 'module';
 
-const pkg = require('../package.json');
-const { initGenerateComponentCommand } = require('./commands/generateComponent');
-const { getCLIConfigFile } = require('./utils/grcConfigUtils');
+import initGenerateComponentCommand from './commands/generateComponent.js';
+import { getCLIConfigFile } from './utils/grcConfigUtils.js';
 
-module.exports = async function cli(args) {
+export default async function cli(args) {
   const cliConfigFile = await getCLIConfigFile();
+  const localRequire = createRequire(import.meta.url);
+  const pkg = localRequire('../package.json');
 
   // Initialize generate component command
 
@@ -13,4 +15,4 @@ module.exports = async function cli(args) {
 
   program.version(pkg.version);
   program.parse(args);
-};
+}

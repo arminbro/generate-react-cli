@@ -1,4 +1,4 @@
-module.exports = `/* eslint-disable */
+export default `/* eslint-disable */
 import TemplateName from './TemplateName';
 
 export default {

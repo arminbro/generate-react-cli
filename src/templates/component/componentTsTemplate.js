@@ -1,4 +1,4 @@
-module.exports = `import React, { FC } from 'react';
+export default `import React, { FC } from 'react';
 import styles from './TemplateName.module.css';
 
 interface TemplateNameProps {}

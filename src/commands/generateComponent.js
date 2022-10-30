@@ -1,10 +1,10 @@
-const {
+import {
   generateComponent,
   getComponentByType,
   getCorrespondingComponentFileTypes,
-} = require('../utils/generateComponentUtils');
+} from '../utils/generateComponentUtils.js';
 
-function initGenerateComponentCommand(args, cliConfigFile, program) {
+export default function initGenerateComponentCommand(args, cliConfigFile, program) {
   const selectedComponentType = getComponentByType(args, cliConfigFile);
 
   const componentCommand = program
@@ -41,7 +41,3 @@ function initGenerateComponentCommand(args, cliConfigFile, program) {
     componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile))
   );
 }
-
-module.exports = {
-  initGenerateComponentCommand,
-};

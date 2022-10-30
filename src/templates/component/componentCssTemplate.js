@@ -1,1 +1,1 @@
-module.exports = `.TemplateName {}`;
+export default `.TemplateName {}`;

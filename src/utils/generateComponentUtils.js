@@ -1,20 +1,25 @@
-const chalk = require('chalk');
-const path = require('path');
-const replace = require('replace');
-const { camelCase, kebabCase, snakeCase, upperFirst } = require('lodash');
-const { existsSync, outputFileSync, readFileSync } = require('fs-extra');
+import chalk from 'chalk';
+import path from 'path';
+import replace from 'replace';
+import camelCase from 'lodash/camelCase.js';
+import kebabCase from 'lodash/kebabCase.js';
+import snakeCase from 'lodash/snakeCase.js';
+import upperFirst from 'lodash/upperCase.js';
+import fsExtra from 'fs-extra';
 
-const componentJsTemplate = require('../templates/component/componentJsTemplate');
-const componentTsTemplate = require('../templates/component/componentTsTemplate');
-const componentCssTemplate = require('../templates/component/componentCssTemplate');
-const componentLazyTemplate = require('../templates/component/componentLazyTemplate');
-const componentTsLazyTemplate = require('../templates/component/componentTsLazyTemplate');
-const componentStoryTemplate = require('../templates/component/componentStoryTemplate');
-const componentTestEnzymeTemplate = require('../templates/component/componentTestEnzymeTemplate');
-const componentTestDefaultTemplate = require('../templates/component/componentTestDefaultTemplate');
-const componentTestTestingLibraryTemplate = require('../templates/component/componentTestTestingLibraryTemplate');
+import componentJsTemplate from '../templates/component/componentJsTemplate.js';
+import componentTsTemplate from '../templates/component/componentTsTemplate.js';
+import componentCssTemplate from '../templates/component/componentCssTemplate.js';
+import componentLazyTemplate from '../templates/component/componentLazyTemplate.js';
+import componentTsLazyTemplate from '../templates/component/componentTsLazyTemplate.js';
+import componentStoryTemplate from '../templates/component/componentStoryTemplate.js';
+import componentTestEnzymeTemplate from '../templates/component/componentTestEnzymeTemplate.js';
+import componentTestDefaultTemplate from '../templates/component/componentTestDefaultTemplate.js';
+import componentTestTestingLibraryTemplate from '../templates/component/componentTestTestingLibraryTemplate.js';
 
-function getComponentByType(args, cliConfigFile) {
+const { existsSync, outputFileSync, readFileSync } = fsExtra;
+
+export function getComponentByType(args, cliConfigFile) {
   const hasComponentTypeOption = args.find((arg) => arg.includes('--type'));
 
   // Check for component type option.
@@ -48,7 +53,7 @@ function getComponentByType(args, cliConfigFile) {
   return cliConfigFile.component.default;
 }
 
-function getCorrespondingComponentFileTypes(component) {
+export function getCorrespondingComponentFileTypes(component) {
   return Object.keys(component).filter((key) => key.split('with').length > 1);
 }
 
@@ -329,7 +334,7 @@ const componentTemplateGeneratorMap = {
   [buildInComponentFileTypes.LAZY]: componentLazyTemplateGenerator,
 };
 
-function generateComponent(componentName, cmd, cliConfigFile) {
+export function generateComponent(componentName, cmd, cliConfigFile) {
   const componentFileTypes = ['component', ...getCorrespondingComponentFileTypes(cmd)];
 
   componentFileTypes.forEach((componentFileType) => {
@@ -427,9 +432,3 @@ function generateComponent(componentName, cmd, cliConfigFile) {
     console.log(chalk.yellow(`NOTE: The "dry-run" flag means no changes were made.`));
   }
 }
-
-module.exports = {
-  generateComponent,
-  getComponentByType,
-  getCorrespondingComponentFileTypes,
-};
