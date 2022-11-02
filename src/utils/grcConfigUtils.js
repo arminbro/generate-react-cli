@@ -63,6 +63,11 @@ export const componentLevelQuestions = [
   },
   {
     type: 'confirm',
+    name: 'component.default.withMdx',
+    message: 'Would you like to create a corresponding MDX file with each component you generate?',
+  },
+  {
+    type: 'confirm',
     name: 'component.default.withLazy',
     message:
       'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each component you generate?',

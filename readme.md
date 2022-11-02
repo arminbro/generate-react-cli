@@ -48,6 +48,7 @@ When you run GRC within your project the first time, it will ask you a series of
       "path": "src/components",
       "withLazy": false,
       "withStory": false,
+      "withMdx": false,
       "withStyle": true,
       "withTest": true
     }

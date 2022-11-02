@@ -13,6 +13,7 @@ import componentCssTemplate from '../templates/component/componentCssTemplate.js
 import componentLazyTemplate from '../templates/component/componentLazyTemplate.js';
 import componentTsLazyTemplate from '../templates/component/componentTsLazyTemplate.js';
 import componentStoryTemplate from '../templates/component/componentStoryTemplate.js';
+import componentMdxTemplate from '../templates/component/componentMdxTemplate.js';
 import componentTestEnzymeTemplate from '../templates/component/componentTestEnzymeTemplate.js';
 import componentTestDefaultTemplate from '../templates/component/componentTestDefaultTemplate.js';
 import componentTestTestingLibraryTemplate from '../templates/component/componentTestTestingLibraryTemplate.js';
@@ -244,6 +245,37 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   };
 }
 
+function componentMdxTemplateGenerator({ cliConfigFile, cmd, componentName }) {
+  const { customTemplates } = cliConfigFile.component[cmd.type];
+  let template = null;
+  let filename = null;
+
+  // Check for a custom story template.
+
+  if (customTemplates && customTemplates.mdx) {
+    // --- Load and use the custom story template
+
+    const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
+      componentName,
+      customTemplates.mdx
+    );
+
+    template = customTemplate;
+    filename = customTemplateFilename;
+  } else {
+    // --- Else use GRC built-in story template
+
+    template = componentMdxTemplate;
+    filename = `${componentName}.mdx`;
+  }
+
+  return {
+    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    filename,
+    template,
+  };
+}
+
 function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
@@ -321,6 +353,7 @@ const buildInComponentFileTypes = {
   STYLE: 'withStyle',
   TEST: 'withTest',
   STORY: 'withStory',
+  MDX: 'withMdx',
   LAZY: 'withLazy',
 };
 
@@ -331,6 +364,7 @@ const componentTemplateGeneratorMap = {
   [buildInComponentFileTypes.STYLE]: componentStyleTemplateGenerator,
   [buildInComponentFileTypes.TEST]: componentTestTemplateGenerator,
   [buildInComponentFileTypes.STORY]: componentStoryTemplateGenerator,
+  [buildInComponentFileTypes.MDX]: componentMdxTemplateGenerator,
   [buildInComponentFileTypes.LAZY]: componentLazyTemplateGenerator,
 };
 
