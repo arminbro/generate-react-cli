@@ -411,7 +411,7 @@ GRC uses the DaVinci language model, so you can check out their pricing here: ht
 Let's generate our first component using OpenAI:
 
 ```sh
-npx generate-react-cli c Counter -d "Create a counter component that increments by one when I click on the increment button"
+npx generate-react-cli@alpha c Counter -d "Create a counter component that increments by one when I click on the increment button"
 ```
 
 GRC should have created a Counter component that looks something like this 🤯:
@@ -444,7 +444,7 @@ OpenAI will do its best to generate the component following the instructions pro
 Okay, let's try another one.
 
 ```sh
-npx generate-react-cli c GlobalNav -d "Create a navbar component with 1 logo named 'GRC' and 3 links: 'Home', 'About', 'Contact'"
+npx generate-react-cli@alpha c GlobalNav -d "Create a navbar component with 1 logo named 'GRC' and 3 links: 'Home', 'About', 'Contact'"
 ```
 
 and here's the output in src/components/GlobalNav/GlobalNav.js:
