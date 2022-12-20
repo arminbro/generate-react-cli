@@ -41,9 +41,11 @@
     "chalk": "5.2.0",
     "commander": "9.4.1",
     "deep-keys": "0.5.0",
+    "dotenv": "^16.0.3",
     "fs-extra": "11.1.0",
     "inquirer": "9.1.4",
     "lodash": "4.17.21",
+    "openai": "^3.1.0",
     "replace": "1.2.2"
   },
   "devDependencies": {
