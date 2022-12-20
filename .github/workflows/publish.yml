@@ -2,10 +2,7 @@ name: Publish
 
 on:
   push:
-    branches:
-      - alpha
-      - beta
-      - main
+    branches: [alpha, beta, main]
 
 jobs:
   publish:

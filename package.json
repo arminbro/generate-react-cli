@@ -72,6 +72,8 @@
   },
   "release": {
     "branches": [
+      "alpha",
+      "beta",
       "main"
     ],
     "plugins": [
