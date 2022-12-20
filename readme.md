@@ -10,18 +10,18 @@
 
 To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
 
-A short [article](https://dev.to/arminbro/generate-react-cli-1ooh) that goes a little deeper into why we created GRC if you have the time.
+A short [article](https://dev.to/arminbro/generate-react-cli-1ooh) goes deeper into why we created GRC if you have the time.
 
-Suppose you enjoy learning by watching tutorial videos. Here's an excellent [video](https://www.youtube.com/watch?v=NEvnt3MWttY) on how to use GRC by [Eric Murphy](https://www.youtube.com/channel/UC5KDiSAFxrDWhmysBcNqtMA).
+You can also watch an excellent [video](https://www.youtube.com/watch?v=NEvnt3MWttY) tutorial on how to use GRC by [Eric Murphy](https://www.youtube.com/channel/UC5KDiSAFxrDWhmysBcNqtMA).
 
-**_A few notes:_**
+## Table of Contents:
 
-- Now supports custom component types ([read more](#custom-component-types)). 🎉
-- Now supports custom component templates ([read more](#custom-component-templates)). 🎉
-- Now supports custom component files ([read more](#custom-component-files)). 🎉
-- Supports React [TypeScript](https://www.typescriptlang.org/) projects.
-- Supports two different component testing libraries - [Testing Library](https://testing-library.com) and [Enzyme](https://airbnb.io/enzyme) - that work with [Jest](https://jestjs.io/). We assume that you have these libraries already configured in your React project.
-- It follows [grouping by feature](https://reactjs.org/docs/faq-structure.html#grouping-by-file-type) because we believe when you look at a component, you should see all of its corresponding files (i.e., stylesheet, test, and component) under one folder with the feature name. We feel this approach provides a better developer experience.
+- [Config file](#config-file)
+- [Generate components](#generate-components)
+- [Custom component types](#custom-component-types)
+- [Custom component templates](#custom-component-templates)
+- [Custom component files](#custom-component-files)
+- [OpenAi integration (Alpha release)](#openai-integration-alpha-release)
 
 ## You can run it using npx like this:
 
@@ -39,7 +39,7 @@ When you run GRC within your project the first time, it will ask you a series of
 
 ```json
 {
-  "usesTypeScript": false,
+  "usesTypeScript": true,
   "usesCssModule": true,
   "cssPreprocessor": "scss",
   "testLibrary": "Testing Library",
@@ -57,7 +57,7 @@ When you run GRC within your project the first time, it will ask you a series of
 
 ## Generate Components
 
-```
+```sh
   npx generate-react-cli component Box
 ```
 
@@ -78,13 +78,13 @@ This command will create a folder with your component name within your default (
 
 You can also override some of the GRC component config rules using one-off commands. So for example, let's say you have set **withTest** to be `true` in the `component.default` property. You can override it like this:
 
-```
+```sh
   npx generate-react-cli component Box --withTest=false
 ```
 
 Or vice versa, if you have set **withTest** to be `false` you can do this:
 
-```
+```sh
   npx generate-react-cli component Box --withTest=true
 ```
 
@@ -166,6 +166,14 @@ Otherwise, if you don't pass any options, it will just use the default values th
     <td width="20%">Boolean</td>
     <td width="20%"><code>false<code></td>
   </tr>
+    <tr>
+    <td width="20%"><b>--describe</b></td>
+    <td width="60%">
+      Describe the component you're trying to generate, and OpenAI will do its best to render it following your instructions.
+    </td>
+    <td width="20%">String</td>
+    <td width="20%"><code>null<code></td>
+  </tr>
 </table>
 
 ### Custom component types:
@@ -210,11 +218,11 @@ You can do so by extending the **generate-react-cli.json** config file like this
 
 Now you can generate a component with your custom component types like this:
 
-```
+```sh
   npx generate-react-cli component HomePage --type=page
 ```
 
-```
+```sh
   npx generate-react-cli component BoxLayout --type=layout
 ```
 
@@ -376,6 +384,106 @@ You should also see that we added `index` and `storyStyle` to our `customTemplat
 
 Also, we used the `TemplateName` keyword for the `storyStyle` custom file. GRC will generate this corresponding file and replace `TemplateName` with the component name.
 
+## OpenAI integration (Alpha release)
+
+Well, the time has come to incorporate OpenAI with GRC.
+
+I had a chance to experiment with OpenAI's latest GPT-3 natural language model, and I was super impressed by its capabilities. You can read more about OpenAI by visiting their site: https://openai.com/.
+
+If you've been using GRC, you already know about its component generation capabilities using its internal templates or the custom ones you provide.
+
+With the help of OpenAI, we can now generate our components intelligently by describing them using the new `--describe` flag, or `-d` for short.
+
+The plan for this alpha integration will start simple, but I have a few good ideas coming in the near future (and I'm hoping to hear some of yours) on how we can use OpenAI with GRC to improve the developer experience.
+
+Please remember that this release is still early, and you will run into bugs. So, please report any bugs or issues [here](https://github.com/arminbro/generate-react-cli/issues).
+
+### Okay, let's get started.
+
+1. If you don't have one, you must create an OpenAI account: https://openai.com/api/.
+2. You'll need to obtain a secret API key from OpenAI. You can do so by visiting https://beta.openai.com/account/api-keys.
+3. Once you have your API key, you'll need to create a `.env.local` file in your react project and store it as a variable as `OPENAI_API_KEY`. Please be sure not to share the key or push it to version control, as it is private.
+
+GRC will pass the key to OpenAI to communicate with the API on your behalf. You will see the usage reflected on your OpenAI account here: https://beta.openai.com/account/usage.
+
+GRC uses the DaVinci language model, so you can check out their pricing here: https://openai.com/api/pricing/.
+
+Let's generate our first component using OpenAI:
+
+```sh
+npx generate-react-cli@alpha c Counter -d "Create a counter component that increments by one when I click on the increment button"
+```
+
+GRC should have created a Counter component that looks something like this 🤯:
+
+```jsx
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import './Counter.css';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="Counter" data-testid="Counter">
+      <h2> The count is: {count} </h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+};
+
+Counter.propTypes = {};
+
+Counter.defaultProps = {};
+
+export default Counter;
+```
+
+OpenAI will do its best to generate the component following the instructions provided in the `--describe` flag while using the patterns supplied from the internal or custom component templates.
+
+Okay, let's try another one.
+
+```sh
+npx generate-react-cli@alpha c GlobalNav -d "Create a navbar component with 1 logo named 'GRC' and 3 links: 'Home', 'About', 'Contact'"
+```
+
+and here's the output in src/components/GlobalNav/GlobalNav.js:
+
+```jsx
+import React from 'react';
+import PropTypes from 'prop-types';
+import './GlobalNav.css';
+
+const GlobalNav = () => (
+  <div className="GlobalNav" data-testid="GlobalNav">
+    <a href="#">GRC</a>
+    <ul>
+      <li>
+        <a href="#">Home</a>
+      </li>
+      <li>
+        <a href="#">About</a>
+      </li>
+      <li>
+        <a href="#">Contact</a>
+      </li>
+    </ul>
+  </div>
+);
+
+GlobalNav.propTypes = {};
+
+GlobalNav.defaultProps = {};
+
+export default GlobalNav;
+```
+
+That's a wrap. I hope this integration will allow us to generate React components more efficiently, and we can still go in and make the necessary adjustments.
+
+Again, please provide any feedback if you have any, and I would love to see some of the components that you generate with GRC+OpenAI.
+
+Please share them with me on Twitter [@arminbro](https://twitter.com/arminbro).
+
 ## License
 
-Generate React CLI is open source software [licensed as MIT](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE).
+Generate React CLI is an open source software [licensed as MIT](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE).

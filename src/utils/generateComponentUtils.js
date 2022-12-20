@@ -7,6 +7,7 @@ import snakeCase from 'lodash/snakeCase.js';
 import startCase from 'lodash/startCase.js';
 import fsExtra from 'fs-extra';
 
+import { aiComponentGenerator } from '../services/openAiService.js';
 import componentJsTemplate from '../templates/component/componentJsTemplate.js';
 import componentTsTemplate from '../templates/component/componentTsTemplate.js';
 import componentCssTemplate from '../templates/component/componentCssTemplate.js';
@@ -416,6 +417,25 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
               recursive: false,
               silent: true,
             });
+          }
+
+          // Generate component with openAi, if component description is provided
+
+          if (cmd.describe && componentFileType === buildInComponentFileTypes.COMPONENT) {
+            aiComponentGenerator(template, cmd.describe)
+              .then((aiGeneratedComponent) => {
+                outputFileSync(componentPath, aiGeneratedComponent.trim());
+                console.log(
+                  chalk.green(`OpenAI Successfully created the ${filename} component with the provided description.`)
+                );
+              })
+              .catch((error) =>
+                console.log(
+                  chalk.red(`OpenAI failed to create the ${filename} component with the provided description.`, error)
+                )
+              );
+
+            return;
           }
 
           console.log(chalk.green(`${filename} was successfully created at ${componentPath}`));

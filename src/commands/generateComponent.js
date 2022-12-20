@@ -19,6 +19,11 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
       'You can pass a component type that you have configured in your GRC config file.',
       'default'
     )
+    .option(
+      '-d, --describe <describe>',
+      'Describe the component you want GRC to generate (e.g., Create a counter component that increments by one when I click on the increment button).',
+      null
+    )
     .option('-f, --flat', 'Generate the files in the mentioned path insted of creating new folder for it', false);
 
   // Dynamic component command option defaults.
