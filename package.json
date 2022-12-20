@@ -71,11 +71,6 @@
     "printWidth": 120
   },
   "release": {
-    "branches": [
-      "alpha",
-      "beta",
-      "main"
-    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
