@@ -24,7 +24,8 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
       'Describe the component you want GRC to generate (e.g., Create a counter component that increments by one when I click on the increment button).',
       null
     )
-    .option('-f, --flat', 'Generate the files in the mentioned path insted of creating new folder for it', false);
+    .option('-f, --flat', 'Generate the files in the mentioned path insted of creating new folder for it', false)
+    .option('-dr, --dry-run', 'Show what will be generated without writing to disk');
 
   // Dynamic component command option defaults.
 
@@ -37,8 +38,6 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
       selectedComponentType[dynamicOption]
     );
   });
-
-  componentCommand.option('--dry-run', 'Show what will be generated without writing to disk');
 
   // Component command action.
 
