@@ -7,7 +7,7 @@ import snakeCase from 'lodash/snakeCase.js';
 import startCase from 'lodash/startCase.js';
 import fsExtra from 'fs-extra';
 
-import { aiComponentGenerator } from '../services/openAiService.js';
+import { aiComponentGenerator, aiComponentTestGenerator } from '../services/openAiService.js';
 import componentJsTemplate from '../templates/component/componentJsTemplate.js';
 import componentTsTemplate from '../templates/component/componentTsTemplate.js';
 import componentCssTemplate from '../templates/component/componentCssTemplate.js';
@@ -432,6 +432,30 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
               .catch((error) =>
                 console.log(
                   chalk.red(`OpenAI failed to create the ${filename} component with the provided description.`, error)
+                )
+              );
+
+            return;
+          }
+
+          // Generate component test with openAi, if component description is provided
+
+          if (cmd.describe && componentFileType === buildInComponentFileTypes.TEST) {
+            aiComponentTestGenerator(template, cmd.describe)
+              .then((aiGeneratedComponentTest) => {
+                outputFileSync(componentPath, aiGeneratedComponentTest.trim());
+                console.log(
+                  chalk.green(
+                    `OpenAI Successfully created the ${filename} component test with the provided description.`
+                  )
+                );
+              })
+              .catch((error) =>
+                console.log(
+                  chalk.red(
+                    `OpenAI failed to create the ${filename} component test with the provided description.`,
+                    error
+                  )
                 )
               );
 
