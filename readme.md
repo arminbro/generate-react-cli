@@ -478,6 +478,49 @@ GlobalNav.defaultProps = {};
 export default GlobalNav;
 ```
 
+If you have unit testing enabled in your project and have the `withTest` flag enabled, it will generate the unit test file and initialize with some test cases for the generated component right out of the box!
+
+Here are the unit tests it generated for the GlobalNav component using the default testing library template (`@testing-library/react`) that comes with GRC.
+
+```tsx
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import GlobalNav from './GlobalNav';
+
+describe('<GlobalNav />', () => {
+  test('it should mount', () => {
+    render(<GlobalNav />);
+
+    const globalNav = screen.getByTestId('GlobalNav');
+
+    expect(globalNav).toBeInTheDocument();
+  });
+
+  test('it should display the logo "GRC"', () => {
+    render(<GlobalNav />);
+
+    const logo = screen.getByText('GRC');
+
+    expect(logo).toBeInTheDocument();
+  });
+
+  test('it should display three links: Home, About and Contact', () => {
+    render(<GlobalNav />);
+
+    const homeLink = screen.getByText('Home');
+    const aboutLink = screen.getByText('About');
+    const contactLink = screen.getByText('Contact');
+
+    expect(homeLink).toBeInTheDocument();
+    expect(aboutLink).toBeInTheDocument();
+    expect(contactLink).toBeInTheDocument();
+  });
+});
+```
+
+Please note, If you're using a different testing library, you need to provide it as a [custom testing component template](#custom-component-templates), and GRC will instruct openAi to use that to write your unit tests.
+
 That's a wrap. I hope this integration will allow us to generate React components more efficiently, and we can still go in and make the necessary adjustments.
 
 Again, please provide any feedback if you have any, and I would love to see some of the components that you generate with GRC+OpenAI.
