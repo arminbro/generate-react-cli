@@ -86,6 +86,9 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   let template = null;
   let filename = null;
 
+  // allow naming the component src file as ComponentName/index.jsx
+  componentName = cmd.withNameIndex ? 'index' : componentName;
+
   // Check for a custom component template.
 
   if (customTemplates && customTemplates.component) {
