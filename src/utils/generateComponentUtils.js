@@ -82,9 +82,10 @@ Please make sure you're pointing to the right custom template path in your gener
 
 function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.component[cmd.type];
+  const { customTemplates, flat } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
+  const isFlat = flat || cmd.flat;
 
   // Check for a custom component template.
 
@@ -133,16 +134,17 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: `${cmd.path}${isFlat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
 }
 
 function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) {
-  const { customTemplates } = cliConfigFile.component[cmd.type];
+  const { customTemplates, flat } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
+  const isFlat = flat || cmd.flat;
 
   // Check for a custom style template.
 
@@ -168,17 +170,18 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: `${cmd.path}${isFlat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
 }
 
 function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
-  const { customTemplates } = cliConfigFile.component[cmd.type];
+  const { customTemplates, flat } = cliConfigFile.component[cmd.type];
   const { testLibrary, usesTypeScript } = cliConfigFile;
   let template = null;
   let filename = null;
+  const isFlat = flat || cmd.flat;
 
   // Check for a custom test template.
 
@@ -207,7 +210,7 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: `${cmd.path}${isFlat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -215,9 +218,10 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
 
 function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.component[cmd.type];
+  const { customTemplates, flat } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
+  const isFlat = flat || cmd.flat;
 
   // Check for a custom story template.
 
@@ -239,7 +243,7 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: `${cmd.path}${isFlat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
@@ -247,9 +251,10 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
 
 function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   const { usesTypeScript } = cliConfigFile;
-  const { customTemplates } = cliConfigFile.component[cmd.type];
+  const { customTemplates, flat } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
+  const isFlat = flat || cmd.flat;
 
   // Check for a custom lazy template.
 
@@ -271,17 +276,18 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: `${cmd.path}${isFlat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
 }
 
 function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, componentFileType }) {
-  const { customTemplates } = cliConfigFile.component[cmd.type];
+  const { customTemplates, flat } = cliConfigFile.component[cmd.type];
   const fileType = camelCase(componentFileType.split('with')[1]);
   let filename = null;
   let template = null;
+  const isFlat = flat || cmd.flat;
 
   // Check for a valid custom template for the corresponding custom component file.
 
@@ -309,7 +315,7 @@ Please make sure you're pointing to the right custom template path in your gener
   filename = customTemplateFilename;
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: `${cmd.path}${isFlat ? '' : `/${componentName}`}/${filename}`,
     filename,
     template,
   };
