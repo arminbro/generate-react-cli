@@ -11,6 +11,7 @@ import { aiComponentGenerator } from '../services/openAiService.js';
 import componentJsTemplate from '../templates/component/componentJsTemplate.js';
 import componentTsTemplate from '../templates/component/componentTsTemplate.js';
 import componentCssTemplate from '../templates/component/componentCssTemplate.js';
+import componentStyledTemplate from '../templates/component/componentStyledTemplate.js';
 import componentLazyTemplate from '../templates/component/componentLazyTemplate.js';
 import componentTsLazyTemplate from '../templates/component/componentTsLazyTemplate.js';
 import componentStoryTemplate from '../templates/component/componentStoryTemplate.js';
@@ -81,7 +82,7 @@ Please make sure you're pointing to the right custom template path in your gener
 }
 
 function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
-  const { cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
+  const { usesStyledComponents, cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
@@ -113,16 +114,27 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
     // --- If it has a corresponding stylesheet
 
     if (cmd.withStyle) {
-      const module = usesCssModule ? '.module' : '';
-      const cssPath = `${componentName}${module}.${cssPreprocessor}`;
-
-      // --- If the css module is true make sure to update the template accordingly
-
-      if (module.length) {
-        template = template.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
+      if (cliConfigFile.usesStyledComponents) {
+        const cssPath = `${componentName}.styled`;
+        template = template.replace(
+          `import styles from './TemplateName.module.css'`,
+          `import { TemplateNameWrapper } from './${cssPath}'`
+        );
+        template = template.replace(` className={styles.TemplateName}`, '');
+        template = template.replace(` <div`, '<TemplateNameWrapper');
+        template = template.replace(` </div>`, '</TemplateNameWrapper>');
       } else {
-        template = template.replace(`{styles.TemplateName}`, `"${componentName}"`);
-        template = template.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
+        const module = usesCssModule ? '.module' : '';
+        const cssPath = `${componentName}${module}.${cssPreprocessor}`;
+
+        // --- If the css module is true make sure to update the template accordingly
+
+        if (module.length) {
+          template = template.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
+        } else {
+          template = template.replace(`{styles.TemplateName}`, `"${componentName}"`);
+          template = template.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
+        }
       }
     } else {
       // --- If no stylesheet, remove className attribute and style import from jsTemplate
@@ -157,14 +169,19 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) 
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    const { cssPreprocessor, usesCssModule } = cliConfigFile;
-    const module = usesCssModule ? '.module' : '';
-    const cssFilename = `${componentName}${module}.${cssPreprocessor}`;
+    const { usesTypeScript, usesStyledComponents, cssPreprocessor, usesCssModule } = cliConfigFile;
+    if (usesStyledComponents) {
+      filename = usesTypeScript ? `${componentName}.styled.ts` : `${componentName}.styled.js`;
+      template = componentStyledTemplate;
+    } else {
+      const module = usesCssModule ? '.module' : '';
+      const cssFilename = `${componentName}${module}.${cssPreprocessor}`;
 
-    // --- Else use GRC built-in style template
+      // --- Else use GRC built-in style template
 
-    template = componentCssTemplate;
-    filename = cssFilename;
+      template = componentCssTemplate;
+      filename = cssFilename;
+    }
   }
 
   return {
