@@ -20,12 +20,19 @@ const projectLevelQuestions = [
   },
   {
     type: 'confirm',
+    name: 'usesStyledComponents',
+    message: 'Does this project use styled-components?',
+  },
+  {
+    type: 'confirm',
+    when: (answers) => !answers['usesStyledComponents'],
     name: 'usesCssModule',
     message: 'Does this project use CSS modules?',
   },
   {
     type: 'list',
     name: 'cssPreprocessor',
+    when: (answers) => !answers['usesStyledComponents'],
     message: 'Does this project use a CSS Preprocessor?',
     choices: ['css', 'scss', 'less', 'styl'],
   },
@@ -184,7 +191,9 @@ export async function getCLIConfigFile() {
        */
 
       const missingConfigQuestions = grcConfigQuestions.filter(
-        (question) => !deepKeys(currentConfigFile).includes(question.name)
+        (question) =>
+          !deepKeys(currentConfigFile).includes(question.name) &&
+          (question.when ? question.when(currentConfigFile) : true)
       );
 
       if (missingConfigQuestions.length) {
