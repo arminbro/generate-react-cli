@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/npm/l/express.svg)](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE)
 
-<p align="center"> 
+<p align="center">
   <img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/generate-react-cli.svg?raw=true"/>
 </p>
 
@@ -20,6 +20,7 @@ You can also watch an excellent [video](https://www.youtube.com/watch?v=NEvnt3MW
 - [Generate components](#generate-components)
 - [Custom component types](#custom-component-types)
 - [Custom component templates](#custom-component-templates)
+- [Custom component directory](#custom-component-directory)
 - [Custom component files](#custom-component-files)
 - [OpenAi integration (Alpha release)](#openai-integration-alpha-release)
 
@@ -97,10 +98,11 @@ Otherwise, if you don't pass any options, it will just use the default values th
     <th>Value Type</th>
     <th>Default Value</th>
   </tr>
+
   <tr>
     <td width="20%"><b>--path</b></td>
     <td width="60%">
-      Value of the path where you want the component to be generated in (e.g. <b>src/components</b>).  
+      Value of the path where you want the component to be generated in (e.g. <b>src/components</b>).
     </td>
     <td width="20%">String</td>
     <td width="20%"><code>component.default.path<code></td>
@@ -118,7 +120,7 @@ Otherwise, if you don't pass any options, it will just use the default values th
   <tr>
     <td width="20%"><b>--withLazy</b></td>
     <td width="60%">
-      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.      
+      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.
     </td>
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withLazy<code></td>
@@ -127,7 +129,7 @@ Otherwise, if you don't pass any options, it will just use the default values th
   <tr>
     <td width="20%"><b>--withStory</b></td>
     <td width="60%">
-      Creates a corresponding (<a href="https://storybook.js.org">storybook</a>) story file with this component.      
+      Creates a corresponding (<a href="https://storybook.js.org">storybook</a>) story file with this component.
     </td>
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withStory<code></td>
@@ -136,7 +138,7 @@ Otherwise, if you don't pass any options, it will just use the default values th
   <tr>
     <td width="20%"><b>--withStyle</b></td>
     <td width="60%">
-      Creates a corresponding stylesheet file with this component.    
+      Creates a corresponding stylesheet file with this component.
     </td>
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withStyle<code></td>
@@ -145,11 +147,12 @@ Otherwise, if you don't pass any options, it will just use the default values th
   <tr>
     <td width="20%"><b>--withTest</b></td>
     <td width="60%">
-      Creates a corresponding test file with this component.      
+      Creates a corresponding test file with this component.
     </td>
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withTest<code></td>
   </tr>
+
   <tr>
     <td width="20%"><b>--dry-run</b></td>
     <td width="60%">
@@ -158,15 +161,27 @@ Otherwise, if you don't pass any options, it will just use the default values th
     <td width="20%">Boolean</td>
     <td width="20%"><code>false<code></td>
   </tr>
+
   <tr>
     <td width="20%"><b>--flat</b></td>
     <td width="60%">
-      Generate the files in the mentioned path insted of creating new folder for it
+      Generate the files in the mentioned path instead of creating new folder for it
     </td>
     <td width="20%">Boolean</td>
     <td width="20%"><code>false<code></td>
   </tr>
-    <tr>
+
+  <tr>
+    <td width="20%"><b>--customDirectory</b></td>
+    <td width="60%">
+      Template value that overrides the name of the directory of the component to be generated in.<br />
+      See more under <a href="#custom-component-directory">custom component directory</a>.
+    </td>
+    <td width="20%">String</td>
+    <td width="20%"><code>null</code></td>
+  </tr>
+
+  <tr>
     <td width="20%"><b>--describe</b></td>
     <td width="60%">
       Describe the component you're trying to generate, and OpenAI will do its best to render it following your instructions.
@@ -176,7 +191,7 @@ Otherwise, if you don't pass any options, it will just use the default values th
   </tr>
 </table>
 
-### Custom component types:
+### Custom component types
 
 By default, GRC will use the `component.default` configuration rules when running the component command out of the box.
 
@@ -328,6 +343,93 @@ it('It should mount', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 ```
+
+### Custom component directory
+
+Using the `customDirectory` you can easily override the directory name for the component generated. For instance, if prefixes are required for particular components or if template names will be mixed, the `customDirectory` option will allow you to override the way that GRC generates the name of the directory where the component files will live.
+
+The `customDirectory` directive allows all supported casings (see previous section) and can be overridden at the following levels in ascending specific of priority:
+
+- top
+- component.default
+- component._type_
+- CLI
+
+#### Example:
+
+For React Context Providers in a project, the decision has been made to separate Context generation from the visual components.
+
+In a typical configuration the configuration would look as following:
+
+```json
+{
+  "provider": {
+    "path": "src/components/providers",
+    "withLazy": false,
+    "withStory": true,
+    "withStyle": false,
+    "withTest": true,
+    "withTypes": true,
+    "withContext": true,
+    "customTemplates": {
+      "component": "src/components/templates/provider/TemplateName.tsx",
+      "context": "src/components/templates/provider/TemplateName.context.ts",
+      "story": "src/components/templates/provider/TemplateName.stories.tsx",
+      "test": "src/components/templates/provider/TemplateName.test.tsx",
+      "types": "src/components/templates/provider/TemplateName.types.ts"
+    }
+  }
+}
+```
+
+With the configuration above, the component would be required to either follow a full or a minimalistic naming convention.
+I.e. the component would either need to be generated as `ThemeProvider` and consequently the context name would be generated as `ThemeProviderContext`, or by renaming the files and templates as `TemplateNameProvider` but with the downside of the component path being generated as `src/components/providers/Theme`. This creates inconsistent naming in the directory containg the component files.
+
+To work around this, the `customDirectory` option can be used to enforce a particular style.
+
+```json
+{
+  ...
+  "provider": {
+    "path": "src/components/providers",
+      "withLazy": false,
+      "withStory": true,
+      "withStyle": false,
+      "withTest": true,
+      "withTypes": true,
+      "withContext": true,
+      "customDirectory": "TemplateNameProvider",
+      "customTemplates": {
+          "component": "src/components/templates/provider/TemplateNameProvider.tsx",
+          "context": "src/components/templates/provider/TemplateName.context.ts",
+          "story": "src/components/templates/provider/TemplateNameProvider.stories.tsx",
+          "test": "src/components/templates/provider/TemplateNameProvider.test.tsx",
+          "types": "src/components/templates/provider/TemplateNameProvider.types.ts"
+      }
+  }
+  ...
+}
+```
+
+The above configuration would allow you to mix and match different template names and keep naming consistent.
+
+If we executed GRC with the above configuration (`npx generate-react-cli component Theme --type=provider`), the result would look like this:
+
+```fs
+src/components/providers/ThemeProvider/Theme.context.ts
+src/components/providers/ThemeProvider/ThemeProvider.tsx
+src/components/providers/ThemeProvider/ThemeProvider.stories.tsx
+src/components/providers/ThemeProvider/ThemeProvider.test.tsx
+src/components/providers/ThemeProvider/ThemeProvider.types.ts
+```
+
+Similarly, this construct could be used as a shortcut for generating other named components, like the `BoxLayout` example above, depending on that could be shortened to:
+
+```sh
+  npx generate-react-cli component Box --type=layout --customDir=TemplateNameLayout
+```
+
+Or it could be used to generate files with a naming convention with `Test`, `Lazy`, `Context`, `Theme`, or `Provider` suffixes. Or even combined with skeleton CSS
 
 ### Custom component files
 
