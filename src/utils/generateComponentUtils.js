@@ -19,6 +19,8 @@ import componentTestEnzymeTemplate from '../templates/component/componentTestEnz
 import componentTestDefaultTemplate from '../templates/component/componentTestDefaultTemplate.js';
 import componentTestTestingLibraryTemplate from '../templates/component/componentTestTestingLibraryTemplate.js';
 
+const templateNameRE = /.*(template[|_-]?name).*/i;
+
 const { existsSync, outputFileSync, readFileSync } = fsExtra;
 
 export function getComponentByType(args, cliConfigFile) {
@@ -71,7 +73,7 @@ function getCustomTemplate(componentName, templatePath) {
     console.error(
       chalk.red(
         `
-ERROR: The custom template path of "${templatePath}" does not exist. 
+ERROR: The custom template path of "${templatePath}" does not exist.
 Please make sure you're pointing to the right custom template path in your generate-react-cli.json config file.
         `
       )
@@ -81,7 +83,52 @@ Please make sure you're pointing to the right custom template path in your gener
   }
 }
 
-function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
+function componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }) {
+  let componentPath = cmd.path;
+
+  if (cmd.flat !== true) {
+    let componentDirectory = componentName;
+
+    const customDirectoryConfigs = [
+      cliConfigFile.customDirectory,
+      cliConfigFile.component.default.customDirectory,
+      cliConfigFile.component[cmd.type].customDirectory,
+      cmd.customDirectory,
+    ].filter((e) => Boolean(e) && typeof e === 'string');
+
+    if (customDirectoryConfigs.length > 0) {
+      const customDirectory = customDirectoryConfigs.slice(-1).toString();
+
+      // Double check if the customDirectory is templatable
+      if (templateNameRE.exec(customDirectory) == null) {
+        console.error(
+          chalk.red(
+            `customDirectory [${customDirectory}] for ${componentName} does not contain a templatable value.\nPlease check your configuration!`
+          )
+        );
+
+        process.exit(-2);
+      }
+
+      for (const convertor in convertors) {
+        const re = new RegExp(`.*${convertor}.*`);
+
+        if (re.exec(customDirectory) !== null) {
+          componentDirectory = customDirectory.replace(convertor, convertors[convertor]);
+        }
+      }
+    }
+
+    componentPath += `/${componentDirectory}`;
+  }
+
+  componentPath += `/${filename}`;
+
+  return componentPath;
+}
+
+function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convertors }) {
+  // @ts-ignore
   const { usesStyledComponents, cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
@@ -145,13 +192,13 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
     filename,
     template,
   };
 }
 
-function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) {
+function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, convertors }) {
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
@@ -185,13 +232,13 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
     filename,
     template,
   };
 }
 
-function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
+function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, convertors }) {
   const { customTemplates } = cliConfigFile.component[cmd.type];
   const { testLibrary, usesTypeScript } = cliConfigFile;
   let template = null;
@@ -224,13 +271,13 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName }) {
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
     filename,
     template,
   };
 }
 
-function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) {
+function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, convertors }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
@@ -256,13 +303,13 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName }) 
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
     filename,
     template,
   };
 }
 
-function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
+function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile, convertors }) {
   const { usesTypeScript } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
@@ -288,13 +335,13 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile }) {
   }
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
     filename,
     template,
   };
 }
 
-function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, componentFileType }) {
+function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, componentFileType, convertors }) {
   const { customTemplates } = cliConfigFile.component[cmd.type];
   const fileType = camelCase(componentFileType.split('with')[1]);
   let filename = null;
@@ -306,7 +353,7 @@ function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, compon
     console.error(
       chalk.red(
         `
-ERROR: Custom component files require a valid custom template. 
+ERROR: Custom component files require a valid custom template.
 Please make sure you're pointing to the right custom template path in your generate-react-cli.json config file.
         `
       )
@@ -326,7 +373,7 @@ Please make sure you're pointing to the right custom template path in your gener
   filename = customTemplateFilename;
 
   return {
-    componentPath: `${cmd.path}${cmd.flat ? '' : `/${componentName}`}/${filename}`,
+    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
     filename,
     template,
   };
@@ -365,11 +412,21 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
     ) {
       const generateTemplate = componentTemplateGeneratorMap[componentFileType] || customFileTemplateGenerator;
 
+      const convertors = {
+        templatename: componentName,
+        TemplateName: startCase(camelCase(componentName)).replace(/ /g, ''),
+        templateName: camelCase(componentName),
+        'template-name': kebabCase(componentName),
+        template_name: snakeCase(componentName),
+        TEMPLATE_NAME: snakeCase(componentName).toUpperCase(),
+      };
+
       const { componentPath, filename, template } = generateTemplate({
         cmd,
         componentName,
         cliConfigFile,
         componentFileType,
+        convertors,
       });
 
       // --- Make sure the component does not already exist in the path directory.
@@ -384,7 +441,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the templatename in whichever format the user typed the component name in the command.
             replace({
               regex: 'templatename',
-              replacement: componentName,
+              replacement: convertors['templatename'],
               paths: [componentPath],
               recursive: false,
               silent: true,
@@ -393,7 +450,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the TemplateName in PascalCase
             replace({
               regex: 'TemplateName',
-              replacement: startCase(camelCase(componentName)).replace(/ /g, ''),
+              replacement: convertors['TemplateName'],
               paths: [componentPath],
               recursive: false,
               silent: true,
@@ -402,7 +459,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the templateName in camelCase
             replace({
               regex: 'templateName',
-              replacement: camelCase(componentName),
+              replacement: convertors['templateName'],
               paths: [componentPath],
               recursive: false,
               silent: true,
@@ -411,7 +468,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the template-name in kebab-case
             replace({
               regex: 'template-name',
-              replacement: kebabCase(componentName),
+              replacement: convertors['template-name'],
               paths: [componentPath],
               recursive: false,
               silent: true,
@@ -420,7 +477,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the template_name in snake_case
             replace({
               regex: 'template_name',
-              replacement: snakeCase(componentName),
+              replacement: convertors['template_name'],
               paths: [componentPath],
               recursive: false,
               silent: true,
@@ -429,7 +486,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             // Will replace the TEMPLATE_NAME in uppercase SNAKE_CASE
             replace({
               regex: 'TEMPLATE_NAME',
-              replacement: snakeCase(componentName).toUpperCase(),
+              replacement: convertors['TEMPLATE_NAME'],
               paths: [componentPath],
               recursive: false,
               silent: true,
@@ -441,6 +498,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
           if (cmd.describe && componentFileType === buildInComponentFileTypes.COMPONENT) {
             aiComponentGenerator(template, cmd.describe)
               .then((aiGeneratedComponent) => {
+                // @ts-ignore
                 outputFileSync(componentPath, aiGeneratedComponent.trim());
                 console.log(
                   chalk.green(`OpenAI Successfully created the ${filename} component with the provided description.`)

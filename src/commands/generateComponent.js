@@ -29,7 +29,17 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
       'Generate the files in the mentioned path instead of creating new folder for it',
       selectedComponentType.flat || false
     )
-    .option('-dr, --dry-run', 'Show what will be generated without writing to disk');
+    .option('-dr, --dry-run', 'Show what will be generated without writing to disk')
+    .option(
+      '--customDirectory <customDirectory>',
+      'You can pass a cased path template that will be used as the component path for the component being generated.\n' +
+        'E.g. this allows you to add a prefix or suffix to the component path, ' +
+        'or change the case of the name of the directory holding the components to kebab-case.\n' +
+        'Examples:\n' +
+        '- TemplateName\n' +
+        '- template-name\n' +
+        '- TemplateNameSuffix'
+    );
 
   // Dynamic component command option defaults.
 
