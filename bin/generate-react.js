@@ -6,12 +6,12 @@ const isNotValidNodeVersion = () => {
   const semver = currentNodeVersion.split('.');
   const major = semver[0];
 
-  if (major < 16) {
+  if (major < 18) {
     console.error(
       // eslint-disable-next-line
       'You are running Node ' +
         currentNodeVersion +
-        ' Generate React CLI requires Node 16 or higher. Please update your version of Node.'
+        ' Generate React CLI requires Node 18 or higher. Please update your version of Node.'
     );
 
     return true;
