@@ -65,7 +65,7 @@ function getCustomTemplate(componentName, templatePath) {
 
   try {
     const template = readFileSync(templatePath, 'utf8');
-    const filename = path.basename(templatePath).replace('TemplateName', componentName);
+    const filename = path.basename(templatePath).replace(/template[|_-]?name/i, componentName);
 
     return { template, filename };
   } catch (e) {
