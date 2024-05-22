@@ -1,1 +1,1 @@
-export default `.TemplateName {}`;
+export default `.templatename {}`;

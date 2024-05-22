@@ -308,7 +308,7 @@ const TemplateName = () => (
 export default TemplateName;
 ```
 
-**Important** - You can also use the following keywords within your custom templates to format the component name in your templates accordingly:
+**Important:** You can use the following keywords within your custom templates to format the component name. Note that the built-in GRC templates use `templatename` casing by default:
 
 | Keyword         | Replacement                                                                                    |
 | --------------- | ---------------------------------------------------------------------------------------------- |
