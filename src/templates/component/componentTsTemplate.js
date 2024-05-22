@@ -1,13 +1,13 @@
 export default `import React, { FC } from 'react';
-import styles from './TemplateName.module.css';
+import styles from './templatename.module.css';
 
-interface TemplateNameProps {}
+interface templatenameProps {}
 
-const TemplateName: FC<TemplateNameProps> = () => (
-  <div className={styles.TemplateName} data-testid="TemplateName">
-    TemplateName Component
+const templatename: FC<templatenameProps> = () => (
+  <div className={styles.templatename} data-testid="templatename">
+    templatename Component
   </div>
 );
 
-export default TemplateName;
+export default templatename;
 `;

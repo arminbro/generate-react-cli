@@ -1,14 +1,14 @@
 export default `import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import TemplateName from './TemplateName';
+import templatename from './templatename';
 
-describe('<TemplateName />', () => {
+describe('<templatename />', () => {
   test('it should mount', () => {
-    render(<TemplateName />);
+    render(<templatename />);
 
-    const templateName = screen.getByTestId('TemplateName');
+    const templatename = screen.getByTestId('templatename');
 
-    expect(templateName).toBeInTheDocument();
+    expect(templatename).toBeInTheDocument();
   });
 });`;

@@ -1,11 +1,11 @@
 export default `/* eslint-disable */
-import TemplateName from './TemplateName';
+import templatename from './templatename';
 
 export default {
-  title: "TemplateName",
+  title: "templatename",
 };
 
-export const Default = () => <TemplateName />;
+export const Default = () => <templatename />;
 
 Default.story = {
   name: 'default',

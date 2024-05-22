@@ -1,12 +1,12 @@
 export default `import React from 'react';
 import { shallow } from 'enzyme';
-import TemplateName from './TemplateName';
+import templatename from './templatename';
 
-describe('<TemplateName />', () => {
+describe('<templatename />', () => {
   let component;
 
   beforeEach(() => {
-    component = shallow(<TemplateName />);
+    component = shallow(<templatename />);
   });
 
   test('It should mount', () => {
