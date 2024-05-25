@@ -154,7 +154,7 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
     // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
 
     if (testLibrary !== 'Testing Library' || !cmd.withTest) {
-      template = template.replace(` data-testid="TemplateName"`, '');
+      template = template.replace(` data-testid="templatename"`, '');
     }
 
     // --- If it has a corresponding stylesheet
@@ -163,12 +163,12 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
       if (cliConfigFile.usesStyledComponents) {
         const cssPath = `${componentName}.styled`;
         template = template.replace(
-          `import styles from './TemplateName.module.css'`,
-          `import { TemplateNameWrapper } from './${cssPath}'`
+          `import styles from './templatename.module.css'`,
+          `import { templatenameWrapper } from './${cssPath}'`
         );
-        template = template.replace(` className={styles.TemplateName}`, '');
-        template = template.replace(` <div`, '<TemplateNameWrapper');
-        template = template.replace(` </div>`, '</TemplateNameWrapper>');
+        template = template.replace(` className={styles.templatename}`, '');
+        template = template.replace(` <div`, '<templatenameWrapper');
+        template = template.replace(` </div>`, '</templatenameWrapper>');
       } else {
         const module = usesCssModule ? '.module' : '';
         const cssPath = `${componentName}${module}.${cssPreprocessor}`;
@@ -176,17 +176,17 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
         // --- If the css module is true make sure to update the template accordingly
 
         if (module.length) {
-          template = template.replace(`'./TemplateName.module.css'`, `'./${cssPath}'`);
+          template = template.replace(`'./templatename.module.css'`, `'./${cssPath}'`);
         } else {
-          template = template.replace(`{styles.TemplateName}`, `"${componentName}"`);
-          template = template.replace(`styles from './TemplateName.module.css'`, `'./${cssPath}'`);
+          template = template.replace(`{styles.templatename}`, `"${componentName}"`);
+          template = template.replace(`styles from './templatename.module.css'`, `'./${cssPath}'`);
         }
       }
     } else {
       // --- If no stylesheet, remove className attribute and style import from jsTemplate
 
-      template = template.replace(` className={styles.TemplateName}`, '');
-      template = template.replace(`import styles from './TemplateName.module.css';`, '');
+      template = template.replace(` className={styles.templatename}`, '');
+      template = template.replace(`import styles from './templatename.module.css';`, '');
     }
   }
 
