@@ -7,8 +7,8 @@ describe('<templatename />', () => {
   test('it should mount', () => {
     render(<templatename />);
 
-    const templatename = screen.getByTestId('templatename');
+    const templateName = screen.getByTestId('templatename');
 
-    expect(templatename).toBeInTheDocument();
+    expect(templateName).toBeInTheDocument();
   });
 });`;
