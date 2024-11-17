@@ -1,7 +1,7 @@
 name: 'Run Repo Pruner'
 on:
   schedule:
-    - cron: '0 0 * * 0' # Runs weekly
+    - cron: '0 0 1 * *' # Runs once a month - At 00:00 on day-of-month 1.
   workflow_dispatch:
 
 jobs:
@@ -9,9 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Repo Pruner
-        uses: arminbro/repo-pruner@v1.0.4
+        uses: arminbro/repo-pruner@v2.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           inactive_days: 30
-          base_branch: master
