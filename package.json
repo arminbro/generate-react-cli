@@ -50,11 +50,11 @@
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
-    "@semantic-release/commit-analyzer": "13.0.0",
+    "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "11.0.0",
-    "@semantic-release/npm": "12.0.1",
-    "@semantic-release/release-notes-generator": "14.0.1",
+    "@semantic-release/github": "11.0.5",
+    "@semantic-release/npm": "12.0.2",
+    "@semantic-release/release-notes-generator": "14.0.3",
     "eslint": "8.57.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "9.1.0",
@@ -62,7 +62,7 @@
     "husky": "9.1.7",
     "prettier": "3.6.2",
     "pretty-quick": "4.2.2",
-    "semantic-release": "24.2.0"
+    "semantic-release": "24.2.7"
   },
   "prettier": {
     "singleQuote": true,
