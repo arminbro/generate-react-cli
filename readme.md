@@ -22,7 +22,6 @@ You can also watch an excellent [video](https://www.youtube.com/watch?v=NEvnt3MW
 - [Custom component templates](#custom-component-templates)
 - [Custom component directory](#custom-component-directory)
 - [Custom component files](#custom-component-files)
-- [OpenAi integration (Alpha release)](https://github.com/arminbro/generate-react-cli/tree/alpha?tab=readme-ov-file#openai-integration-alpha-release)
 
 ## You can run it using npx like this:
 

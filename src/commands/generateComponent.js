@@ -20,16 +20,11 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
       'default'
     )
     .option(
-      '-d, --describe <describe>',
-      'Describe the component you want GRC to generate (e.g., Create a counter component that increments by one when I click on the increment button).',
-      null
-    )
-    .option(
       '-f, --flat',
       'Generate the files in the mentioned path instead of creating new folder for it',
       selectedComponentType.flat || false
     )
-    .option('-dr, --dry-run', 'Show what will be generated without writing to disk')
+    .option('--dry-run', 'Show what will be generated without writing to disk')
     .option(
       '--customDirectory <customDirectory>',
       'You can pass a cased path template that will be used as the component path for the component being generated.\n' +

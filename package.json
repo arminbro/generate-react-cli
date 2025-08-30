@@ -39,11 +39,11 @@
   },
   "dependencies": {
     "chalk": "5.6.0",
-    "commander": "12.1.0",
+    "commander": "14.0.0",
     "deep-keys": "0.5.0",
     "dotenv": "16.6.1",
     "fs-extra": "11.2.0",
-    "inquirer": "9.3.7",
+    "inquirer": "12.9.4",
     "lodash": "4.17.21",
     "replace": "1.2.2"
   },
