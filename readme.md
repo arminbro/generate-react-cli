@@ -40,6 +40,7 @@ When you run GRC within your project the first time, it will ask you a series of
 ```json
 {
   "usesTypeScript": true,
+  "usesJsxFormat": false,
   "usesCssModule": true,
   "cssPreprocessor": "scss",
   "testLibrary": "Testing Library",
@@ -192,6 +193,7 @@ You can do so by extending the **generate-react-cli.json** config file like this
 ```json
 {
   "usesTypeScript": false,
+  "usesJsxFormat": false,
   "usesCssModule": true,
   "cssPreprocessor": "scss",
   "testLibrary": "Testing Library",
@@ -258,6 +260,7 @@ The keys represent the type of file, and the values are the paths that point to 
 ```json
 {
   "usesTypeScript": false,
+  "usesJsxFormat": false,
   "usesCssModule": true,
   "cssPreprocessor": "scss",
   "testLibrary": "Testing Library",
@@ -436,6 +439,7 @@ You can do so by editing your **generate-react-cli.json** config file like so.
 ```json
 {
   "usesTypeScript": false,
+  "usesJsxFormat": false,
   "usesCssModule": false,
   "cssPreprocessor": "css",
   "testLibrary": "Testing Library",

@@ -128,7 +128,8 @@ function componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, fi
 
 function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convertors }) {
   // @ts-ignore
-  const { usesStyledComponents, cssPreprocessor, testLibrary, usesCssModule, usesTypeScript } = cliConfigFile;
+  const { usesStyledComponents, cssPreprocessor, testLibrary, usesCssModule, usesTypeScript, usesJsxFormat } =
+    cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
@@ -149,7 +150,7 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
     // --- Else use GRC built-in component template
 
     template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
-    filename = usesTypeScript ? `${componentName}.tsx` : `${componentName}.js`;
+    filename = usesTypeScript ? `${componentName}.tsx` : usesJsxFormat ? `${componentName}.jsx` : `${componentName}.js`;
 
     // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
 
@@ -215,9 +216,13 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, co
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    const { usesTypeScript, usesStyledComponents, cssPreprocessor, usesCssModule } = cliConfigFile;
+    const { usesTypeScript, usesStyledComponents, cssPreprocessor, usesCssModule, usesJsxFormat } = cliConfigFile;
     if (usesStyledComponents) {
-      filename = usesTypeScript ? `${componentName}.styled.ts` : `${componentName}.styled.js`;
+      filename = usesTypeScript
+        ? `${componentName}.styled.ts`
+        : usesJsxFormat
+          ? `${componentName}.styled.jsx`
+          : `${componentName}.styled.js`;
       template = componentStyledTemplate;
     } else {
       const module = usesCssModule ? '.module' : '';
@@ -239,7 +244,7 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, co
 
 function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, convertors }) {
   const { customTemplates } = cliConfigFile.component[cmd.type];
-  const { testLibrary, usesTypeScript } = cliConfigFile;
+  const { testLibrary, usesTypeScript, usesJsxFormat } = cliConfigFile;
   let template = null;
   let filename = null;
 
@@ -256,7 +261,11 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    filename = usesTypeScript ? `${componentName}.test.tsx` : `${componentName}.test.js`;
+    filename = usesTypeScript
+      ? `${componentName}.test.tsx`
+      : usesJsxFormat
+        ? `${componentName}.test.jsx`
+        : `${componentName}.test.js`;
 
     if (testLibrary === 'Enzyme') {
       // --- Else use GRC built-in test template based on test library type
@@ -277,7 +286,7 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
 }
 
 function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, convertors }) {
-  const { usesTypeScript } = cliConfigFile;
+  const { usesTypeScript, usesJsxFormat } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
@@ -298,7 +307,11 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, co
     // --- Else use GRC built-in story template
 
     template = componentStoryTemplate;
-    filename = usesTypeScript ? `${componentName}.stories.tsx` : `${componentName}.stories.js`;
+    filename = usesTypeScript
+      ? `${componentName}.stories.tsx`
+      : usesJsxFormat
+        ? `${componentName}.stories.jsx`
+        : `${componentName}.stories.js`;
   }
 
   return {
@@ -309,7 +322,7 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, co
 }
 
 function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile, convertors }) {
-  const { usesTypeScript } = cliConfigFile;
+  const { usesTypeScript, usesJsxFormat } = cliConfigFile;
   const { customTemplates } = cliConfigFile.component[cmd.type];
   let template = null;
   let filename = null;
@@ -330,7 +343,11 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile, con
     // --- Else use GRC built-in lazy template
 
     template = usesTypeScript ? componentTsLazyTemplate : componentLazyTemplate;
-    filename = usesTypeScript ? `${componentName}.lazy.tsx` : `${componentName}.lazy.js`;
+    filename = usesTypeScript
+      ? `${componentName}.lazy.tsx`
+      : usesJsxFormat
+        ? `${componentName}.lazy.jsx`
+        : `${componentName}.lazy.js`;
   }
 
   return {
