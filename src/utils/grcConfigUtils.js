@@ -20,6 +20,12 @@ const projectLevelQuestions = [
   },
   {
     type: 'confirm',
+    name: 'usesJsxFormat',
+    message: 'Do you want to use the .jsx file format for components?',
+    default: false,
+  },
+  {
+    type: 'confirm',
     name: 'usesStyledComponents',
     message: 'Does this project use styled-components?',
   },
