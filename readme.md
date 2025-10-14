@@ -317,6 +317,7 @@ export default TemplateName;
 | `template-name` | component name in kebab-case                                                                   |
 | `template_name` | component name in snake_case                                                                   |
 | `TEMPLATE_NAME` | component name in uppercase SNAKE_CASE                                                         |
+| `TEMPLATENAME`  | component name in full UPPERCASE                                                               |
 
 #### Example of a custom test template file:
 
