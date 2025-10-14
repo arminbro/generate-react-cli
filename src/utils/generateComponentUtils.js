@@ -418,6 +418,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
         'template-name': kebabCase(componentName),
         template_name: snakeCase(componentName),
         TEMPLATE_NAME: snakeCase(componentName).toUpperCase(),
+        TEMPLATENAME: componentName.toUpperCase(),
       };
 
       const { componentPath, filename, template } = generateTemplate({
@@ -486,6 +487,15 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
             replace({
               regex: 'TEMPLATE_NAME',
               replacement: convertors['TEMPLATE_NAME'],
+              paths: [componentPath],
+              recursive: false,
+              silent: true,
+            });
+
+            // Will replace the TEMPLATENAME in uppercase SNAKE_CASE
+            replace({
+              regex: 'TEMPLATENAME',
+              replacement: convertors['TEMPLATENAME'],
               paths: [componentPath],
               recursive: false,
               silent: true,
