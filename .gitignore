@@ -14,3 +14,9 @@
 
 # Claude AI context file
 **/CLAUDE.md
+
+# VSCode
+.vscode
+
+# Zed
+.zed
