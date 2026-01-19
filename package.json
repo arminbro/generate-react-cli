@@ -1,32 +1,32 @@
 {
   "name": "generate-react-cli",
+  "type": "module",
   "version": "9.0.1",
   "description": "A simple React CLI to generate components instantly and more.",
-  "repository": "https://github.com/arminbro/generate-react-cli",
-  "bugs": "https://github.com/arminbro/generate-react-cli/issues",
   "author": "Armin Broubakarian",
   "license": "MIT",
-  "main": "bin/generate-react",
-  "bin": {
-    "generate-react": "bin/generate-react.js"
-  },
-  "type": "module",
-  "files": [
-    "bin/",
-    "src/",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "repository": "https://github.com/arminbro/generate-react-cli",
+  "bugs": "https://github.com/arminbro/generate-react-cli/issues",
   "keywords": [
     "cli",
     "react",
     "build-tools",
     "generate-react-cli"
   ],
+  "main": "bin/generate-react",
+  "bin": {
+    "generate-react": "bin/generate-react.js"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "bin/",
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=22",
     "npm": ">=10"
@@ -48,7 +48,7 @@
     "replace": "1.2.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "4.12.0",
+    "@antfu/eslint-config": "7.0.1",
     "@commitlint/cli": "20.3.1",
     "@commitlint/config-conventional": "20.3.1",
     "@semantic-release/commit-analyzer": "13.0.1",
@@ -58,7 +58,7 @@
     "@semantic-release/release-notes-generator": "14.1.0",
     "eslint": "9.39.2",
     "husky": "9.1.7",
-    "lint-staged": "16.1.0",
+    "lint-staged": "16.2.7",
     "semantic-release": "25.0.2"
   },
   "lint-staged": {
