@@ -16,6 +16,7 @@
   "bin": {
     "generate-react": "bin/generate-react.js"
   },
+  "type": "module",
   "files": [
     "CHANGELOG.md",
     "LICENSE",
