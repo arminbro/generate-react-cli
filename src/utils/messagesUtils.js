@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 
+const DEFAULT_TERMINAL_WIDTH = 80;
+
 // Symbols for consistent visual feedback
 const symbols = {
   success: chalk.green('✓'),
@@ -12,8 +14,12 @@ const symbols = {
 
 // Create a responsive divider that adapts to terminal width
 function divider(color = 'cyan') {
-  const width = Math.min(process.stdout.columns || 80, 80);
+  const width = Math.min(process.stdout.columns || DEFAULT_TERMINAL_WIDTH, DEFAULT_TERMINAL_WIDTH);
   return chalk[color]('─'.repeat(width));
+}
+
+function pluralize(count, word) {
+  return count === 1 ? word : `${word}s`;
 }
 
 // Success message with optional file path
@@ -43,6 +49,12 @@ export function error(message, { details, suggestions } = {}) {
     });
   }
   console.log();
+}
+
+// Error message with exit
+export function exitWithError(message, options = {}, exitCode = 1) {
+  error(message, options);
+  process.exit(exitCode);
 }
 
 // Warning message
@@ -102,12 +114,11 @@ export function fileSummary(files, basePath, { dryRun = false } = {}) {
   } else {
     // Actual run: show what happened
     if (createdFiles.length > 0) {
-      console.log(`${symbols.success} ${chalk.green(`Created ${createdFiles.length} file${createdFiles.length === 1 ? '' : 's'} in ${basePath}`)}`);
+      console.log(`${symbols.success} ${chalk.green(`Created ${createdFiles.length} ${pluralize(createdFiles.length, 'file')} in ${basePath}`)}`);
     }
     if (skippedFiles.length > 0) {
-      console.log(`${symbols.warning} ${chalk.yellow(`Skipped ${skippedFiles.length} file${skippedFiles.length === 1 ? '' : 's'} (already exist)`)}`);
+      console.log(`${symbols.warning} ${chalk.yellow(`Skipped ${skippedFiles.length} ${pluralize(skippedFiles.length, 'file')} (already exist)`)}`);
     }
-    console.log();
 
     // Show file tree with status icons
     files.forEach((file, index) => {
