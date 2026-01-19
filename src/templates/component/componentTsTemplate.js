@@ -1,4 +1,4 @@
-export default `import React, { FC } from 'react';
+export default `import type { FC } from 'react';
 import styles from './templatename.module.css';
 
 interface templatenameProps {}

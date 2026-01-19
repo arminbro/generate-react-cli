@@ -55,6 +55,12 @@ When you run GRC within your project the first time, it will ask you a series of
 }
 ```
 
+#### Test library options:
+
+- `Testing Library` - Generates tests using [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- `Vitest` - Generates tests using [Vitest](https://vitest.dev/) with React Testing Library
+- `None` - Generates basic tests using React's createRoot API
+
 ## Generate Components
 
 ```sh
@@ -119,7 +125,7 @@ Otherwise, if you don't pass any options, it will just use the default values th
   <tr>
     <td width="20%"><b>--withLazy</b></td>
     <td width="60%">
-      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://reactjs.org/docs/code-splitting.html#code-splitting">code splitting</a>) with this component.
+      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://react.dev/reference/react/lazy">code splitting</a>) with this component.
     </td>
     <td width="20%">Boolean</td>
     <td width="20%"><code>component.default.withLazy<code></td>
@@ -295,7 +301,6 @@ Notice in the `page.customTemplates` that we only specified the `test` custom te
 ```jsx
 // templates/component/TemplateName.js
 
-import React from 'react';
 import styles from './TemplateName.module.css';
 
 const TemplateName = () => (
@@ -324,14 +329,14 @@ export default TemplateName;
 ```jsx
 // templates/component/TemplateName.test.js
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import TemplateName from './TemplateName';
 
-it('It should mount', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<TemplateName />, div);
-  ReactDOM.unmountComponentAtNode(div);
+it('should mount', () => {
+  const container = document.createElement('div');
+  const root = createRoot(container);
+  root.render(<TemplateName />);
+  root.unmount();
 });
 ```
 

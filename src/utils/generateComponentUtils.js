@@ -12,13 +12,13 @@ import componentLazyTemplate from '../templates/component/componentLazyTemplate.
 import componentStoryTemplate from '../templates/component/componentStoryTemplate.js';
 import componentStyledTemplate from '../templates/component/componentStyledTemplate.js';
 import componentTestDefaultTemplate from '../templates/component/componentTestDefaultTemplate.js';
-import componentTestEnzymeTemplate from '../templates/component/componentTestEnzymeTemplate.js';
 import componentTestTestingLibraryTemplate from '../templates/component/componentTestTestingLibraryTemplate.js';
+import componentTestVitestTemplate from '../templates/component/componentTestVitestTemplate.js';
 import componentTsLazyTemplate from '../templates/component/componentTsLazyTemplate.js';
 import componentTsTemplate from '../templates/component/componentTsTemplate.js';
-import { error, fileSummary } from './messagesUtils.js';
+import { error, exitWithError, fileSummary } from './messagesUtils.js';
 
-const templateNameRE = /.*(template[|_-]?name).*/i;
+const TEMPLATE_NAME_REGEX = /template[-_]?name/i;
 
 const { existsSync, outputFileSync, readFileSync } = fsExtra;
 
@@ -35,15 +35,13 @@ export function getComponentByType(args, cliConfigFile) {
 
     if (!selectedComponentType) {
       const availableTypes = Object.keys(cliConfigFile.component).join(', ');
-      error(`Unknown component type "${componentType}"`, {
+      exitWithError(`Unknown component type "${componentType}"`, {
         details: `Available types: ${availableTypes}`,
         suggestions: [
           `Use one of the available types: ${availableTypes}`,
           'Add this component type to your generate-react-cli.json config',
         ],
       });
-
-      process.exit(1);
     }
 
     // Otherwise return it.
@@ -61,7 +59,7 @@ export function getCorrespondingComponentFileTypes(component) {
 }
 
 function getCustomTemplate(componentName, templatePath) {
-  // --- Try loading custom template
+  // Try loading custom template
 
   try {
     const template = readFileSync(templatePath, 'utf8');
@@ -69,15 +67,13 @@ function getCustomTemplate(componentName, templatePath) {
 
     return { template, filename };
   } catch {
-    error(`Custom template not found: "${templatePath}"`, {
+    exitWithError(`Custom template not found: "${templatePath}"`, {
       suggestions: [
         'Verify the template path in your generate-react-cli.json config',
         'Check that the file exists and is readable',
         'Use an absolute path or a path relative to project root',
       ],
     });
-
-    return process.exit(1);
   }
 }
 
@@ -97,17 +93,15 @@ function componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, fi
     if (customDirectoryConfigs.length > 0) {
       const customDirectory = customDirectoryConfigs.slice(-1).toString();
 
-      // Double check if the customDirectory is templatable
-      if (templateNameRE.exec(customDirectory) == null) {
-        error(`Invalid customDirectory: "${customDirectory}"`, {
+      // Check if the customDirectory contains a template placeholder
+      if (!TEMPLATE_NAME_REGEX.test(customDirectory)) {
+        exitWithError(`Invalid customDirectory: "${customDirectory}"`, {
           details: 'customDirectory must contain a template placeholder',
           suggestions: [
             'Use templatename, TemplateName, template-name, or template_name',
             'Example: "{{templatename}}" or "TemplateName"',
           ],
         });
-
-        process.exit(-2);
       }
 
       for (const convertor in convertors) {
@@ -137,7 +131,7 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
   // Check for a custom component template.
 
   if (customTemplates && customTemplates.component) {
-    // --- Load and use the custom component template
+    // Load and use the custom component template
 
     const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
       componentName,
@@ -147,18 +141,19 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    // --- Else use GRC built-in component template
+    // Else use GRC built-in component template
 
     template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
     filename = usesTypeScript ? `${componentName}.tsx` : `${componentName}.js`;
 
-    // --- If test library is not Testing Library or if withTest is false. Remove data-testid from template
+    // If test library doesn't use data-testid or if withTest is false. Remove data-testid from template
 
-    if (testLibrary !== 'Testing Library' || !cmd.withTest) {
+    const usesTestId = testLibrary === 'Testing Library' || testLibrary === 'Vitest';
+    if (!usesTestId || !cmd.withTest) {
       template = template.replace(` data-testid="templatename"`, '');
     }
 
-    // --- If it has a corresponding stylesheet
+    // If it has a corresponding stylesheet
 
     if (cmd.withStyle) {
       if (cliConfigFile.usesStyledComponents) {
@@ -174,7 +169,7 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
         const module = usesCssModule ? '.module' : '';
         const cssPath = `${componentName}${module}.${cssPreprocessor}`;
 
-        // --- If the css module is true make sure to update the template accordingly
+        // If the css module is true make sure to update the template accordingly
 
         if (module.length) {
           template = template.replace(`'./templatename.module.css'`, `'./${cssPath}'`);
@@ -184,7 +179,7 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
         }
       }
     } else {
-      // --- If no stylesheet, remove className attribute and style import from jsTemplate
+      // If no stylesheet, remove className attribute and style import from jsTemplate
 
       template = template.replace(` className={styles.templatename}`, '');
       template = template.replace(`import styles from './templatename.module.css';`, '');
@@ -206,7 +201,7 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, co
   // Check for a custom style template.
 
   if (customTemplates && customTemplates.style) {
-    // --- Load and use the custom style template
+    // Load and use the custom style template
 
     const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
       componentName,
@@ -224,7 +219,7 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, co
       const module = usesCssModule ? '.module' : '';
       const cssFilename = `${componentName}${module}.${cssPreprocessor}`;
 
-      // --- Else use GRC built-in style template
+      // Else use GRC built-in style template
 
       template = componentCssTemplate;
       filename = cssFilename;
@@ -247,7 +242,7 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
   // Check for a custom test template.
 
   if (customTemplates && customTemplates.test) {
-    // --- Load and use the custom test template
+    // Load and use the custom test template
 
     const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
       componentName,
@@ -259,12 +254,10 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
   } else {
     filename = usesTypeScript ? `${componentName}.test.tsx` : `${componentName}.test.js`;
 
-    if (testLibrary === 'Enzyme') {
-      // --- Else use GRC built-in test template based on test library type
-
-      template = componentTestEnzymeTemplate;
-    } else if (testLibrary === 'Testing Library') {
+    if (testLibrary === 'Testing Library') {
       template = componentTestTestingLibraryTemplate;
+    } else if (testLibrary === 'Vitest') {
+      template = componentTestVitestTemplate;
     } else {
       template = componentTestDefaultTemplate;
     }
@@ -286,7 +279,7 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, co
   // Check for a custom story template.
 
   if (customTemplates && customTemplates.story) {
-    // --- Load and use the custom story template
+    // Load and use the custom story template
 
     const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
       componentName,
@@ -296,7 +289,7 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, co
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    // --- Else use GRC built-in story template
+    // Else use GRC built-in story template
 
     template = componentStoryTemplate;
     filename = usesTypeScript ? `${componentName}.stories.tsx` : `${componentName}.stories.js`;
@@ -318,7 +311,7 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile, con
   // Check for a custom lazy template.
 
   if (customTemplates && customTemplates.lazy) {
-    // --- Load and use the custom lazy template
+    // Load and use the custom lazy template
 
     const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
       componentName,
@@ -328,7 +321,7 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile, con
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    // --- Else use GRC built-in lazy template
+    // Else use GRC built-in lazy template
 
     template = usesTypeScript ? componentTsLazyTemplate : componentLazyTemplate;
     filename = usesTypeScript ? `${componentName}.lazy.tsx` : `${componentName}.lazy.js`;
@@ -350,18 +343,16 @@ function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, compon
   // Check for a valid custom template for the corresponding custom component file.
 
   if (!customTemplates || !customTemplates[fileType]) {
-    error(`Missing custom template for "${fileType}"`, {
+    exitWithError(`Missing custom template for "${fileType}"`, {
       details: 'Custom component files require a matching custom template',
       suggestions: [
         `Add a "${fileType}" template path to customTemplates in your config`,
         'Check that the template file exists at the specified path',
       ],
     });
-
-    return process.exit(1);
   }
 
-  // --- Load and use the custom component template.
+  // Load and use the custom component template.
 
   const { template: customTemplate, filename: customTemplateFilename } = getCustomTemplate(
     componentName,
@@ -378,7 +369,7 @@ function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, compon
   };
 }
 
-// --- Built in component file types
+// Built in component file types
 
 const buildInComponentFileTypes = {
   COMPONENT: 'component',
@@ -388,7 +379,7 @@ const buildInComponentFileTypes = {
   LAZY: 'withLazy',
 };
 
-// --- Generate component template map
+// Generate component template map
 
 const componentTemplateGeneratorMap = {
   [buildInComponentFileTypes.COMPONENT]: componentTemplateGenerator,
@@ -404,7 +395,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
   let basePath = '';
 
   componentFileTypes.forEach((componentFileType) => {
-    // --- Generate templates only if the component options (withStyle, withTest, etc..) are true,
+    // Generate templates only if the component options (withStyle, withTest, etc..) are true,
     // or if the template type is "component"
 
     if (
@@ -436,7 +427,7 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
         basePath = path.dirname(componentPath);
       }
 
-      // --- Make sure the component does not already exist in the path directory.
+      // Make sure the component does not already exist in the path directory.
 
       if (existsSync(componentPath)) {
         generatedFiles.push({ filename, status: 'skipped', path: componentPath });
@@ -445,67 +436,9 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
           if (!cmd.dryRun) {
             outputFileSync(componentPath, template);
 
-            // Will replace the templatename in whichever format the user typed the component name in the command.
-            replace({
-              regex: 'templatename',
-              replacement: convertors.templatename,
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
-            });
-
-            // Will replace the TemplateName in PascalCase
-            replace({
-              regex: 'TemplateName',
-              replacement: convertors.TemplateName,
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
-            });
-
-            // Will replace the templateName in camelCase
-            replace({
-              regex: 'templateName',
-              replacement: convertors.templateName,
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
-            });
-
-            // Will replace the template-name in kebab-case
-            replace({
-              regex: 'template-name',
-              replacement: convertors['template-name'],
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
-            });
-
-            // Will replace the template_name in snake_case
-            replace({
-              regex: 'template_name',
-              replacement: convertors.template_name,
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
-            });
-
-            // Will replace the TEMPLATE_NAME in uppercase SNAKE_CASE
-            replace({
-              regex: 'TEMPLATE_NAME',
-              replacement: convertors.TEMPLATE_NAME,
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
-            });
-
-            // Will replace the TEMPLATENAME in uppercase SNAKE_CASE
-            replace({
-              regex: 'TEMPLATENAME',
-              replacement: convertors.TEMPLATENAME,
-              paths: [componentPath],
-              recursive: false,
-              silent: true,
+            // Replace all template placeholders with their corresponding component name formats
+            Object.entries(convertors).forEach(([pattern, replacement]) => {
+              replace({ regex: pattern, replacement, paths: [componentPath], recursive: false, silent: true });
             });
           }
 

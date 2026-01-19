@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 
 import merge from 'lodash/merge.js';
 import deepKeys from './deepKeysUtils.js';
-import { blank, error, header, outro, success } from './messagesUtils.js';
+import { blank, error, exitWithError, header, outro, success } from './messagesUtils.js';
 
 const { accessSync, constants, outputFileSync, readFileSync } = fsExtra;
 const { prompt } = inquirer;
@@ -40,7 +40,7 @@ const projectLevelQuestions = [
     type: 'select',
     name: 'testLibrary',
     message: 'What testing library does your project use?',
-    choices: ['Testing Library', 'Enzyme', 'None'],
+    choices: ['Testing Library', 'Vitest', 'None'],
   },
 ];
 
@@ -76,7 +76,7 @@ export const componentLevelQuestions = [
     type: 'confirm',
     name: 'component.default.withLazy',
     message:
-      'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://reactjs.org/docs/code-splitting.html#code-splitting) with each component you generate?',
+      'Would you like to create a corresponding lazy file (a file that lazy-loads your component out of the box and enables code splitting: https://react.dev/reference/react/lazy) with each component you generate?',
   },
 ];
 
@@ -99,9 +99,9 @@ async function createCLIConfigFile() {
     outputFileSync('generate-react-cli.json', JSON.stringify(answers, null, 2));
 
     blank();
-    success('Config file created successfully');
+    success('Created the generate-react-cli.json config file');
     blank();
-    outro('You can always update it manually. Happy Hacking!');
+    outro('You can always update the config file manually. Happy Hacking!');
 
     return answers;
   } catch (e) {
@@ -132,9 +132,9 @@ async function updateCLIConfigFile(missingConfigQuestions, currentConfigFile) {
     );
 
     blank();
-    success('Config file updated successfully');
+    success('Updated the generate-react-cli.json config file');
     blank();
-    outro('You can always update it manually. Happy Hacking!');
+    outro('You can always update the config file manually. Happy Hacking!');
 
     return updatedAnswers;
   } catch (e) {
@@ -186,13 +186,12 @@ export async function getCLIConfigFile() {
       return await createCLIConfigFile();
     }
   } catch {
-    error('Not in project root', {
+    exitWithError('Not in project root', {
       details: 'Could not find package.json in current directory',
       suggestions: [
         'Run this command from your project root directory',
         'Make sure package.json exists in the current directory',
       ],
     });
-    return process.exit(1);
   }
 }
