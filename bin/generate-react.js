@@ -12,7 +12,6 @@ function isNotValidNodeVersion() {
       details: 'Generate React CLI requires Node 22 or higher',
       suggestions: [
         'Update your Node.js version to 22 or higher',
-        'Use nvm to manage multiple Node versions: nvm install 22',
       ],
     });
 
