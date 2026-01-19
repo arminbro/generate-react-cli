@@ -11,29 +11,29 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
     .command('component [names...]')
     .alias('c')
 
-    // Static component command option defaults.
+  // Static component command option defaults.
 
     .option('-p, --path <path>', 'The path where the component will get generated in.', selectedComponentType.path)
     .option(
       '--type <type>',
       'You can pass a component type that you have configured in your GRC config file.',
-      'default'
+      'default',
     )
     .option(
       '-f, --flat',
       'Generate the files in the mentioned path instead of creating new folder for it',
-      selectedComponentType.flat || false
+      selectedComponentType.flat || false,
     )
     .option('--dry-run', 'Show what will be generated without writing to disk')
     .option(
       '--customDirectory <customDirectory>',
-      'You can pass a cased path template that will be used as the component path for the component being generated.\n' +
-        'E.g. this allows you to add a prefix or suffix to the component path, ' +
-        'or change the case of the name of the directory holding the components to kebab-case.\n' +
-        'Examples:\n' +
-        '- TemplateName\n' +
-        '- template-name\n' +
-        '- TemplateNameSuffix'
+      'You can pass a cased path template that will be used as the component path for the component being generated.\n'
+      + 'E.g. this allows you to add a prefix or suffix to the component path, '
+      + 'or change the case of the name of the directory holding the components to kebab-case.\n'
+      + 'Examples:\n'
+      + '- TemplateName\n'
+      + '- template-name\n'
+      + '- TemplateNameSuffix',
     );
 
   // Dynamic component command option defaults.
@@ -44,13 +44,13 @@ export default function initGenerateComponentCommand(args, cliConfigFile, progra
     componentCommand.option(
       `--${dynamicOption} <${dynamicOption}>`,
       `With corresponding ${dynamicOption.split('with')[1]} file.`,
-      selectedComponentType[dynamicOption]
+      selectedComponentType[dynamicOption],
     );
   });
 
   // Component command action.
 
   componentCommand.action((componentNames, cmd) =>
-    componentNames.forEach((componentName) => generateComponent(componentName, cmd, cliConfigFile))
+    componentNames.forEach(componentName => generateComponent(componentName, cmd, cliConfigFile)),
   );
 }

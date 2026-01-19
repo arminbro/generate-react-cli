@@ -1,24 +1,26 @@
 #!/usr/bin/env node
 import cli from '../src/cli.js';
+import { error } from '../src/utils/messagesUtils.js';
 
-const isNotValidNodeVersion = () => {
+function isNotValidNodeVersion() {
   const currentNodeVersion = process.versions.node;
   const semver = currentNodeVersion.split('.');
   const major = semver[0];
 
-  if (major < 18) {
-    console.error(
-      // eslint-disable-next-line
-      'You are running Node ' +
-        currentNodeVersion +
-        ' Generate React CLI requires Node 18 or higher. Please update your version of Node.'
-    );
+  if (major < 22) {
+    error(`Node ${currentNodeVersion} is not supported`, {
+      details: 'Generate React CLI requires Node 22 or higher',
+      suggestions: [
+        'Update your Node.js version to 22 or higher',
+        'Use nvm to manage multiple Node versions: nvm install 22',
+      ],
+    });
 
     return true;
   }
 
   return false;
-};
+}
 
 // --- Check if user is running Node 12 or higher.
 
