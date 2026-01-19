@@ -1,7 +1,6 @@
 {
   "name": "generate-react-cli",
-  "type": "module",
-  "version": "9.0.1",
+  "version": "10.0.0",
   "description": "A simple React CLI to generate components instantly and more.",
   "author": "Armin Broubakarian",
   "license": "MIT",
