@@ -12,8 +12,8 @@ import componentLazyTemplate from '../templates/component/componentLazyTemplate.
 import componentStoryTemplate from '../templates/component/componentStoryTemplate.js';
 import componentStyledTemplate from '../templates/component/componentStyledTemplate.js';
 import componentTestDefaultTemplate from '../templates/component/componentTestDefaultTemplate.js';
-import componentTestEnzymeTemplate from '../templates/component/componentTestEnzymeTemplate.js';
 import componentTestTestingLibraryTemplate from '../templates/component/componentTestTestingLibraryTemplate.js';
+import componentTestVitestTemplate from '../templates/component/componentTestVitestTemplate.js';
 import componentTsLazyTemplate from '../templates/component/componentTsLazyTemplate.js';
 import componentTsTemplate from '../templates/component/componentTsTemplate.js';
 import { error, exitWithError, fileSummary } from './messagesUtils.js';
@@ -146,9 +146,10 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
     template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
     filename = usesTypeScript ? `${componentName}.tsx` : `${componentName}.js`;
 
-    // If test library is not Testing Library or if withTest is false. Remove data-testid from template
+    // If test library doesn't use data-testid or if withTest is false. Remove data-testid from template
 
-    if (testLibrary !== 'Testing Library' || !cmd.withTest) {
+    const usesTestId = testLibrary === 'Testing Library' || testLibrary === 'Vitest';
+    if (!usesTestId || !cmd.withTest) {
       template = template.replace(` data-testid="templatename"`, '');
     }
 
@@ -253,12 +254,10 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
   } else {
     filename = usesTypeScript ? `${componentName}.test.tsx` : `${componentName}.test.js`;
 
-    if (testLibrary === 'Enzyme') {
-      // Else use GRC built-in test template based on test library type
-
-      template = componentTestEnzymeTemplate;
-    } else if (testLibrary === 'Testing Library') {
+    if (testLibrary === 'Testing Library') {
       template = componentTestTestingLibraryTemplate;
+    } else if (testLibrary === 'Vitest') {
+      template = componentTestVitestTemplate;
     } else {
       template = componentTestDefaultTemplate;
     }

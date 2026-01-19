@@ -40,7 +40,7 @@ const projectLevelQuestions = [
     type: 'select',
     name: 'testLibrary',
     message: 'What testing library does your project use?',
-    choices: ['Testing Library', 'Enzyme', 'None'],
+    choices: ['Testing Library', 'Vitest', 'None'],
   },
 ];
 

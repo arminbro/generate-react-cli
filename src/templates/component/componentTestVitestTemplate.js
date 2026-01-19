@@ -1,5 +1,6 @@
-export default `import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+export default `import { describe, test, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
 import templatename from './templatename';
 
 describe('<templatename />', () => {
@@ -10,4 +11,5 @@ describe('<templatename />', () => {
 
     expect(templateName).toBeInTheDocument();
   });
-});`;
+});
+`;
