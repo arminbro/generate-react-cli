@@ -6,36 +6,41 @@
   <img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/generate-react-cli.svg?raw=true"/>
 </p>
 
-## Why?
+A CLI tool to speed up productivity in React projects by generating components instantly with configurable templates.
 
-To help speed up productivity in React projects and stop copying, pasting, and renaming files each time you want to create a new component.
+## Table of Contents
 
-A short [article](https://dev.to/arminbro/generate-react-cli-1ooh) goes deeper into why we created GRC if you have the time.
+- [Quick Start](#quick-start)
+- [Requirements](#requirements)
+- [Config File](#config-file)
+- [Generate Components](#generate-components)
+- [Options](#options)
+- [Custom Component Types](#custom-component-types)
+- [Custom Component Templates](#custom-component-templates)
+- [Template Keywords](#template-keywords)
+- [Custom Component Files](#custom-component-files)
+- [Advanced: Custom Directory](#advanced-custom-directory)
+- [License](#license)
 
-You can also watch an excellent [video](https://www.youtube.com/watch?v=NEvnt3MWttY) tutorial on how to use GRC by [Eric Murphy](https://www.youtube.com/channel/UC5KDiSAFxrDWhmysBcNqtMA).
+## Quick Start
 
-## Table of Contents:
+```bash
+# Generate your first component (creates config on first run)
+npx generate-react-cli component Box
 
-- [Config file](#config-file)
-- [Generate components](#generate-components)
-- [Custom component types](#custom-component-types)
-- [Custom component templates](#custom-component-templates)
-- [Custom component directory](#custom-component-directory)
-- [Custom component files](#custom-component-files)
-
-## You can run it using npx like this:
-
+# Or install globally
+npm i -g generate-react-cli
+generate-react component Button
 ```
-  npx generate-react-cli component Box
-```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) is a package runner tool that comes with npm 5.2+)_
+## Requirements
+
+- Node.js 22 or higher
+- npm 10 or higher
 
 ## Config File
 
-When you run GRC within your project the first time, it will ask you a series of questions to customize the cli for your project needs (this will create a "generate-react-cli.json" config file).
-
-#### Example of the **generate-react-cli.json** config file:
+When you run GRC within your project the first time, it will ask you a series of questions to customize the CLI for your project needs (this will create a `generate-react-cli.json` config file).
 
 ```json
 {
@@ -55,21 +60,21 @@ When you run GRC within your project the first time, it will ask you a series of
 }
 ```
 
-#### Test library options:
+**Test library options:**
 
-- `Testing Library` - Generates tests using [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- `Vitest` - Generates tests using [Vitest](https://vitest.dev/) with React Testing Library
-- `None` - Generates basic tests using React's createRoot API
+| Option | Description |
+|--------|-------------|
+| `Testing Library` | Uses [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) |
+| `Vitest` | Uses [Vitest](https://vitest.dev/) with React Testing Library |
+| `None` | Basic tests using React's createRoot API |
 
 ## Generate Components
 
 ```sh
-  npx generate-react-cli component Box
+npx generate-react-cli component Box
 ```
 
-This command will create a folder with your component name within your default (e.g. **src/components**) directory, and its corresponding files.
-
-#### Example of the component files structure:
+This command will create a folder with your component name within your default (e.g., `src/components`) directory, and its corresponding files.
 
 ```
 |-- /src
@@ -80,120 +85,29 @@ This command will create a folder with your component name within your default (
             |-- Box.test.js
 ```
 
-### Options
+## Options
 
-You can also override some of the GRC component config rules using one-off commands. So for example, let's say you have set **withTest** to be `true` in the `component.default` property. You can override it like this:
-
-```sh
-  npx generate-react-cli component Box --withTest=false
-```
-
-Or vice versa, if you have set **withTest** to be `false` you can do this:
+You can override config rules using command-line options:
 
 ```sh
-  npx generate-react-cli component Box --withTest=true
+npx generate-react-cli component Box --withTest=false
 ```
 
-Otherwise, if you don't pass any options, it will just use the default values that you have set in the GRC config file under `component.default`.
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--path` | Output directory for the component | Config value |
+| `--type` | [Custom component type](#custom-component-types) to use | `default` |
+| `--withLazy` | Generate a [lazy-loading](https://react.dev/reference/react/lazy) wrapper file | Config value |
+| `--withStory` | Generate a [Storybook](https://storybook.js.org) story file | Config value |
+| `--withStyle` | Generate a stylesheet file | Config value |
+| `--withTest` | Generate a test file | Config value |
+| `--dry-run` | Preview what will be generated without writing files | `false` |
+| `--flat` | Generate files directly in path without creating a folder | `false` |
+| `--customDirectory` | Override the component's folder name ([see below](#advanced-custom-directory)) | Component name |
 
-<table>
-  <tr align="left">
-    <th>Options</th>
-    <th>Description</th>
-    <th>Value Type</th>
-    <th>Default Value</th>
-  </tr>
+## Custom Component Types
 
-  <tr>
-    <td width="20%"><b>--path</b></td>
-    <td width="60%">
-      Value of the path where you want the component to be generated in (e.g. <b>src/components</b>).
-    </td>
-    <td width="20%">String</td>
-    <td width="20%"><code>component.default.path<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--type</b></td>
-    <td width="60%">
-      You can pass a custom component type that you have configured in the GRC config file that has its own set of component config rules. Read more about <a href="#custom-component-types">custom component types</a>.
-    </td>
-    <td width="20%">String</td>
-    <td width="20%"><code>component.default<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--withLazy</b></td>
-    <td width="60%">
-      Creates a corresponding lazy file (a file that lazy-loads your component out of the box and enables <a href="https://react.dev/reference/react/lazy">code splitting</a>) with this component.
-    </td>
-    <td width="20%">Boolean</td>
-    <td width="20%"><code>component.default.withLazy<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--withStory</b></td>
-    <td width="60%">
-      Creates a corresponding (<a href="https://storybook.js.org">storybook</a>) story file with this component.
-    </td>
-    <td width="20%">Boolean</td>
-    <td width="20%"><code>component.default.withStory<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--withStyle</b></td>
-    <td width="60%">
-      Creates a corresponding stylesheet file with this component.
-    </td>
-    <td width="20%">Boolean</td>
-    <td width="20%"><code>component.default.withStyle<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--withTest</b></td>
-    <td width="60%">
-      Creates a corresponding test file with this component.
-    </td>
-    <td width="20%">Boolean</td>
-    <td width="20%"><code>component.default.withTest<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--dry-run</b></td>
-    <td width="60%">
-      Show what will be generated without writing to disk
-    </td>
-    <td width="20%">Boolean</td>
-    <td width="20%"><code>false<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--flat</b></td>
-    <td width="60%">
-      Generate the files in the mentioned path instead of creating new folder for it
-    </td>
-    <td width="20%">Boolean</td>
-    <td width="20%"><code>false<code></td>
-  </tr>
-
-  <tr>
-    <td width="20%"><b>--customDirectory</b></td>
-    <td width="60%">
-      Template value that overrides the name of the directory of the component to be generated in.<br />
-      See more under <a href="#custom-component-directory">custom component directory</a>.
-    </td>
-    <td width="20%">String</td>
-    <td width="20%"><code>null</code></td>
-  </tr>
-</table>
-
-### Custom component types
-
-By default, GRC will use the `component.default` configuration rules when running the component command out of the box.
-
-What if you wanted to generate other types of components that have their own set of config rules (e.g., **page** or **layout**)?
-
-You can do so by extending the **generate-react-cli.json** config file like this.
+By default, GRC uses the `component.default` configuration. You can define additional component types with their own rules:
 
 ```json
 {
@@ -227,79 +141,38 @@ You can do so by extending the **generate-react-cli.json** config file like this
 }
 ```
 
-Now you can generate a component with your custom component types like this:
+Generate components with custom types:
 
 ```sh
-  npx generate-react-cli component HomePage --type=page
+npx generate-react-cli component HomePage --type=page
+npx generate-react-cli component Sidebar --type=layout
 ```
 
-```sh
-  npx generate-react-cli component BoxLayout --type=layout
-```
+## Custom Component Templates
 
-You can also pass the same [options](#options) to your custom component types as you would for the default component type.
-
-### Custom component templates
-
-You can also create your own custom templates that GRC can use instead of the built-in templates that come with it. We hope this will provide more flexibility for your components that you want to generate.
-
-There is an optional `customTemplates` object that you can pass to the `component.default` or any of your custom component types within your **generate-react-cli.json** config file.
-
-#### Example of the `customTemplates` object:
-
-```json
-"customTemplates": {
-  "component": "templates/TemplateName.js",
-  "lazy":  "templates/TemplateName.lazy.js",
-  "story":  "templates/TemplateName.story.js",
-  "style": "templates/TemplateName.style.scss",
-  "test":  "templates/TemplateName.test.js"
-},
-```
-
-The keys represent the type of file, and the values are the paths that point to where your custom template lives in your project/system. Please note the `TemplateName` keyword in the template filename. GRC will use this keyword and replace it with your component name (in whichever format you typed the component name in the command) as the filename.
-
-#### Example of using the `customTemplates` object within your generate-react-cli.json config file:
+Create your own templates that GRC uses instead of the built-in ones. Add a `customTemplates` object to any component type:
 
 ```json
 {
-  "usesTypeScript": false,
-  "usesCssModule": true,
-  "cssPreprocessor": "scss",
-  "testLibrary": "Testing Library",
   "component": {
     "default": {
-      "customTemplates": {
-        "component": "templates/component/TemplateName.js",
-        "style": "templates/component/TemplateName.style.scss",
-        "test": "templates/component/TemplateName.test.js"
-      },
       "path": "src/components",
       "withStyle": true,
       "withTest": true,
-      "withStory": true,
-      "withLazy": false
-    },
-    "page": {
       "customTemplates": {
-        "test": "templates/page/TemplateName.test.js"
-      },
-      "path": "src/pages",
-      "withLazy": true,
-      "withStory": false,
-      "withStyle": true,
-      "withTest": true
+        "component": "templates/TemplateName.js",
+        "style": "templates/TemplateName.module.css",
+        "test": "templates/TemplateName.test.js"
+      }
     }
   }
 }
 ```
 
-Notice in the `page.customTemplates` that we only specified the `test` custom template type. That's because all the custom template types are optional. If you don't set the other types, GRC will default to using the built-in templates it comes with.
-
-#### Example of a custom component template file:
+Example custom component template:
 
 ```jsx
-// templates/component/TemplateName.js
+// templates/TemplateName.js
 
 import styles from './TemplateName.module.css';
 
@@ -312,22 +185,10 @@ const TemplateName = () => (
 export default TemplateName;
 ```
 
-**Important:** You can use the following keywords within your custom templates to format the component name. Note that the built-in GRC templates use `templatename` casing by default:
-
-| Keyword         | Replacement                                                                                    |
-| --------------- | ---------------------------------------------------------------------------------------------- |
-| `templatename`  | component name in raw case (whichever format the user typed the component name in the command) |
-| `TemplateName`  | component name in PascalCase                                                                   |
-| `templateName`  | component name in camelCase                                                                    |
-| `template-name` | component name in kebab-case                                                                   |
-| `template_name` | component name in snake_case                                                                   |
-| `TEMPLATE_NAME` | component name in uppercase SNAKE_CASE                                                         |
-| `TEMPLATENAME`  | component name in full UPPERCASE                                                               |
-
-#### Example of a custom test template file:
+Example custom test template:
 
 ```jsx
-// templates/component/TemplateName.test.js
+// templates/TemplateName.test.js
 
 import { createRoot } from 'react-dom/client';
 import TemplateName from './TemplateName';
@@ -340,123 +201,38 @@ it('should mount', () => {
 });
 ```
 
-### Custom component directory
+All template types are optional. If you don't specify a custom template for a file type, GRC uses its built-in template.
 
-Using the `customDirectory` you can easily override the directory name for the component generated. For instance, if prefixes are required for particular components or if template names will be mixed, the `customDirectory` option will allow you to override the way that GRC generates the name of the directory where the component files will live.
+## Template Keywords
 
-The `customDirectory` directive allows all supported casings (see previous section) and can be overridden at the following levels in ascending specific of priority:
+Use these keywords in your custom templates and filenames. GRC replaces them with the component name in various formats:
 
-- top
-- component.default
-- component._type_
-- CLI
+| Keyword | Output Format | Example (`Box`) |
+|---------|--------------|-----------------|
+| `templatename` | raw (as typed) | `Box` |
+| `TemplateName` | PascalCase | `Box` |
+| `templateName` | camelCase | `box` |
+| `template-name` | kebab-case | `box` |
+| `template_name` | snake_case | `box` |
+| `TEMPLATE_NAME` | UPPER_SNAKE | `BOX` |
+| `TEMPLATENAME` | UPPERCASE | `BOX` |
 
-#### Example:
+## Custom Component Files
 
-For React Context Providers in a project, the decision has been made to separate Context generation from the visual components.
+Add custom files beyond the built-in options (`withStyle`, `withTest`, `withStory`, `withLazy`).
 
-In a typical configuration the configuration would look as following:
-
-```json
-{
-  "provider": {
-    "path": "src/components/providers",
-    "withLazy": false,
-    "withStory": true,
-    "withStyle": false,
-    "withTest": true,
-    "withTypes": true,
-    "withContext": true,
-    "customTemplates": {
-      "component": "src/components/templates/provider/TemplateName.tsx",
-      "context": "src/components/templates/provider/TemplateName.context.ts",
-      "story": "src/components/templates/provider/TemplateName.stories.tsx",
-      "test": "src/components/templates/provider/TemplateName.test.tsx",
-      "types": "src/components/templates/provider/TemplateName.types.ts"
-    }
-  }
-}
-```
-
-With the configuration above, the component would be required to either follow a full or a minimalistic naming convention.
-I.e. the component would either need to be generated as `ThemeProvider` and consequently the context name would be generated as `ThemeProviderContext`, or by renaming the files and templates as `TemplateNameProvider` but with the downside of the component path being generated as `src/components/providers/Theme`. This creates inconsistent naming in the directory containg the component files.
-
-To work around this, the `customDirectory` option can be used to enforce a particular style.
+Example: Adding an `index.js` barrel file for cleaner imports:
 
 ```json
 {
-  ...
-  "provider": {
-    "path": "src/components/providers",
-      "withLazy": false,
-      "withStory": true,
-      "withStyle": false,
-      "withTest": true,
-      "withTypes": true,
-      "withContext": true,
-      "customDirectory": "TemplateNameProvider",
-      "customTemplates": {
-          "component": "src/components/templates/provider/TemplateNameProvider.tsx",
-          "context": "src/components/templates/provider/TemplateName.context.ts",
-          "story": "src/components/templates/provider/TemplateNameProvider.stories.tsx",
-          "test": "src/components/templates/provider/TemplateNameProvider.test.tsx",
-          "types": "src/components/templates/provider/TemplateNameProvider.types.ts"
-      }
-  }
-  ...
-}
-```
-
-The above configuration would allow you to mix and match different template names and keep naming consistent.
-
-If we executed GRC with the above configuration (`npx generate-react-cli component Theme --type=provider`), the result would look like this:
-
-```fs
-src/components/providers/ThemeProvider/Theme.context.ts
-src/components/providers/ThemeProvider/ThemeProvider.tsx
-src/components/providers/ThemeProvider/ThemeProvider.stories.tsx
-src/components/providers/ThemeProvider/ThemeProvider.test.tsx
-src/components/providers/ThemeProvider/ThemeProvider.types.ts
-```
-
-Similarly, this construct could be used as a shortcut for generating other named components, like the `BoxLayout` example above, depending on that could be shortened to:
-
-```sh
-  npx generate-react-cli component Box --type=layout --customDir=TemplateNameLayout
-```
-
-Or it could be used to generate files with a naming convention with `Test`, `Lazy`, `Context`, `Theme`, or `Provider` suffixes. Or even combined with skeleton CSS
-
-### Custom component files
-
-GRC comes with corresponding built-in files for a given component if you need them (i.e., `withStyle`, `withTest`, `withStory`, and `withLazy`).
-
-What if you wanted to add custom files of your own?
-
-For example, let's say you wanted to add an `index.js` file for each component, so you don't have to add the additional component name with each import (i.e., `import Box from './components/Box'` instead of `import Box from './components/Box/Box'`).
-
-Or maybe you need an additional style file for your component stories.
-
-You can do so by editing your **generate-react-cli.json** config file like so.
-
-```json
-{
-  "usesTypeScript": false,
-  "usesCssModule": false,
-  "cssPreprocessor": "css",
-  "testLibrary": "Testing Library",
   "component": {
     "default": {
       "path": "src/components",
       "withStyle": true,
       "withTest": true,
-      "withStory": true,
-      "withLazy": false,
       "withIndex": true,
-      "withStoryStyle": true,
       "customTemplates": {
-        "index": "templates/default/index.js",
-        "storyStyle": "templates/default/TemplateName.stories.css"
+        "index": "templates/index.js"
       }
     }
   }
@@ -464,24 +240,44 @@ You can do so by editing your **generate-react-cli.json** config file like so.
 ```
 
 ```jsx
-// templates/default/index.js
-
+// templates/index.js
 export { default } from './TemplateName';
 ```
 
-```css
-/* templates/default/TemplateName.stories.css */
+Custom files require corresponding custom templates in `customTemplates`.
 
-.TemplateName {
+## Advanced: Custom Directory
+
+Override the generated component's folder name using `customDirectory`. This is useful when you need naming conventions that differ from the component name.
+
+Example: Generate a `Theme` provider where files live in a `ThemeProvider` folder:
+
+```json
+{
+  "component": {
+    "provider": {
+      "path": "src/providers",
+      "withTest": true,
+      "customDirectory": "TemplateNameProvider",
+      "customTemplates": {
+        "component": "templates/TemplateNameProvider.tsx"
+      }
+    }
+  }
 }
 ```
 
-In this case, we added a `withIndex` & `withStoryStyle` to the `component.default`. Note: You can add custom files to any of your custom component types.
+```sh
+npx generate-react-cli component Theme --type=provider
+# Creates: src/providers/ThemeProvider/ThemeProvider.tsx
+```
 
-You should also see that we added `index` and `storyStyle` to our `customTemplates` object. That's because custom files require custom templates. Otherwise, you will get an error when you generate a component.
+You can also pass it as a CLI option:
 
-Also, we used the `TemplateName` keyword for the `storyStyle` custom file. GRC will generate this corresponding file and replace `TemplateName` with the component name.
+```sh
+npx generate-react-cli component Box --customDirectory=TemplateNameLayout
+```
 
 ## License
 
-Generate React CLI is an open source software [licensed as MIT](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE).
+Generate React CLI is open source software [licensed as MIT](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE).
