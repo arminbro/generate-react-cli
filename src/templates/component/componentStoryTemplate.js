@@ -1,13 +1,9 @@
-export default `/* eslint-disable */
-import TemplateName from './TemplateName';
+export default `import templatename from './templatename';
 
 export default {
-  title: "TemplateName",
+  title: 'templatename',
+  component: templatename,
 };
 
-export const Default = () => <TemplateName />;
-
-Default.story = {
-  name: 'default',
-};
+export const Default = {};
 `;

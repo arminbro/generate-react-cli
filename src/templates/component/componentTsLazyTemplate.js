@@ -1,12 +1,12 @@
-export default `import React, { lazy, Suspense } from 'react';
+export default `import { lazy, Suspense, ComponentProps } from 'react';
 
-const LazyTemplateName = lazy(() => import('./TemplateName'));
+const Lazytemplatename = lazy(() => import('./templatename'));
 
-const TemplateName = (props: JSX.IntrinsicAttributes & { children?: React.ReactNode; }) => (
+const templatename = (props: ComponentProps<typeof Lazytemplatename>) => (
   <Suspense fallback={null}>
-    <LazyTemplateName {...props} />
+    <Lazytemplatename {...props} />
   </Suspense>
 );
 
-export default TemplateName;
+export default templatename;
 `;

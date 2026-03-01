@@ -1,74 +1,67 @@
 {
   "name": "generate-react-cli",
-  "version": "8.2.0",
+  "version": "11.0.3",
   "description": "A simple React CLI to generate components instantly and more.",
-  "repository": "https://github.com/arminbro/generate-react-cli",
-  "bugs": "https://github.com/arminbro/generate-react-cli/issues",
   "author": "Armin Broubakarian",
   "license": "MIT",
-  "main": "bin/generate-react",
-  "bin": {
-    "generate-react": "bin/generate-react.js"
-  },
-  "type": "module",
-  "files": [
-    "bin/",
-    "src/",
-    "README.md",
-    "CHANGELOG.md",
-    "LICENSE"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "repository": "https://github.com/arminbro/generate-react-cli",
+  "bugs": "https://github.com/arminbro/generate-react-cli/issues",
   "keywords": [
     "cli",
     "react",
     "build-tools",
     "generate-react-cli"
   ],
+  "main": "bin/generate-react",
+  "bin": {
+    "generate-react": "bin/generate-react.js"
+  },
+  "type": "module",
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "bin/",
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
-    "node": ">=10.x",
-    "npm": ">= 6.x"
+    "node": ">=22",
+    "npm": ">=10"
   },
   "browserslist": [
     "maintained node versions"
   ],
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "chalk": "5.2.0",
-    "commander": "9.4.1",
-    "deep-keys": "0.5.0",
-    "dotenv": "^16.0.3",
-    "fs-extra": "11.1.0",
-    "inquirer": "9.1.4",
-    "lodash": "4.17.21",
-    "openai": "^3.1.0",
-    "replace": "1.2.2"
+    "chalk": "5.6.2",
+    "commander": "14.0.3",
+    "fs-extra": "11.3.3",
+    "inquirer": "13.3.0",
+    "lodash": "4.17.23"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.3.0",
-    "@commitlint/config-conventional": "17.3.0",
-    "@semantic-release/commit-analyzer": "9.0.2",
+    "@antfu/eslint-config": "7.6.1",
+    "@commitlint/cli": "20.4.2",
+    "@commitlint/config-conventional": "20.4.2",
+    "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "8.0.7",
-    "@semantic-release/npm": "9.0.1",
-    "@semantic-release/release-notes-generator": "10.0.3",
-    "eslint": "8.30.0",
-    "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "husky": "8.0.2",
-    "prettier": "2.8.1",
-    "pretty-quick": "3.1.3",
-    "semantic-release": "19.0.5"
+    "@semantic-release/github": "12.0.6",
+    "@semantic-release/npm": "13.1.5",
+    "@semantic-release/release-notes-generator": "14.1.0",
+    "eslint": "10.0.2",
+    "husky": "9.1.7",
+    "lint-staged": "16.3.1",
+    "semantic-release": "25.0.3"
   },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "printWidth": 120
+  "lint-staged": {
+    "*.js": "eslint --fix"
   },
   "release": {
     "plugins": [
@@ -90,25 +83,12 @@
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb-base",
-      "plugin:prettier/recommended"
     ],
-    "env": {
-      "commonjs": false,
-      "node": true
-    },
-    "parserOptions": {
-      "ecmaVersion": "latest"
-    },
     "rules": {
-      "import/extensions": [
-        {
-          "js": "always"
-        }
+      "body-max-line-length": [
+        0,
+        "always",
+        200
       ]
     }
   }
