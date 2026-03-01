@@ -4,7 +4,6 @@ import camelCase from 'lodash/camelCase.js';
 import kebabCase from 'lodash/kebabCase.js';
 import snakeCase from 'lodash/snakeCase.js';
 import startCase from 'lodash/startCase.js';
-import replace from 'replace';
 import componentCssTemplate from '../templates/component/componentCssTemplate.js';
 
 import componentJsTemplate from '../templates/component/componentJsTemplate.js';
@@ -434,12 +433,13 @@ export function generateComponent(componentName, cmd, cliConfigFile) {
       } else {
         try {
           if (!cmd.dryRun) {
-            outputFileSync(componentPath, template);
-
             // Replace all template placeholders with their corresponding component name formats
+            let processedTemplate = template;
             Object.entries(convertors).forEach(([pattern, replacement]) => {
-              replace({ regex: pattern, replacement, paths: [componentPath], recursive: false, silent: true });
+              processedTemplate = processedTemplate.replaceAll(pattern, replacement);
             });
+
+            outputFileSync(componentPath, processedTemplate);
           }
 
           generatedFiles.push({ filename, status: 'created', path: componentPath });
