@@ -1,6 +1,6 @@
 {
   "name": "generate-react-cli",
-  "version": "11.0.3",
+  "version": "11.0.5",
   "description": "A simple React CLI to generate components instantly and more.",
   "author": "Armin Broubakarian",
   "license": "MIT",
@@ -41,24 +41,24 @@
   },
   "dependencies": {
     "chalk": "5.6.2",
-    "commander": "14.0.3",
-    "fs-extra": "11.3.3",
-    "inquirer": "13.3.0",
-    "lodash": "4.17.23"
+    "commander": "15.0.0",
+    "fs-extra": "11.3.5",
+    "inquirer": "14.0.2",
+    "lodash": "4.18.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "7.6.1",
-    "@commitlint/cli": "20.4.2",
-    "@commitlint/config-conventional": "20.4.2",
+    "@antfu/eslint-config": "9.1.0",
+    "@commitlint/cli": "21.1.0",
+    "@commitlint/config-conventional": "21.1.0",
     "@semantic-release/commit-analyzer": "13.0.1",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/github": "12.0.6",
+    "@semantic-release/github": "12.0.8",
     "@semantic-release/npm": "13.1.5",
-    "@semantic-release/release-notes-generator": "14.1.0",
-    "eslint": "10.0.2",
+    "@semantic-release/release-notes-generator": "14.1.1",
+    "eslint": "10.6.0",
     "husky": "9.1.7",
-    "lint-staged": "16.3.1",
-    "semantic-release": "25.0.3"
+    "lint-staged": "17.0.8",
+    "semantic-release": "25.0.5"
   },
   "lint-staged": {
     "*.js": "eslint --fix"
