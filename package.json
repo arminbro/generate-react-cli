@@ -47,7 +47,7 @@
     "lodash": "4.18.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "9.1.0",
+    "@antfu/eslint-config": "9.3.0",
     "@commitlint/cli": "21.1.0",
     "@commitlint/config-conventional": "21.1.0",
     "@semantic-release/commit-analyzer": "13.0.1",
