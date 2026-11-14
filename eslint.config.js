@@ -24,6 +24,10 @@ export default antfu({
   rules: {
     'no-console': 'off', // CLI tool - console output is expected
     'node/prefer-global/process': 'off', // process is always available in Node.js
-    'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+    'style/brace-style': [
+      'error',
+      '1tbs',
+      { allowSingleLine: true },
+    ],
   },
 });

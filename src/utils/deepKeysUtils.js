@@ -11,11 +11,16 @@
  */
 export default function deepKeys(obj, prefix = '') {
   return Object.keys(obj).reduce((keys, key) => {
-    const path = prefix ? `${prefix}.${key}` : key;
+    const path = prefix
+      ? `${prefix}.${key}`
+      : key;
     const value = obj[key];
 
     if (value && typeof value === 'object' && !Array.isArray(value)) {
-      return [...keys, ...deepKeys(value, path)];
+      return [
+        ...keys,
+        ...deepKeys(value, path),
+      ];
     }
 
     return [...keys, path];

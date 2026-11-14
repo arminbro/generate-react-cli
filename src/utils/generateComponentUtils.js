@@ -143,7 +143,9 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
     // Else use GRC built-in component template
 
     template = usesTypeScript ? componentTsTemplate : componentJsTemplate;
-    filename = usesTypeScript ? `${componentName}.tsx` : `${componentName}.js`;
+    filename = usesTypeScript
+      ? `${componentName}.tsx`
+      : `${componentName}.js`;
 
     // If test library doesn't use data-testid or if withTest is false. Remove data-testid from template
 
@@ -186,7 +188,13 @@ function componentTemplateGenerator({ cmd, componentName, cliConfigFile, convert
   }
 
   return {
-    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
+    componentPath: componentDirectoryNameGenerator({
+      cmd,
+      componentName,
+      cliConfigFile,
+      filename,
+      convertors,
+    }),
     filename,
     template,
   };
@@ -212,7 +220,9 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, co
   } else {
     const { usesTypeScript, usesStyledComponents, cssPreprocessor, usesCssModule } = cliConfigFile;
     if (usesStyledComponents) {
-      filename = usesTypeScript ? `${componentName}.styled.ts` : `${componentName}.styled.js`;
+      filename = usesTypeScript
+        ? `${componentName}.styled.ts`
+        : `${componentName}.styled.js`;
       template = componentStyledTemplate;
     } else {
       const module = usesCssModule ? '.module' : '';
@@ -226,7 +236,13 @@ function componentStyleTemplateGenerator({ cliConfigFile, cmd, componentName, co
   }
 
   return {
-    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
+    componentPath: componentDirectoryNameGenerator({
+      cmd,
+      componentName,
+      cliConfigFile,
+      filename,
+      convertors,
+    }),
     filename,
     template,
   };
@@ -251,7 +267,9 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
     template = customTemplate;
     filename = customTemplateFilename;
   } else {
-    filename = usesTypeScript ? `${componentName}.test.tsx` : `${componentName}.test.js`;
+    filename = usesTypeScript
+      ? `${componentName}.test.tsx`
+      : `${componentName}.test.js`;
 
     if (testLibrary === 'Testing Library') {
       template = componentTestTestingLibraryTemplate;
@@ -263,7 +281,13 @@ function componentTestTemplateGenerator({ cliConfigFile, cmd, componentName, con
   }
 
   return {
-    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
+    componentPath: componentDirectoryNameGenerator({
+      cmd,
+      componentName,
+      cliConfigFile,
+      filename,
+      convertors,
+    }),
     filename,
     template,
   };
@@ -291,11 +315,19 @@ function componentStoryTemplateGenerator({ cliConfigFile, cmd, componentName, co
     // Else use GRC built-in story template
 
     template = componentStoryTemplate;
-    filename = usesTypeScript ? `${componentName}.stories.tsx` : `${componentName}.stories.js`;
+    filename = usesTypeScript
+      ? `${componentName}.stories.tsx`
+      : `${componentName}.stories.js`;
   }
 
   return {
-    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
+    componentPath: componentDirectoryNameGenerator({
+      cmd,
+      componentName,
+      cliConfigFile,
+      filename,
+      convertors,
+    }),
     filename,
     template,
   };
@@ -323,11 +355,19 @@ function componentLazyTemplateGenerator({ cmd, componentName, cliConfigFile, con
     // Else use GRC built-in lazy template
 
     template = usesTypeScript ? componentTsLazyTemplate : componentLazyTemplate;
-    filename = usesTypeScript ? `${componentName}.lazy.tsx` : `${componentName}.lazy.js`;
+    filename = usesTypeScript
+      ? `${componentName}.lazy.tsx`
+      : `${componentName}.lazy.js`;
   }
 
   return {
-    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
+    componentPath: componentDirectoryNameGenerator({
+      cmd,
+      componentName,
+      cliConfigFile,
+      filename,
+      convertors,
+    }),
     filename,
     template,
   };
@@ -362,7 +402,13 @@ function customFileTemplateGenerator({ componentName, cmd, cliConfigFile, compon
   filename = customTemplateFilename;
 
   return {
-    componentPath: componentDirectoryNameGenerator({ cmd, componentName, cliConfigFile, filename, convertors }),
+    componentPath: componentDirectoryNameGenerator({
+      cmd,
+      componentName,
+      cliConfigFile,
+      filename,
+      convertors,
+    }),
     filename,
     template,
   };
@@ -389,7 +435,10 @@ const componentTemplateGeneratorMap = {
 };
 
 export function generateComponent(componentName, cmd, cliConfigFile) {
-  const componentFileTypes = ['component', ...getCorrespondingComponentFileTypes(cmd)];
+  const componentFileTypes = [
+    'component',
+    ...getCorrespondingComponentFileTypes(cmd),
+  ];
   const generatedFiles = [];
   let basePath = '';
 

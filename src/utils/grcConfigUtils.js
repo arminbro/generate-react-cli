@@ -171,7 +171,9 @@ export async function getCLIConfigFile() {
       const missingConfigQuestions = grcConfigQuestions.filter(
         question =>
           !deepKeys(currentConfigFile).includes(question.name)
-          && (question.when ? question.when(currentConfigFile) : true),
+          && (question.when
+            ? question.when(currentConfigFile)
+            : true),
       );
 
       if (missingConfigQuestions.length) {
