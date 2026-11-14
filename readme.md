@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/npm/l/express.svg)](https://github.com/arminbro/generate-react-cli/blob/master/LICENSE)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/generate-react-cli.svg?raw=true"/>
+  <img src="https://raw.githubusercontent.com/arminbro/generate-react-cli/master/docs/assets/generate-react-cli.svg?raw=true" alt="Generate React CLI"/>
 </p>
 
 A CLI tool to speed up productivity in React projects by generating components instantly with configurable templates.
@@ -176,11 +176,13 @@ Example custom component template:
 
 import styles from './TemplateName.module.css';
 
-const TemplateName = () => (
-  <div className={styles.TemplateName} data-testid="TemplateName">
-    <h1>TemplateName component</h1>
-  </div>
-);
+function TemplateName() {
+  return (
+    <div className={styles.TemplateName} data-testid="TemplateName">
+      <h1>TemplateName component</h1>
+    </div>
+  );
+}
 
 export default TemplateName;
 ```

@@ -19,7 +19,9 @@ function divider(color = 'cyan') {
 }
 
 function pluralize(count, word) {
-  return count === 1 ? word : `${word}s`;
+  return count === 1
+    ? word
+    : `${word}s`;
 }
 
 // Success message with optional file path
